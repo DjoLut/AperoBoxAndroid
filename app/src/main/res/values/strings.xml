@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">AperoBox</string>
+    <string name="nomUtilisateur">Nom de l\'utilisateur</string>
+    <string name="prenom">Prénom</string>
+    <string name="nom">Nom</string>
+    <string name="email">Adresse email</string>
+    <string name="dateNaissance">Date de naissance</string>
+    <string name="motDePasse">Mot de passe</string>
+    <string name="inscription">S\'inscrire</string>
+    <string name="connexion">Se connecter</string>
+    <string name="deconnection">Se déconnecter</string>
+    <string name="modeSombre">Mode sombre</string>
+</resources>
