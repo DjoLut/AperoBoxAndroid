@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_connexion);
+        setContentView(R.layout.activity_main);
 
         boxToDisplay = findViewById(R.id.recyclerViewBox);
 

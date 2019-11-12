@@ -1,14 +1,10 @@
 package com.example.aperobox.Dao;
 
-import android.app.Person;
-
 import com.example.aperobox.Model.Box;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -18,7 +14,7 @@ import java.util.ArrayList;
 public class BoxDAO {
 
     public ArrayList<Box> getAllBox() throws Exception {
-        URL url = new URL("https://...");
+        URL url = new URL("https://example.com/allBox");
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         BufferedReader buffer = new BufferedReader(new InputStreamReader(connection.getInputStream()));
         StringBuilder builder = new StringBuilder();
@@ -29,10 +25,21 @@ public class BoxDAO {
         }
         buffer.close();
         stringJSON = builder.toString();
-        return jsonToBox(stringJSON);
+        return jsonToBoxes(stringJSON);
     }
 
-    private ArrayList<Box> jsonToBox(String stringJSON) throws Exception
+    public Box getBox(int id) throws Exception {
+        URL url = new URL("https://example.com/allBox/"+id);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        BufferedReader buffer = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+        StringBuilder builder = new StringBuilder();
+        String stringJSON = "";
+
+        return jsonToBox(stringJSON);
+
+    }
+
+    private ArrayList<Box> jsonToBoxes(String stringJSON) throws Exception
     {
         ArrayList<Box> boxes = new ArrayList<>();
         Box box;
@@ -44,6 +51,18 @@ public class BoxDAO {
             boxes.add(box);
         }
         return boxes;
+    }
+
+
+    private Box jsonToBox(String stringJSON) throws Exception
+    {
+        Box box;
+
+        JSONObject jsonBox = new JSONObject(stringJSON);
+        Gson object = new GsonBuilder().create();
+        box = object.fromJson(jsonBox.toString(), Box.class);
+
+        return box;
     }
 
 }
