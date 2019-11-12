@@ -3,16 +3,13 @@ package com.example.aperobox.Activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.Toast;
-
 import com.example.aperobox.Adapter.AllBoxAdapter;
 import com.example.aperobox.Dao.BoxDAO;
 import com.example.aperobox.Model.Box;
 import com.example.aperobox.R;
-
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
