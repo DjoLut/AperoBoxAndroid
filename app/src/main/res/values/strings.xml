@@ -1,4 +1,8 @@
 <resources>
+    <string name="product_title">Title</string>
+    <string name="product_description">Secondary text</string>
+
+
     <string name="app_name">AperoBox</string>
     <string name="nomUtilisateur">Nom de l\'utilisateur</string>
     <string name="prenom">Prénom</string>
@@ -6,8 +10,31 @@
     <string name="email">Adresse email</string>
     <string name="dateNaissance">Date de naissance</string>
     <string name="motDePasse">Mot de passe</string>
+    <string name="connexionTitle">Connexion</string>
     <string name="inscription">S\'inscrire</string>
     <string name="connexion">Se connecter</string>
     <string name="deconnection">Se déconnecter</string>
     <string name="modeSombre">Mode sombre</string>
+    <string name="title_activity_login">Sign in</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="aperobox">Apéro Box</string>
+
+
+    <!-- Backdrop menu labels -->
+    <string name="featured_label">Featured</string>
+    <string name="apartment_label">Apartment</string>
+    <string name="accessories_label">Accessories</string>
+    <string name="shoes_label">Shoes</string>
+    <string name="tops_label">Tops</string>
+    <string name="bottoms_label">Bottoms</string>
+    <string name="dresses_label">Dresses</string>
+    <string name="account_label">My Account</string>
+
 </resources>

@@ -2,7 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.aperobox">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -10,8 +11,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".Activity.PanierView"></activity>
+        android:name="com.example.aperobox.application.AperoBoxApplication"
+        android:theme="@style/Theme.AperoBox">
+        <activity android:name=".Activity.PanierView" />
         <activity android:name=".Activity.CommentaireView" />
         <activity android:name=".Activity.BoxView" />
         <activity android:name=".Activity.Options" />

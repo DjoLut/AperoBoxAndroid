@@ -1,7 +1,8 @@
 package com.example.aperobox.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -12,7 +13,7 @@ import com.example.aperobox.Model.Box;
 import com.example.aperobox.R;
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationHost{
 
     private RecyclerView boxToDisplay;
     private LoadBox loadBoxTask;
@@ -22,12 +23,33 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        boxToDisplay = findViewById(R.id.recyclerViewBox);
+        if (savedInstanceState == null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.container, new LoginFragment())
+                    .commit();
+        }
+    }
 
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        boxToDisplay.setLayoutManager(layoutManager);
-        loadBoxTask = new LoadBox();
-        loadBoxTask.execute();
+
+    /**
+     * Navigate to the given fragment.
+     *
+     * @param fragment       Fragment to navigate to.
+     * @param addToBackstack Whether or not the current fragment should be added to the backstack.
+     */
+    @Override
+    public void navigateTo(Fragment fragment, boolean addToBackstack) {
+        FragmentTransaction transaction =
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.container, fragment);
+
+        if (addToBackstack) {
+            transaction.addToBackStack(null);
+        }
+
+        transaction.commit();
     }
 
 
