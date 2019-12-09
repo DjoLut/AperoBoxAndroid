@@ -30,8 +30,8 @@ public class LoginFragment extends Fragment {
         final TextInputEditText passwordEditText = view.findViewById(R.id.login_password_edit_text);
         final TextInputLayout usernameTextInput = view.findViewById(R.id.login_username_text_input);
         final TextInputEditText usernameEditText = view.findViewById(R.id.login_username_edit_text);
-        MaterialButton nextButton = view.findViewById(R.id.connexion_button);
-        MaterialButton inscriptioButton = view.findViewById(R.id.inscription_button);
+        final MaterialButton nextButton = view.findViewById(R.id.connexion_button);
+        final MaterialButton inscriptionButton = view.findViewById(R.id.inscription_button);
 
         // Set an error if the password is less than 8 characters.
         nextButton.setOnClickListener(new View.OnClickListener() {
@@ -56,7 +56,7 @@ public class LoginFragment extends Fragment {
             }
         });
 
-        inscriptioButton.setOnClickListener(new View.OnClickListener() {
+        inscriptionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ((NavigationHost) getActivity()).navigateTo(new InscriptionFragment(), false);

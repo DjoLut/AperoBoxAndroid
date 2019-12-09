@@ -38,7 +38,7 @@
     <string name="invalid_password">Mauvais mot de passe</string>
     <string name="invalid_conf_password">Mots de passes différents</string>
     <string name="login_failed">"Échec de la connexion"</string>
-
+    <string name="invalid_date_naissance">La date de naissance n\'est pas valable</string>
 
     <!-- Backdrop menu -->
     <string name="featured_label">Featured</string>

@@ -20,6 +20,9 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.util.Calendar;
+import java.util.Date;
+
 
 /**
  * Fragment representing the register screen for AperoBox.
@@ -77,6 +80,13 @@ public class InscriptionFragment extends Fragment {
                     usernameTextInput.setError(null);
                 }
 
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(dateNaissanceEditText.getYear(), dateNaissanceEditText.getMonth(), dateNaissanceEditText.getDayOfMonth());
+                if(!isDateNaissanceValid(calendar.getTime())){
+                    dateNaissanceTextInput.setError(getString(R.string.invalid_date_naissance));
+                    valid = false;
+                } else
+                    dateNaissanceTextInput.setError(null);
 
 
 
@@ -133,5 +143,9 @@ public class InscriptionFragment extends Fragment {
 
     private boolean isConfPasswordValid(@Nullable Editable text, @Nullable Editable text2) {
         return text.equals(text2);
+    }
+
+    private boolean isDateNaissanceValid(Date date){
+        return date.after(new Date());
     }
 }
