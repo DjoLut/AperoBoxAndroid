@@ -26,8 +26,10 @@ public class LoginFragment extends Fragment {
             @NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.login_fragment, container, false);
-        final TextInputLayout passwordTextInput = view.findViewById(R.id.password_text_input);
-        final TextInputEditText passwordEditText = view.findViewById(R.id.password_edit_text);
+        final TextInputLayout passwordTextInput = view.findViewById(R.id.login_password_text_input);
+        final TextInputEditText passwordEditText = view.findViewById(R.id.login_password_edit_text);
+        final TextInputLayout usernameTextInput = view.findViewById(R.id.login_username_text_input);
+        final TextInputEditText usernameEditText = view.findViewById(R.id.login_username_edit_text);
         MaterialButton nextButton = view.findViewById(R.id.connexion_button);
         MaterialButton inscriptioButton = view.findViewById(R.id.inscription_button);
 
@@ -35,12 +37,22 @@ public class LoginFragment extends Fragment {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!isPasswordValid(passwordEditText.getText())) {
-                    passwordTextInput.setError(getString(R.string.invalid_password));
-                } else {
-                    passwordTextInput.setError(null); // Clear the error
-                    ((NavigationHost) getActivity()).navigateTo(new ProductGridFragment(), false); // Navigate to the next Fragment
+                boolean valid = true;
+                if(!isUsernameLengthValid(usernameEditText.getText())) {
+                    usernameTextInput.setError(getString(R.string.invalid_username_length));
+                    valid = false;
                 }
+                else
+                    usernameTextInput.setError(null);
+
+                if (!isPasswordLengthValid(passwordEditText.getText())) {
+                    passwordTextInput.setError(getString(R.string.invalid_password));
+                    valid = false;
+                } else
+                    passwordTextInput.setError(null); // Clear the error
+
+                if(valid)
+                    ((NavigationHost) getActivity()).navigateTo(new ProductGridFragment(), false); // Navigate to the next Fragment
             }
         });
 
@@ -55,12 +67,22 @@ public class LoginFragment extends Fragment {
         passwordEditText.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                if (isPasswordValid(passwordEditText.getText())) {
+                if (isPasswordLengthValid(passwordEditText.getText())) {
                     passwordTextInput.setError(null); //Clear the error
                 }
                 return false;
             }
         });
+
+        usernameEditText.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(isUsernameLengthValid(usernameEditText.getText()))
+                    usernameTextInput.setError(null);
+                return false;
+            }
+        });
+
         return view;
     }
 
@@ -68,7 +90,11 @@ public class LoginFragment extends Fragment {
         In reality, this will have more complex logic including, but not limited to, actual
         authentication of the username and password.
      */
-    private boolean isPasswordValid(@Nullable Editable text) {
+    private boolean isPasswordLengthValid(@Nullable Editable text) {
         return text != null && text.length() >= 8;
+    }
+
+    private boolean isUsernameLengthValid(@Nullable Editable text) {
+        return text!=null && text.length() >=8;
     }
 }

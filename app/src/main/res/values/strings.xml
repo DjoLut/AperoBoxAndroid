@@ -1,9 +1,12 @@
 <resources>
-    <string name="product_title">Title</string>
-    <string name="product_description">Secondary text</string>
+    <string name="product_title">Titre</string>
+    <string name="product_description">Text secondaire</string>
 
 
-    <string name="app_name">AperoBox</string>
+    <string name="app_name">AperoBox</string>4
+    <string name="aperobox">Apéro Box</string>
+
+    <!-- Connexion / Inscription -->
     <string name="nomUtilisateur">Nom d\'utilisateur</string>
     <string name="prenom">Prénom</string>
     <string name="nom">Nom</string>
@@ -18,25 +21,26 @@
     <string name="localite">Localité</string>
     <string name="codepostal">Code postal</string>
     <string name="pays">Pays</string>
+
+    <!-- Title/button/gen -->
     <string name="connexionTitle">Connexion</string>
     <string name="inscriptionTitle">Inscription</string>
     <string name="inscription">S\'inscrire</string>
     <string name="connexion">Se connecter</string>
     <string name="deconnection">Se déconnecter</string>
     <string name="modeSombre">Mode sombre</string>
-    <string name="title_activity_login">Sign in</string>
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome !"</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
-    <string name="aperobox">Apéro Box</string>
+    <string name="welcome">"Bienvenue !"</string>
+
+    <!-- Error messages -->
+    <string name="invalid_username">Nom d\'utilisateur inconnu</string>
+    <string name="invalid_username_length">8 caractères minimum</string>
+    <string name="invalid_password_length">8 caractères minimum</string>
+    <string name="invalid_password">Mauvais mot de passe</string>
+    <string name="invalid_conf_password">Mots de passes différents</string>
+    <string name="login_failed">"Échec de la connexion"</string>
 
 
-    <!-- Backdrop menu labels -->
+    <!-- Backdrop menu -->
     <string name="featured_label">Featured</string>
     <string name="apartment_label">Apartment</string>
     <string name="accessories_label">Accessories</string>

@@ -34,13 +34,14 @@
             android:textAppearance="@style/TextAppearance.AperoBox.Title" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/username_text_input"
+            android:id="@+id/inscription_username_text_input"
             style="@style/Widget.AperoBox.TextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/nomUtilisateur">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inscription_username_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
@@ -48,7 +49,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/password_text_input"
+        android:id="@+id/inscription_password_text_input"
         style="@style/Widget.AperoBox.TextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -56,14 +57,14 @@
         app:errorEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/password_edit_text"
+            android:id="@+id/inscription_password_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/conf_password_text_input"
+            android:id="@+id/inscription_conf_password_text_input"
             style="@style/Widget.AperoBox.TextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -71,20 +72,21 @@
             app:errorEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/conf_password_edit_text"
+                android:id="@+id/inscription_conf_password_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/nom_text_input"
+            android:id="@+id/inscription_nom_text_input"
             style="@style/Widget.AperoBox.TextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/nom">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inscription_nom_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
@@ -92,13 +94,14 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/prenom_text_input"
+            android:id="@+id/inscription_prenom_text_input"
             style="@style/Widget.AperoBox.TextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/prenom">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inscription_prenom_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
@@ -106,14 +109,14 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/date_naissance_input"
+            android:id="@+id/inscription_date_naissance_input"
             style="@style/Widget.AperoBox.TextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/dateNaissance">
 
             <DatePicker
-                android:id="@+id/datePicker1"
+                android:id="@+id/inscription_date_naissance_datePicker1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:datePickerMode="spinner"
