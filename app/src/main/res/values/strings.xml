@@ -4,13 +4,22 @@
 
 
     <string name="app_name">AperoBox</string>
-    <string name="nomUtilisateur">Nom de l\'utilisateur</string>
+    <string name="nomUtilisateur">Nom d\'utilisateur</string>
     <string name="prenom">Prénom</string>
     <string name="nom">Nom</string>
     <string name="email">Adresse email</string>
     <string name="dateNaissance">Date de naissance</string>
     <string name="motDePasse">Mot de passe</string>
+    <string name="confmotdepasse">Répétez le mot de passe</string>
+    <string name="gsm">Numéro de téléphone portable</string>
+    <string name="telephone">Numéro de téléphone fixe</string>
+    <string name="rue">Rue</string>
+    <string name="numero">Numéro</string>
+    <string name="localite">Localité</string>
+    <string name="codepostal">Code postal</string>
+    <string name="pays">Pays</string>
     <string name="connexionTitle">Connexion</string>
+    <string name="inscriptionTitle">Inscription</string>
     <string name="inscription">S\'inscrire</string>
     <string name="connexion">Se connecter</string>
     <string name="deconnection">Se déconnecter</string>

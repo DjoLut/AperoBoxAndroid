@@ -22,7 +22,8 @@
 
     <style name="Widget.AperoBox.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="hintTextAppearance">@style/TextAppearance.AperoBox.TextInputLayout.HintText</item>
-        <!--<item name="hintTextColor">@color/textColorPrimary</item>-->
+        <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="android:paddingTop">0dp</item>
         <item name="android:paddingBottom">8dp</item>
         <item name="boxStrokeColor">@color/textInputOutlineColor</item>
     </style>
@@ -31,6 +32,11 @@
         <item name="android:textColor">?android:attr/textColorPrimary</item>
     </style>
 
+    <style name="TextAppearance.AperoBox.TextInputLayout.HintText.DateSpinner" parent="@android:style/Widget.DeviceDefault.DatePicker">
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:centerDark"></item>
+    </style>
     <style name="Widget.AperoBox.Button" parent="Widget.MaterialComponents.Button">
         <item name="android:textColor">?android:attr/textColorPrimary</item>
         <item name="backgroundTint">?attr/colorPrimaryDark</item>

@@ -1,6 +1,13 @@
 package com.example.aperobox.Activity;
 
+import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import android.text.Editable;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -12,42 +19,30 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 /**
- * Fragment representing the login screen for AperoBox.
+ * Fragment representing the register screen for AperoBox.
  */
-public class LoginFragment extends Fragment {
-
+public class InscriptionFragment extends Fragment {
     @Override
     public View onCreateView(
             @NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.login_fragment, container, false);
+        View view = inflater.inflate(R.layout.inscription_fragment, container, false);
         final TextInputLayout passwordTextInput = view.findViewById(R.id.password_text_input);
         final TextInputEditText passwordEditText = view.findViewById(R.id.password_edit_text);
-        MaterialButton nextButton = view.findViewById(R.id.connexion_button);
-        MaterialButton inscriptioButton = view.findViewById(R.id.inscription_button);
+        MaterialButton inscriptionButton = view.findViewById(R.id.inscription_button_inscription);
 
         // Set an error if the password is less than 8 characters.
-        nextButton.setOnClickListener(new View.OnClickListener() {
+        inscriptionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!isPasswordValid(passwordEditText.getText())) {
                     passwordTextInput.setError(getString(R.string.invalid_password));
                 } else {
                     passwordTextInput.setError(null); // Clear the error
-                    ((NavigationHost) getActivity()).navigateTo(new ProductGridFragment(), false); // Navigate to the next Fragment
+                    ((NavigationHost) getActivity()).navigateTo(new LoginFragment(), false); // Navigate to the next Fragment
                 }
-            }
-        });
-
-        inscriptioButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((NavigationHost) getActivity()).navigateTo(new InscriptionFragment(), false);
             }
         });
 

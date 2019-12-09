@@ -66,7 +66,7 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/next_button"
+                android:id="@+id/connexion_button"
                 style="@style/Widget.AperoBox.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -75,14 +75,14 @@
                 android:text="@string/connexion" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/cancel_button"
+                android:id="@+id/inscription_button"
                 style="@style/Widget.AperoBox.Button.TextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="12dp"
                 android:layout_marginRight="12dp"
-                android:layout_toStartOf="@id/next_button"
-                android:layout_toLeftOf="@id/next_button"
+                android:layout_toStartOf="@id/connexion_button"
+                android:layout_toLeftOf="@id/connexion_button"
                 android:text="@string/inscription" />
 
         </RelativeLayout>
