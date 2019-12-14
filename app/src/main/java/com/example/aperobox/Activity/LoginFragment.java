@@ -97,4 +97,29 @@ public class LoginFragment extends Fragment {
     private boolean isUsernameLengthValid(@Nullable Editable text) {
         return text!=null && text.length() >=8;
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
 }

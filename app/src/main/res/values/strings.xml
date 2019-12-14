@@ -40,6 +40,15 @@
     <string name="personne10">10</string>
     <string name="personne">Combien de personnes?</string>
 
+    <!-- AProposFragment -->
+    <string name="apropos_message">Application créé et inventée par deux étudiants d\'IG et trois étudiants de marketing de l\'HENALLux IESN de Namur</string>
+
+    <!-- ContactFragment -->
+    <string name="contact_nous_contactez">Nous contactez</string>
+    <string name="contact_mail">aperobox.henallux@outlook.com</string>
+    <string name="contact_mail_sujet">aperoBox_contact_us</string>
+    <string name="contact_mail_chooser">Choisissez l\'application</string>
+
 
     <!-- Error messages -->
     <string name="error_login_api">Impossible d\'accéder aux serveurs</string>

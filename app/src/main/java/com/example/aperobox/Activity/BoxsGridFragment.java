@@ -1,5 +1,7 @@
 package com.example.aperobox.Activity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -116,7 +118,12 @@ public class BoxsGridFragment extends Fragment {
         view.findViewById(R.id.menu_nous_contactez).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((NavigationHost)getActivity()).navigateTo(new ContactFragment(),true);
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("plain/text");
+                intent.setData(Uri.parse("mailto:"));
+                intent.putExtra(Intent.EXTRA_EMAIL, new String[] {getString(R.string.contact_mail)});
+                intent.putExtra(Intent.EXTRA_SUBJECT, R.string.contact_mail_sujet);
+                startActivity(Intent.createChooser(intent, getString(R.string.contact_mail_chooser)));
             }
         });
 

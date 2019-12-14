@@ -86,4 +86,23 @@
         <item name="android:textColor">?android:attr/textColorPrimary</item>
     </style>
 
+
+    <style name="TextAppearance.aperoBox.APropos" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+    </style>
+
+    <style name="TextAppearance.aperoBox.APropos.Image" parent="TextAppearance.aperoBox.APropos">
+        <item name="android:paddingTop">32dp</item>
+        <item name="android:layout_marginBottom">16dp</item>
+    </style>
+
+    <style name="TextAppearance.aperoBox.APropos.Description" parent="TextAppearance.aperoBox.APropos">
+        <item name="android:paddingTop">32dp</item>
+        <item name="android:textSize">25dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>
