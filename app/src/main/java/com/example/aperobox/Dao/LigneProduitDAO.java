@@ -1,13 +1,9 @@
 package com.example.aperobox.Dao;
 
-import com.example.aperobox.JsonTranslator.LigneProduitJsonTranslator;
+import com.example.aperobox.Dao.JsonTranslator.LigneProduitJsonTranslator;
 import com.example.aperobox.Model.LigneProduit;
 import com.example.aperobox.Utility.Constantes;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 
 public class LigneProduitDAO {

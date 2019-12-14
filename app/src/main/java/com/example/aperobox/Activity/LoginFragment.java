@@ -52,14 +52,14 @@ public class LoginFragment extends Fragment {
                     passwordTextInput.setError(null); // Clear the error
 
                 if(valid)
-                    ((NavigationHost) getActivity()).navigateTo(new ProductGridFragment(), false); // Navigate to the next Fragment
+                    ((NavigationHost) getActivity()).navigateTo(new BoxsGridFragment(), false); // Navigate to the next Fragment
             }
         });
 
         inscriptionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((NavigationHost) getActivity()).navigateTo(new InscriptionFragment(), false);
+                ((NavigationHost) getActivity()).navigateTo(new InscriptionFragment(), true);
             }
         });
 

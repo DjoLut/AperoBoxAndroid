@@ -1,4 +1,4 @@
-package com.example.aperobox.JsonTranslator;
+package com.example.aperobox.Dao.JsonTranslator;
 
 import com.example.aperobox.Model.Commentaire;
 import com.google.gson.Gson;

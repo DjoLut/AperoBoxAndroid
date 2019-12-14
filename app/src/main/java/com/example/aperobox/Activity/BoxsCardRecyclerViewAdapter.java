@@ -7,8 +7,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.aperobox.network.ImageRequester;
-import com.example.aperobox.network.ProductEntry;
+import com.example.aperobox.Dao.network.BoxEntry;
+import com.example.aperobox.Dao.network.ImageRequester;
 
 import com.example.aperobox.R;
 
@@ -17,29 +17,30 @@ import java.util.List;
 /**
  * Adapter used to show a simple grid of products.
  */
-public class ProductCardRecyclerViewAdapter extends RecyclerView.Adapter<ProductCardViewHolder> {
+public class BoxsCardRecyclerViewAdapter extends RecyclerView.Adapter<BoxsCardViewHolder> {
 
-    private List<ProductEntry> productList;
+    private List<BoxEntry> productList;
     private ImageRequester imageRequester;
 
-    ProductCardRecyclerViewAdapter(List<ProductEntry> productList) {
+    BoxsCardRecyclerViewAdapter(List<BoxEntry> productList) {
         this.productList = productList;
         imageRequester = ImageRequester.getInstance();
     }
 
     @NonNull
     @Override
-    public ProductCardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.product_card, parent, false);
-        return new ProductCardViewHolder(layoutView);
+    public BoxsCardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.boxs_card, parent, false);
+        return new BoxsCardViewHolder(layoutView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ProductCardViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull BoxsCardViewHolder holder, int position) {
         if (productList != null && position < productList.size()) {
-            ProductEntry product = productList.get(position);
+            BoxEntry product = productList.get(position);
             holder.productTitle.setText(product.title);
             holder.productPrice.setText(product.price);
+
             imageRequester.setImageFromUrl(holder.productImage, product.url);
         }
     }

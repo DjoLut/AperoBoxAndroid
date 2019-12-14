@@ -1,4 +1,4 @@
-package com.example.aperobox.network;
+package com.example.aperobox.Dao.network;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -69,6 +69,15 @@ public class ImageRequester {
     public void setImageFromUrl(NetworkImageView networkImageView, String url) {
         networkImageView.setImageUrl(url, imageLoader);
     }
+
+    /*public void setImageFromUrl(Image networkImage, NetworkImageView networkImageView, String url) {
+        try {
+            networkImage = imageDAO.getImageFromUrl(url);
+        } catch (Exception e){
+            networkImage = null;
+        }
+        //networkImageView.setImageUrl(url, imageLoader);
+    }*/
 
     private int calculateMaxByteSize() {
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();

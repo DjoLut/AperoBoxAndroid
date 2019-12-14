@@ -4,19 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.Toast;
-import com.example.aperobox.Adapter.AllBoxAdapter;
-import com.example.aperobox.Dao.BoxDAO;
-import com.example.aperobox.Model.Box;
+
+import com.example.aperobox.Dao.UtilDAO;
 import com.example.aperobox.R;
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements NavigationHost{
-
-    private RecyclerView boxToDisplay;
-    private LoadBox loadBoxTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,11 +20,26 @@ public class MainActivity extends AppCompatActivity implements NavigationHost{
         if (savedInstanceState == null) {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .add(R.id.container, new LoginFragment())
+                    .add(R.id.container, new BoxsGridFragment())
                     .commit();
         }
+        if(!UtilDAO.isInternetAvailable())
+            Toast.makeText(this,R.string.error_no_internet,Toast.LENGTH_LONG).show();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(!UtilDAO.isInternetAvailable())
+            Toast.makeText(this,R.string.error_no_internet,Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        if(!UtilDAO.isInternetAvailable())
+            Toast.makeText(this,R.string.error_no_internet,Toast.LENGTH_LONG).show();
+    }
 
     /**
      * Navigate to the given fragment.
@@ -52,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements NavigationHost{
         transaction.commit();
     }
 
+    /*
 
     private class LoadBox extends AsyncTask<String, Void, ArrayList<Box>>
     {
@@ -95,4 +105,6 @@ public class MainActivity extends AppCompatActivity implements NavigationHost{
             loadBoxTask.cancel(true);
     }
 
+
+     */
 }

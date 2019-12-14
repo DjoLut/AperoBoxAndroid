@@ -15,12 +15,16 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.aperobox.Model.Utilisateur;
 import com.example.aperobox.R;
 
-import com.example.aperobox.network.ProductEntry;
+import com.example.aperobox.Dao.network.BoxEntry;
 import com.example.aperobox.staggeredgridlayout.StaggeredProductCardRecyclerViewAdapter;
 
-public class ProductGridFragment extends Fragment {
+public class BoxsGridFragment extends Fragment {
+
+    private Utilisateur utilisateur;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -32,7 +36,7 @@ public class ProductGridFragment extends Fragment {
     public View onCreateView(
             @NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment with the ProductGrid theme
-        View view = inflater.inflate(R.layout.product_grid_fragment, container, false);
+        View view = inflater.inflate(R.layout.boxs_grid_fragment, container, false);
 
         // Set up the tool bar
         setUpToolbar(view);
@@ -48,12 +52,11 @@ public class ProductGridFragment extends Fragment {
             }
         });
         recyclerView.setLayoutManager(gridLayoutManager);
-        StaggeredProductCardRecyclerViewAdapter adapter = new StaggeredProductCardRecyclerViewAdapter(
-                ProductEntry.initProductEntryList(getResources()));
+        StaggeredProductCardRecyclerViewAdapter adapter = new StaggeredProductCardRecyclerViewAdapter(BoxEntry.initBoxEntryList(getResources()), this);
         recyclerView.setAdapter(adapter);
         int largePadding = getResources().getDimensionPixelSize(R.dimen.staggered_product_grid_spacing_large);
         int smallPadding = getResources().getDimensionPixelSize(R.dimen.staggered_product_grid_spacing_small);
-        recyclerView.addItemDecoration(new ProductGridItemDecoration(largePadding, smallPadding));
+        recyclerView.addItemDecoration(new BoxsGridItemDecoration(largePadding, smallPadding));
 
         // Set cut corner background for API 23+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -70,6 +73,62 @@ public class ProductGridFragment extends Fragment {
         if (activity != null) {
             activity.setSupportActionBar(toolbar);
         }
+
+        View acceuil = view.findViewById(R.id.menu_acceuil);
+        acceuil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((NavigationHost)getActivity()).navigateTo(new BoxsGridFragment(),true);
+            }
+        });
+
+        View boxPersonnalise = view.findViewById(R.id.menu_box_personnalise);
+        boxPersonnalise.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((NavigationHost)getActivity()).navigateTo(new BoxFragment(),true);
+            }
+        });
+
+        View panier = view.findViewById(R.id.menu_panier);
+        panier.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((NavigationHost)getActivity()).navigateTo(new PanierFragment(),true);
+            }
+        });
+
+        View options = view.findViewById(R.id.menu_options);
+        options.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((NavigationHost)getActivity()).navigateTo(new OptionFragment(),true);
+            }
+        });
+
+        view.findViewById(R.id.menu_a_propos).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((NavigationHost)getActivity()).navigateTo(new AProposFragment(),true);
+            }
+        });
+
+        view.findViewById(R.id.menu_nous_contactez).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((NavigationHost)getActivity()).navigateTo(new ContactFragment(),true);
+            }
+        });
+
+        view.findViewById(R.id.menu_compte).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(utilisateur==null)
+                    ((NavigationHost)getActivity()).navigateTo(new LoginFragment(),true);
+                else
+                    ((NavigationHost)getActivity()).navigateTo(new CompteFragment(),true);
+            }
+        });
 
         toolbar.setNavigationOnClickListener(new NavigationIconClickListener(
                 getContext(),

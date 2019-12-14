@@ -1,6 +1,6 @@
 package com.example.aperobox.Dao;
 
-import com.example.aperobox.JsonTranslator.CommentaireJsonTranslator;
+import com.example.aperobox.Dao.JsonTranslator.CommentaireJsonTranslator;
 import com.example.aperobox.Model.Commentaire;
 import com.example.aperobox.Utility.Constantes;
 

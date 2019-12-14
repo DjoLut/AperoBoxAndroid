@@ -13,12 +13,6 @@
         android:supportsRtl="true"
         android:name="com.example.aperobox.application.AperoBoxApplication"
         android:theme="@style/Theme.AperoBox">
-        <activity android:name=".Activity.PanierView" />
-        <activity android:name=".Activity.CommentaireView" />
-        <activity android:name=".Activity.BoxView" />
-        <activity android:name=".Activity.Options" />
-        <activity android:name=".Activity.Inscription" />
-        <activity android:name=".Activity.Connexion" />
         <activity android:name=".Activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

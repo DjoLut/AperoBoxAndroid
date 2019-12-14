@@ -5,11 +5,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.aperobox.Activity.BoxFragment;
+import com.example.aperobox.Activity.NavigationHost;
 import com.example.aperobox.R;
-import com.example.aperobox.network.ImageRequester;
-import com.example.aperobox.network.ProductEntry;
+import com.example.aperobox.Dao.network.ImageRequester;
+import com.example.aperobox.Dao.network.BoxEntry;
 
 import java.util.List;
 
@@ -19,10 +22,12 @@ import java.util.List;
  */
 public class StaggeredProductCardRecyclerViewAdapter extends RecyclerView.Adapter<StaggeredProductCardViewHolder> {
 
-    private List<ProductEntry> productList;
+    private Fragment fragment;
+    private List<BoxEntry> productList;
     private ImageRequester imageRequester;
 
-    public StaggeredProductCardRecyclerViewAdapter(List<ProductEntry> productList) {
+    public StaggeredProductCardRecyclerViewAdapter(List<BoxEntry> productList, Fragment fragment) {
+        this.fragment = fragment;
         this.productList = productList;
         imageRequester = ImageRequester.getInstance();
     }
@@ -35,11 +40,11 @@ public class StaggeredProductCardRecyclerViewAdapter extends RecyclerView.Adapte
     @NonNull
     @Override
     public StaggeredProductCardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        int layoutId = R.layout.staggered_product_card_first;
+        int layoutId = R.layout.staggered_boxs_card_first;
         if (viewType == 1) {
-            layoutId = R.layout.staggered_product_card_second;
+            layoutId = R.layout.staggered_boxs_card_second;
         } else if (viewType == 2) {
-            layoutId = R.layout.staggered_product_card_third;
+            layoutId = R.layout.staggered_boxs_card_third;
         }
 
         View layoutView = LayoutInflater.from(parent.getContext()).inflate(layoutId, parent, false);
@@ -49,10 +54,19 @@ public class StaggeredProductCardRecyclerViewAdapter extends RecyclerView.Adapte
     @Override
     public void onBindViewHolder(@NonNull StaggeredProductCardViewHolder holder, int position) {
         if (productList != null && position < productList.size()) {
-            ProductEntry product = productList.get(position);
+            BoxEntry product = productList.get(position);
             holder.productTitle.setText(product.title);
             holder.productPrice.setText(product.price);
             imageRequester.setImageFromUrl(holder.productImage, product.url);
+            //A modifier par id de la box
+            final int id = 1;
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((NavigationHost) fragment.getActivity()).navigateTo(new BoxFragment(id), true);
+                }
+            });
         }
     }
 

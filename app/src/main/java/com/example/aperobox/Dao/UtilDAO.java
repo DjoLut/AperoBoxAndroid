@@ -3,6 +3,7 @@ package com.example.aperobox.Dao;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.InetAddress;
 import java.net.URL;
 
 public class UtilDAO {
@@ -28,5 +29,16 @@ public class UtilDAO {
         String line = buffer.readLine();
         buffer.close();
         return line;
+    }
+
+    public static boolean isInternetAvailable() {
+        try {
+            InetAddress ipAddr = InetAddress.getByName("www.google.com");
+            //You can replace it with your name
+            return !ipAddr.equals("");
+
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

@@ -3,45 +3,45 @@
 
     <com.google.android.material.button.MaterialButton
         style="@style/Widget.AperoBox.Button.TextButton"
+        android:id="@+id/menu_acceuil"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/featured_label" />
+        android:text="@string/menu_acceuil" />
 
     <com.google.android.material.button.MaterialButton
         style="@style/Widget.AperoBox.Button.TextButton"
+        android:id="@+id/menu_box_personnalise"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/apartment_label" />
+        android:text="@string/menu_box_perso" />
 
     <com.google.android.material.button.MaterialButton
         style="@style/Widget.AperoBox.Button.TextButton"
+        android:id="@+id/menu_panier"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/accessories_label" />
+        android:text="@string/menu_panier" />
 
     <com.google.android.material.button.MaterialButton
         style="@style/Widget.AperoBox.Button.TextButton"
+        android:id="@+id/menu_options"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/shoes_label" />
+        android:text="@string/menu_options" />
 
     <com.google.android.material.button.MaterialButton
         style="@style/Widget.AperoBox.Button.TextButton"
+        android:id="@+id/menu_a_propos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/tops_label" />
+        android:text="@string/menu_a_propos" />
 
     <com.google.android.material.button.MaterialButton
         style="@style/Widget.AperoBox.Button.TextButton"
+        android:id="@+id/menu_nous_contactez"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/bottoms_label" />
-
-    <com.google.android.material.button.MaterialButton
-        style="@style/Widget.AperoBox.Button.TextButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/dresses_label" />
+        android:text="@string/menu_nous_contacter" />
 
     <View
         android:layout_width="56dp"
@@ -51,8 +51,9 @@
 
     <com.google.android.material.button.MaterialButton
         style="@style/Widget.AperoBox.Button.TextButton"
+        android:id="@+id/menu_compte"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/account_label" />
+        android:text="@string/compte" />
 
 </merge>

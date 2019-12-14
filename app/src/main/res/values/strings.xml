@@ -30,8 +30,20 @@
     <string name="deconnection">Se déconnecter</string>
     <string name="modeSombre">Mode sombre</string>
     <string name="welcome">"Bienvenue !"</string>
+    <string name="switch_Dark_Mode">Dark mode</string>
+
+    <!-- BoxFragment -->
+    <string name="personne2">2</string>
+    <string name="personne4">4</string>
+    <string name="personne6">6</string>
+    <string name="personne8">8</string>
+    <string name="personne10">10</string>
+    <string name="personne">Combien de personnes?</string>
+
 
     <!-- Error messages -->
+    <string name="error_login_api">Impossible d\'accéder aux serveurs</string>
+    <string name="error_no_internet">Une connexion internet est nécessaire.</string>
     <string name="invalid_username">Nom d\'utilisateur inconnu</string>
     <string name="invalid_username_length">8 caractères minimum</string>
     <string name="invalid_password_length">8 caractères minimum</string>
@@ -41,13 +53,15 @@
     <string name="invalid_date_naissance">La date de naissance n\'est pas valable</string>
 
     <!-- Backdrop menu -->
-    <string name="featured_label">Featured</string>
-    <string name="apartment_label">Apartment</string>
-    <string name="accessories_label">Accessories</string>
-    <string name="shoes_label">Shoes</string>
-    <string name="tops_label">Tops</string>
-    <string name="bottoms_label">Bottoms</string>
-    <string name="dresses_label">Dresses</string>
-    <string name="account_label">My Account</string>
+    <string name="menu_acceuil">Acceuil</string>
+    <string name="menu_box_perso">Box personnalisé</string>
+    <string name="menu_panier">Panier</string>
+    <string name="menu_options">Options</string>
+    <string name="menu_a_propos">À propos</string>
+    <string name="menu_nous_contacter">Contactez-nous</string>
+    <string name="compte">Mon compte</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
