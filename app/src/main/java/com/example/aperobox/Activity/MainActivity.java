@@ -3,7 +3,6 @@ package com.example.aperobox.Activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -23,7 +22,7 @@ public class MainActivity extends AppCompatActivity implements NavigationHost{
                     .add(R.id.container, new BoxsGridFragment())
                     .commit();
         }
-        if(!UtilDAO.isInternetAvailable())
+        if(UtilDAO.isInternetAvailable())
             Toast.makeText(this,R.string.error_no_internet,Toast.LENGTH_LONG).show();
     }
 
@@ -37,8 +36,6 @@ public class MainActivity extends AppCompatActivity implements NavigationHost{
     @Override
     protected void onRestart() {
         super.onRestart();
-        if(!UtilDAO.isInternetAvailable())
-            Toast.makeText(this,R.string.error_no_internet,Toast.LENGTH_LONG).show();
     }
 
     /**

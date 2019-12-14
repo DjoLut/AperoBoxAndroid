@@ -111,7 +111,7 @@ public class BoxsGridFragment extends Fragment {
         view.findViewById(R.id.menu_a_propos).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((NavigationHost)getActivity()).navigateTo(new AProposFragment(),true);
+                ((NavigationHost)getActivity()).navigateTo(new AProposFragment(utilisateur),true);
             }
         });
 

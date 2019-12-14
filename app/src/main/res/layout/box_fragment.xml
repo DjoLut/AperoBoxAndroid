@@ -1,94 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/loginPageBackgroundColor"
+    android:clipChildren="false"
+    android:clipToPadding="false"
     tools:context=".Activity.BoxFragment">
 
     <LinearLayout
+        style="@style/Widget.AperoBox.Backdrop"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingTop="88dp">
+
+        <include layout="@layout/backdrop" />
+    </LinearLayout>
+
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clipChildren="false"
-        android:clipToPadding="false"
-        android:orientation="vertical"
-        android:padding="24dp"
-        android:paddingTop="16dp">
+        app:elevation="0dp">
 
-
-
-        <com.android.volley.toolbox.NetworkImageView
-            android:id="@+id/product_image"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/box_app_bar"
+            style="@style/Widget.AperoBox.Toolbar"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:background="?attr/colorPrimaryDark"
-            android:scaleType="centerCrop" />
+            android:layout_height="?attr/actionBarSize"
+            android:paddingStart="12dp"
+            android:paddingLeft="12dp"
+            android:paddingEnd="12dp"
+            android:paddingRight="12dp"
+            app:contentInsetStart="0dp"
+            app:navigationIcon="@drawable/branded_menu"
+            app:title="@string/aperobox" />
+    </com.google.android.material.appbar.AppBarLayout>
 
-        <TextView
-            android:id="@+id/box_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="32dp"
-            android:textAppearance="@style/TextAppearance.aperoBox.Box.Title" />
-        <TextView
-            android:id="@+id/box_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="32dp"
-            android:textAppearance="@style/TextAppearance.aperoBox.Box.Price" />
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/box_grid"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="56dp"
+        android:background="@color/productGridBackgroundColor"
+        android:elevation="8dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <TextView
-            android:id="@+id/box_description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="32dp"
-            android:textAppearance="@style/TextAppearance.aperoBox.Box.Description" />
 
-        <TextView
-            android:id="@+id/box_radio_group"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="@string/personne"
-            android:textAppearance="@style/TextAppearance.aperoBox.Box.Description" />
-        <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
-            android:accessibilityPaneTitle="@string/personne"
-            android:contentDescription="@string/personne"
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            android:padding="24dp"
+            android:paddingTop="16dp">
 
-            <RadioButton android:id="@+id/radio_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/personne2"
-                android:onClick="onRadioButtonClicked"/>
-            <RadioButton android:id="@+id/radio_4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/personne4"
-                android:onClick="onRadioButtonClicked"/>
-            <RadioButton android:id="@+id/radio_6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/personne6"
-                android:onClick="onRadioButtonClicked"/>
-            <RadioButton android:id="@+id/radio_8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/personne8"
-                android:onClick="onRadioButtonClicked"/>
-            <RadioButton android:id="@+id/radio_10"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/personne10"
-                android:onClick="onRadioButtonClicked"/>
-        </RadioGroup>
+            <com.android.volley.toolbox.NetworkImageView
+                    android:id="@+id/product_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:background="?attr/colorPrimaryDark"
+                    android:scaleType="centerCrop" />
 
-    </LinearLayout>
-</ScrollView>
+                <TextView
+                    android:id="@+id/box_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="32dp"
+                    android:textAppearance="@style/TextAppearance.aperoBox.Box.Title" />
+                <TextView
+                    android:id="@+id/box_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="32dp"
+                    android:textAppearance="@style/TextAppearance.aperoBox.Box.Price" />
+
+                <TextView
+                    android:id="@+id/box_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="32dp"
+                    android:textAppearance="@style/TextAppearance.aperoBox.Box.Description" />
+
+                <TextView
+                    android:id="@+id/box_radio_group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/personne"
+                    android:textAppearance="@style/TextAppearance.aperoBox.Box.Description" />
+                <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:accessibilityPaneTitle="@string/personne"
+                    android:contentDescription="@string/personne"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <RadioButton android:id="@+id/radio_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/personne2"
+                        android:onClick="onRadioButtonClicked"/>
+                    <RadioButton android:id="@+id/radio_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/personne4"
+                        android:onClick="onRadioButtonClicked"/>
+                    <RadioButton android:id="@+id/radio_6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/personne6"
+                        android:onClick="onRadioButtonClicked"/>
+                    <RadioButton android:id="@+id/radio_8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/personne8"
+                        android:onClick="onRadioButtonClicked"/>
+                    <RadioButton android:id="@+id/radio_10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/personne10"
+                        android:onClick="onRadioButtonClicked"/>
+                </RadioGroup>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+</FrameLayout>
