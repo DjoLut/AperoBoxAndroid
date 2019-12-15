@@ -17,19 +17,20 @@ import java.io.Writer;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class JokeEntry {
     private static final String TAG = BoxEntry.class.getSimpleName();
 
-    public final String base;
-    public final String reponse;
+    private final String base;
+    private final String reponse;
 
-    public JokeEntry(String base, String reponse){
+    private JokeEntry(String base, String reponse){
         this.base = base;
         this.reponse = reponse;
     }
 
-    public static List<JokeEntry> initBoxEntryList(Resources resources) {
+    public static List<JokeEntry> initJokeEntryList(Resources resources) {
         InputStream inputStream = resources.openRawResource(R.raw.joke);
         Writer writer = new StringWriter();
         char[] buffer = new char[1024];
@@ -53,5 +54,13 @@ public class JokeEntry {
         Type jokeListType = new TypeToken<ArrayList<JokeEntry>>() {
         }.getType();
         return gson.fromJson(jsonProductsString, jokeListType);
+    }
+
+    public String getBase() {
+        return base;
+    }
+
+    public String getReponse() {
+        return reponse;
     }
 }

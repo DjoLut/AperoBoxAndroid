@@ -41,8 +41,9 @@
     <string name="box_fragment_box_personne">Combien de personnes?</string>
     <string name="box_fragment_box_personnalise_name">Box Personnalisée</string>
     <string name="box_fragment_box_personnalise_description">Une box qui ne contient que ce que vous désirez.</string>
-    <string name="box_fragment_box_error_chargement_api_name">Box par défaut (erreur)</string>
-    <string name="box_fragment_box_error_chargement_api_description">Une erreur est survenue lors de l\'accès à aux données, voici </string>
+    <string name="box_fragment_box_error_chargement_api_name">Box (erreur)</string>
+    <string name="box_fragment_box_error_chargement_api_description">Une erreur est survenue lors de l\'accès à aux données, voici, en attendant son retour, voici une petit Joke de papa</string>
+    <string name="box_fragment_box_prix_gratuit">Gratuit!</string>
 
 
     <!-- AProposFragment -->

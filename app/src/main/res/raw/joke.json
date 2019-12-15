@@ -168,5 +168,798 @@
   },
   {	"base":"C’est Melon et Melèche qui boivent l’apéro",
     "reponse":"Melon mange des gâteaux apéro et melèche le saucisson."
+  },
+
+  {
+    "base":"Qu’est-ce qu’un homme intelligent en Belgique ?",
+    "reponse":"Un touriste."
+  },
+  {
+    "base":"2 militaires discutent : \" Pourquoi tu t’es engagé ?\"\n– Je suis célibataire et j’aime la guerre, et toi ?",
+    "reponse":"– Je suis marié et je voulais avoir la paix"
+  },
+  {
+    "base":"Que fait Jean-Claude Vandame quand il rentre dans une voiture ?",
+    "reponse":"Il full contact."
+  },
+  {
+    "base":"Que fait Jean-Claude Vandame quand il rentre dans une voiture ?",
+    "reponse":"Il full contact."
+  },
+  {
+    "base":"Quelle est la différence entre un rappeur et un campeur ?",
+    "reponse":"Le rappeur niq** ta mère et le campeur monte ta tente"
+  },
+  {
+    "base":"Deux amis discutent :\n– Depuis quelques jours je vois des points noirs !\n– Ah oui et t’as vu l’oculiste ? ",
+    "reponse":"– Non, des points noirs…"
+  },
+  {
+    "base":"Pourquoi Gilbert Montagné se balance-t-il lorsqu’il chante ? ",
+    "reponse":"– Pour être sûr de passer au moins une fois devant le micro."
+  },
+  {
+    "base":"Melon et Melèche attrapent une abeille.",
+    "reponse":"Melon lui arrache les pattes et Melèche le dard."
+  },
+  {
+    "base":"Melon et Melèche sont en avion :",
+    "reponse":"Melon surveille les instruments et Melèche le manche."
+  },
+  {
+    "base":"2 amirs : \"C’est lours un prout ? \"\n– \" Non, c’est un gaz \" ",
+    "reponse":"– \" Bah je me suis fait chié dessus alors… \""
+  },
+  {
+    "base":"Tu connais l’histoire de l’armoire ?",
+    "reponse":"Elle est pas commode…"
+  },
+  {
+    "base":"Deux œufs discutent :\n– Pourquoi t’es tout vert et aussi poilu ?",
+    "reponse":"– Parce que j’suis un kiwi connard"
+  },
+  {
+    "base":"Tu connais la blague du diable ??",
+    "reponse":"Dommage elle est d’enfer."
+  },
+  {
+    "base":"Qu’est-ce qui est jaune, bridé, et qui n’est pas asiatique ? ",
+    "reponse":"Une mobylette de la poste"
+  },
+  {
+    "base":"Qu’est-ce qui est blanc, qui tombe du ciel, et qui finit par -\" ard \" ?",
+    "reponse":"La neige connard"
+  },
+  {
+    "base":"Thomas, penses-tu que je suis une mauvaise mère?",
+    "reponse":"Mon nom est Paul…"
+  },
+  {
+    "base":"Qu’est-ce qu’un chalumeau ??",
+    "reponse":"C’est un drolumadaire à deux bosse !!"
+  },
+  {
+    "base":"– Tu connais la blague qui tue ?\n– Non…",
+    "reponse":"– Pan !"
+  },
+  {
+    "base":"Proverbe ch’ti : Chaque femme mérite qu’on la regarde",
+    "reponse":"Comme si c’était la dernière bière dans le frigo"
+  },
+  {
+    "base":"Qu’est ce qui est transparent et qui cours dans les champs ?",
+    "reponse":"Un troupeau de vitres."
+  },
+  {
+    "base":"Pourquoi n’ y a t-il plus de mammouth ?",
+    "reponse":"Parce qu’il n’y a plus de papmouth"
+  },
+  {
+    "base":"Melon et Melèche s’échappent de prison.",
+    "reponse":"Melon force la serrure et Melèche le barreau."
+  },
+  {
+    "base":"Pourquoi les Belges tirent-ils à côté du but ?",
+    "reponse":"Parce que les buts à l’extérieur comptent double"
+  },
+  {
+    "base":"Quel est le point commun entre un roi et un taureau ?",
+    "reponse":"Tous les deux rentrent dans l’arène"
+  },
+  {
+    "base":"Comment appelle-t-on un ascenseur en Amérique ?",
+    "reponse":"En appuyant sur le bouton…"
+  },
+  {
+    "base":"Pourquoi faut-il se boucher les oreilles en rentrant dans une église ?",
+    "reponse":"Parce que Jésus Christ…"
+  },
+  {
+    "base":"C’est l’histoire d’un pingouin qui respire par les fesses",
+    "reponse":"Un jour il s’assoit et il meurt."
+  },
+  {
+    "base":"Qu’est ce qui est transparent et qui cours dans les champs ?",
+    "reponse":"Un troupeau de vitres."
+  },
+  {
+    "base":"Comment appelle-t-on un cochon qui rit ?",
+    "reponse":"Un portugais"
+  },
+  {
+    "base":"Je vends mon perroquet parlant.\nPourquoi?",
+    "reponse":"Parce qu’hier, ce bâtard a essayé de me vendre !"
+  },
+  {
+    "base":"Qu’est ce qu’une baguette avec une boussole ? ",
+    "reponse":"Du pain perdu"
+  },
+  {
+    "base":"T’as deux poussins, t’en veux qu’un. Tu fais quoi?",
+    "reponse":"T’en pousses un !"
+  },
+  {
+    "base":"Quel est le comble pour un électricien ?",
+    "reponse":"D’avoir des ampoules aux pieds"
+  },
+  {
+    "base":"Melon et Melèche s’occupent du jardin.",
+    "reponse":"Melon fait le gazon et Melèche la fleur."
+  },
+  {
+    "base":"Pourquoi les fonctionnaires font leurs manifs en défilant de la République à la Bastille ?",
+    "reponse":"Parce que c’est en descente"
+  },
+  {
+    "base":"– Docteur, je crois que j’ai besoin de lunettes. ",
+    "reponse":"– Oui certainement. Ici c’est une banque."
+  },
+  {
+    "base":"Un hippie n’urine pas…",
+    "reponse":"Il peace"
+  },
+  {
+    "base":"Un jour Dieu dit à Casto de ramer.",
+    "reponse":"Et depuis, castorama"
+  },
+  {
+    "base":"Melon et Melèche vont a la pêche.",
+    "reponse":"Melon prends les hameçons et Melèche la gaule."
+  },
+  {
+    "base":"Un piano à un autre : \" Hey, ça va ? \"",
+    "reponse":"L’autre : \" Non, j’ai mal au do ! \""
+  },
+  {
+    "base":"T’as 2 poussins, t’en veux qu’un, tu fais quoi ?",
+    "reponse":"T’en pousses un !"
+  },
+  {
+    "base":"Vous cherchez un livre de blagues ? Les meilleures livres drôles sont sur Amazon !\nQu’est-ce qu’un yaourt dans la forêt ?",
+    "reponse":"Un yaourt nature"
+  },
+  {
+    "base":"Melon et Melèche sont charcutiers :",
+    "reponse":"Melon prépare les filets et Melèche les rognons"
+  },
+  {
+    "base":"T’as deux poussins, t’en veux qu’un. Tu fais quoi?",
+    "reponse":"T’en pousses un !"
+  },
+  {
+    "base":"C’est un pistolet qui s’approche d’une mitraillette et qui lui dit: ",
+    "reponse":"– Ca fait longtemps que tu bégayes?"
+  },
+  {
+    "base":"Un mec rentre dans un bar :\n– Je voudrais une chwourkanistroufblisk à la menthe.\nEt le barman : ",
+    "reponse":"– Un chwourkanistroufblisk à la quoi ?"
+  },
+  {
+    "base":"Comment appelle-t-on un cochon qui rit ?",
+    "reponse":"Un portugais"
+  },
+  {
+    "base":"Pourquoi les vieux font-ils des bains de boue? ",
+    "reponse":"Pour s’habituer à la terre…"
+  },
+  {
+    "base":"A l’école, L’institutrice interroge Toto:\n– Cite-moi un mammifère qui n’a pas de dents. ",
+    "reponse":"– Ma grand-mère ?"
+  },
+  {
+    "base":"Quelle est la ville la plus proche de l’eau ?",
+    "reponse":"Bordeaux"
+  },
+  {
+    "base":"– Tu connais la blague du con qui dit non ?\n– Non…",
+    "reponse":"– …"
+  },
+  {
+    "base":"– Maman, c’est quoi de la lingerie coquine ? ",
+    "reponse":"– De la hot couture !"
+  },
+  {
+    "base":"Pourquoi les vacances en Irlande sont-elles particulièrement toniques ?",
+    "reponse":"Parce qu’un peu d’Eire, ca fait Dublin !"
+  },
+  {
+    "base":"Quelle est la ville la plus proche de l’eau ? ",
+    "reponse":"Bordeaux"
+  },
+  {
+    "base":"Melon et Melèche sont électriciens.",
+    "reponse":"Melon casse le fusible et Melèche l’ampoule."
+  },
+  {
+    "base":"De quelle couleur est la voiture de John Travolta? ",
+    "reponse":"Elle est grease !"
+  },
+  {
+    "base":"Alors, ça fait combien de temps qu’il marche votre petit Julien ?\n– Ça va faire 6 mois.",
+    "reponse":"– Ben dites donc, y doit être loin, maintenant"
+  },
+  {
+    "base":"c’est un putois qui rencontre un autre putois",
+    "reponse":"Et qui lui dit : \" Tu pues toi \""
+  },
+  {
+    "base":"Un mec alcoolisé se fait contrôler par la police :\n Bonjour Monsieur, police nationale ! ",
+    "reponse":"– Bien fait pour ta gueule ! T’avais qu’à travailler à l’école !"
+  },
+  {
+    "base":"Quelle est la ville la plus vieille du monde ? ",
+    "reponse":"Milan (1000ans)"
+  },
+  {
+    "base":"Comment appelle-t-on un chat dans l’espace ?",
+    "reponse":"Un chatellite"
+  },
+  {
+    "base":"Quel est le légume le plus courageux ?",
+    "reponse":"Le pois chiche"
+  },
+  {
+    "base":"Pourquoi Napoléon n’ a jamais déménagé?",
+    "reponse":"Parce qu’il avait un Bonaparte"
+  },
+  {
+    "base":"Melon et Melèche sont à la pêche.",
+    "reponse":"Melon pêche le thon et Melèche la raie."
+  },
+  {
+    "base":"Un geek ne s’ennuie pas…",
+    "reponse":"Il se Fichier…"
+  },
+  {
+    "base":"Qu’est-ce qu’un comptable ?",
+    "reponse":"– C’est un con avec une table."
+  },
+  {
+    "base":"C’est un bœuf, qui court… ",
+    "reponse":"Puis qui se viande."
+  },
+  {
+    "base":"Que fait-on aux voleurs de salades ?",
+    "reponse":"On les tue…"
+  },
+  {
+    "base":"C’est quand le retour du Jedi ?",
+    "reponse":"Entre Mercredaille et Jeudaille"
+  },
+  {
+    "base":"Comment appelle t’on un lion qui se rebelle ?",
+    "reponse":"Une rébellion"
+  },
+  {
+    "base":"Alors, ça fait combien de temps qu’il marche votre petit Julien ?\n– Ça va faire 6 mois.",
+    "reponse":"– Ben dites donc, y doit être loin, maintenant"
+  },
+  {
+    "base":"– Docteur, je ne suis pas malade.",
+    "reponse":"– Ca tombe bien, je ne suis pas docteur !"
+  },
+  {
+    "base":"Tu connais la blague du diable ??",
+    "reponse":"Dommage elle est d’enfer."
+  },
+  {
+    "base":"Que s’est-il passé en 1111 ?",
+    "reponse":"L’invasion des huns."
+  },
+  {
+    "base":"Comment ramasse-t-on la papaye? ",
+    "reponse":"Avec une foufourche"
+  },
+  {
+    "base":"Melon et Melèche prennent une maison. Melon l’achète…",
+    "reponse":"Et Melèche l’habite"
+  },
+  {
+    "base":"Comment sort-on de la mer Rouge ?",
+    "reponse":"Mouillé !"
+  },
+  {
+    "base":"C’est quand le retour du Jedi ?",
+    "reponse":"Entre Mercredaille et Jeudaille"
+  },
+  {
+    "base":"Qu’est-ce qu’un nain qui fait du tir à l’arc ?",
+    "reponse":"Un Indien"
+  },
+  {
+    "base":"A l’école, L’institutrice interroge Toto:\n– Cite-moi un mammifère qui n’a pas de dents. ",
+    "reponse":"– Ma grand-mère ?"
+  },
+  {
+    "base":"J’ai fait une blague sur les magasins.",
+    "reponse":"Elle n’a pas supermarché"
+  },
+  {
+    "base":"Comment appelle-t-on une frite enceinte ?",
+    "reponse":"Une pomme de terre sautée"
+  },
+  {
+    "base":"Avec quoi ramasse t’on la papaye ?",
+    "reponse":"Avec une foufourche"
+  },
+  {
+    "base":"2 copains : \"Tien, j’ai croisé ta copine hier mais elle ne m’a pas vu \"",
+    "reponse":"Oui je sais, elle me l’a dit"
+  },
+  {
+    "base":"Proverbe ch’ti : Chaque femme mérite qu’on la regarde",
+    "reponse":"Comme si c’était la dernière bière dans le frigo"
+  },
+  {
+    "base":"Qu’est-ce qui est rose et dur en rentrant, et chaud et mou en ressortant ?",
+    "reponse":"Un Malabar."
+  },
+  {
+    "base":"Melon et Melèche vont à l’église :",
+    "reponse":"Melon cherche le curé et Melèche les Saints"
+  },
+  {
+    "base":"Qu’est ce qu’un chat bossu ? ",
+    "reponse":"Un chameau"
+  },
+  {
+    "base":"Melon et Melèche sont deux copains.",
+    "reponse":"Melon est un crétin et Melèche une burne."
+  },
+  {
+    "base":"C’est l’histoire d’un schtroumpf qui tombe",
+    "reponse":"Et qui se fait un bleu…"
+  },
+  {
+    "base":"Un geek ne s’ennuie pas…",
+    "reponse":"Il se Fichier…"
+  },
+  {
+    "base":"Que crie une lampe lorsqu’elle se fait agresser ?",
+    "reponse":"A l’aide !"
+  },
+  {
+    "base":"Qu’est-ce qu’un gendarme sur un tracteur ?",
+    "reponse":"Un poulet fermier"
+  },
+  {
+    "base":"Bonjour ! Je souhaiterais une paire de lunettes, s’il vous plaît.\n– Pour le soleil ? ",
+    "reponse":"– Non pour moi"
+  },
+  {
+    "base":"Où les super héros vont-ils faire leurs courses ?",
+    "reponse":"Au supermarché"
+  },
+  {
+    "base":"Que s’est-il passé en 1111 ?",
+    "reponse":"L’invasion des huns."
+  },
+  {
+    "base":"Comment appelle-t-on un chat dans l’espace ?",
+    "reponse":"Un chatellite"
+  },
+  {
+    "base":"Que fait un crocodile lorsqu’il rencontre une crocodile ?",
+    "reponse":"Il l’accoste !"
+  },
+  {
+    "base":"Melon et Melèche se font attaquer par un chien.",
+    "reponse":"Melon lui tire les oreilles et Melèche la queue."
+  },
+  {
+    "base":"Que dit Frodon devant sa maison ?",
+    "reponse":"C’est là que j’hobbit…"
+  },
+  {
+    "base":"Que dit une noix de coco lorsqu’elle tombe a l’eau?",
+    "reponse":"Je me noie…"
+  },
+  {
+    "base":"C’est quand le retour du Jedi ?",
+    "reponse":"Entre Mercredaille et Jeudaille"
+  },
+  {
+    "base":"Melon et Melèche construisent une tirelire.",
+    "reponse":"Melon fait le moule, Melèche la fente."
+  },
+  {
+    "base":"Avec quoi ramasse t’on la papaye ?",
+    "reponse":"Avec une foufourche"
+  },
+  {
+    "base":"Quel est le nom de ma femme de ménage",
+    "reponse":"Sarah Masse…"
+  },
+  {
+    "base":"Un monsieur demande à une dame dans la rue :\n– Avez-vous vu un policier?\n– Non ! ",
+    "reponse":"– Alors donnez moi votre sac à main"
+  },
+  {
+    "base":"Pourquoi les pêcheurs ne sont jamais gros ? ",
+    "reponse":"Parce qu’ils surveillent leur ligne."
+  },
+  {
+    "base":"Melon et Melèche jouent au billard.",
+    "reponse":"Melon range les boules et Melèche la queue."
+  },
+  {
+    "base":"Melon et Melèche prennent de la bouteille.",
+    "reponse":"Melon se redresse et Melèche s’affaisse"
+  },
+  {
+    "base":"J’ai fait une blague sur les magasins.",
+    "reponse":"Elle n’a pas supermarché"
+  },
+  {
+    "base":"Pourquoi les français marchent sur les tuyaux d’arrosage ? ",
+    "reponse":"Pour avoir de l’eau plate !"
+  },
+  {
+    "base":"Un hippie n’urine pas…",
+    "reponse":"Il peace"
+  },
+  {
+    "base":"Que fait Jean-Claude Vandame quand il rentre dans une voiture ?",
+    "reponse":"Il full contact."
+  },
+  {
+    "base":"Qu’est-ce que 2 canards qui se battent?",
+    "reponse":"Un conflit de canard"
+  },
+  {
+    "base":"Que dit un oignon quand il se cogne ?",
+    "reponse":"Ail"
+  },
+  {
+    "base":"Je fais des blagues de chimiste",
+    "reponse":"Mais je n’ai jamais de réactions…"
+  },
+  {
+    "base":"Comment appelle t’on un lion qui se rebelle ?",
+    "reponse":"Une rébellion"
+  },
+  {
+    "base":"Que fait un crocodile lorsqu’il rencontre une crocodile ?",
+    "reponse":"Il l’accoste !"
+  },
+  {
+    "base":"Un hippie n’urine pas…",
+    "reponse":"Il peace"
+  },
+  {
+    "base":"Quel super héros donne le plus vite l’heure ?",
+    "reponse":"Speed heure man !"
+  },
+  {
+    "base":"Melon et Melèche sont très pro-europeens.",
+    "reponse":"Melon aime l’Euro et Melèche l’Écu."
+  },
+  {
+    "base":"Que fait un chien noir qui tombe dans la mer rouge ?",
+    "reponse":"Plouf !"
+  },
+  {
+    "base":"Comment appelle-t-on un ascenseur en Amérique ?",
+    "reponse":"En appuyant sur le bouton…"
+  },
+  {
+    "base":"Melon et Melèche nettoient l’écurie.",
+    "reponse":"Melon brosse les chevaux et Melèche les selles."
+  },
+  {
+    "base":"Est-ce que faire des gâteaux d’instinct",
+    "reponse":"C ‘est avoir la pate à tarte innée ?"
+  },
+  {
+    "base":"Melon et Melèche sont très pro-europeens.",
+    "reponse":"Melon aime l’Euro et Melèche l’Écu."
+  },
+  {
+    "base":"Melon et Melèche font de la mécanique.",
+    "reponse":"Melon place la vis et Melèche la rondelle."
+  },
+  {
+    "base":"Melon et Melèche découvrent les épices dans un magasin du Sentier.",
+    "reponse":"Melon découvre le safran et Melèche l’anis (avec l’accent)."
+  },
+  {
+    "base":"Quel est l’ami du feu ?",
+    "reponse":"Le pot-au-feu"
+  },
+  {
+    "base":"C’est au moment où tu vois un moustique se poser sur tes testicules que tu te rends compte qu’il y a moyen de régler certains problèmes autrement que par la violence. ",
+    "reponse":"Lao-Tseu"
+  },
+  {
+    "base":"Un portugais ne chuchote pas",
+    "reponse":"Il murmure"
+  },
+  {
+    "base":"Est-ce qu’une poule peut parler anglais ?",
+    "reponse":"Yes chicken !"
+  },
+  {
+    "base":"Combien d’oeufs est-il possible de manger à jeun ?",
+    "reponse":"Un seul"
+  },
+  {
+    "base":"On ne dit pas Hélène Ségara",
+    "reponse":"Mais Hélène est perdue"
+  },
+  {
+    "base":"C’est l’histoire d’un têtard qui croyait qu’il était tôt…",
+    "reponse":"Alors qu’il était tard"
+  },
+  {
+    "base":"Quel est le comble pour un plombier ?",
+    "reponse":"Que ses clients prennent la fuite !"
+  },
+  {
+    "base":"Pourquoi les oiseaux volent-ils vers le sud ?",
+    "reponse":"Car à pied, c’est beaucoup trop long"
+  },
+  {
+    "base":"Que font 2 brosses à dents le 14 Juillet ?",
+    "reponse":"Un feu dentifrice !"
+  },
+  {
+    "base":"Quel est le comble pour un dentiste ? ",
+    "reponse":"C’est d’habiter dans un palais."
+  },
+  {
+    "base":"Melon et Melèche sont électriciens.",
+    "reponse":"Melon casse le fusible et Melèche l’ampoule."
+  },
+  {
+    "base":"Est-ce qu’une bouteille de vin…",
+    "reponse":"Est une bouteille qui voit l’avenir ?"
+  },
+  {
+    "base":"Quel est le nom de ma femme de ménage",
+    "reponse":"Sarah Masse…"
+  },
+  {
+    "base":"L’autre jour, j’ai raconté une blague à mes vêtements.",
+    "reponse":"Ils étaient pliés."
+  },
+  {
+    "base":"Quel est le légume le plus courageux ?",
+    "reponse":"Le pois chiche"
+  },
+  {
+    "base":"Melon et Melèche jouent au Scrabble.",
+    "reponse":"Melon pioche le W et Melèche le Q."
+  },
+  {
+    "base":"Un mec sur leboncoin veut vendre son SPA. Mais personne ne l’achète. Pourquoi ?",
+    "reponse":"Il a écrit SPA à vendre…"
+  },
+  {
+    "base":"Quel est le fromage préféré de Sherlock Holmes ? ",
+    "reponse":"C’est l’emmental mon cher Watson !"
+  },
+  {
+    "base":"C’est un pistolet qui s’approche d’une mitraillette et qui lui dit: ",
+    "reponse":"– Ca fait longtemps que tu bégayes?"
+  },
+  {
+    "base":"Quel est le poisson le moins lourd de la mer ?",
+    "reponse":"La palourde…"
+  },
+  {
+    "base":"Melon et Melèche dorment à la belle étoile.",
+    "reponse":"Melon regarde les étoiles et Melèche la lune."
+  },
+  {
+    "base":"Pourquoi Gilbert Montagné se balance-t-il lorsqu’il chante ? ",
+    "reponse":"– Pour être sûr de passer au moins une fois devant le micro."
+  },
+  {
+    "base":"Pourquoi un chasseur emmène-t-il son fusil aux toilettes ?",
+    "reponse":"Pour tirer la chasse."
+  },
+  {
+    "base":"Pourquoi les policiers n’ont pas d’acné ?",
+    "reponse":"Car ils ont la peau lisse !"
+  },
+  {
+    "base":"Melon et Melèche jouent à la pétanque.",
+    "reponse":"Melon jette le cochonnet et Melèche les boules."
+  },
+  {
+    "base":"Qu’est-ce qu’un homme intelligent en Belgique ? ",
+    "reponse":"Un touriste."
+  },
+  {
+    "base":"Melon et Melèche font une tarte aux pruneaux",
+    "reponse":"Melon prépare la tarte et Melèche les pruneaux."
+  },
+  {
+    "base":"Dans un restaurant, un client dit :\n– Garçon, que fait cette mouche dans ma soupe ? ",
+    "reponse":"– Je pense que c’est de la brasse… mais je peux me tromper…"
+  },
+  {
+    "base":"Melon et Melèche doivent se construire un bateau chacun et choisir des matériaux différents.",
+    "reponse":"Melon choisit le bois et Melèche le jonc ."
+  },
+  {
+    "base":"Que fait un crocodile lorsqu’il rencontre une crocodile ?",
+    "reponse":"Il l’accoste !"
+  },
+  {
+    "base":"Que crie un donut sur la plage ?",
+    "reponse":"Hey, je vais me beignet !!!"
+  },
+  {
+    "base":"Si je télécharge illégalement depuis la Martinique…",
+    "reponse":"Je suis un pirate des Caraïbes ?"
+  },
+  {
+    "base":"Un geek ne s’ennuie pas…",
+    "reponse":"Il se Fichier…"
+  },
+  {
+    "base":"Melon et Melèche jouent au billard.",
+    "reponse":"Melon range les boules et Melèche la queue."
+  },
+  {
+    "base":"Comment appelle-t-on un covoiturage au Sénégal ?",
+    "reponse":"Un Babacar"
+  },
+  {
+    "base":"Qu’est-ce qui est rose et dur en rentrant, et chaud et mou en ressortant ?",
+    "reponse":"Un Malabar."
+  },
+  {
+    "base":"Melon et Melèche ont envie de se fumer un petit pet,",
+    "reponse":"Melon achète les feuilles, Melèche le bout."
+  },
+  {
+    "base":"– T’as picolé, hier ? ",
+    "reponse":"– Je me rappelle pas, je suis rentré bourré."
+  },
+  {
+    "base":"Melon et Melèche sont à l’assemblée :",
+    "reponse":"Melon vote la poursuite des essais nucléaires et Melèche l’arrêt."
+  },
+  {
+    "base":"Que disent les maitres nageurs à nouvel an ?",
+    "reponse":"Bonne apnée !"
+  },
+  {
+    "base":"Melon et Melèche sont charcutiers :",
+    "reponse":"Melon prépare les filets et Melèche les rognons"
+  },
+  {
+    "base":"Un jour, Dieu demanda à Léonard de devenir une sci",
+    "reponse":"Et depuis, Leonard De Vinci…"
+  },
+  {
+    "base":"Melon et Melèche s’occupent du jardin.",
+    "reponse":"Melon fait le gazon et Melèche la fleur."
+  },
+  {
+    "base":"Pourquoi les sorcières utilisent des balais pour voler ?",
+    "reponse":"Parce que les aspirateurs sont trop lourds !"
+  },
+  {
+    "base":"T’as 2 poussins, t’en veux qu’un, tu fais quoi ?",
+    "reponse":"T’en pousses un !"
+  },
+  {
+    "base":"C’est l’histoire d’une femme dans le désert",
+    "reponse":"Qui a l’air d’une gourde…"
+  },
+  {
+    "base":"Qu’est-ce qu’un oiseau qui se gratte que d’un côté ?",
+    "reponse":"Un oiseau mi-gratteur."
+  },
+  {
+    "base":"Pourquoi les vacances en Irlande sont-elles particulièrement toniques ?",
+    "reponse":"Parce qu’un peu d’Eire, ca fait Dublin !"
+  },
+  {
+    "base":"– Tu connais la blague du con qui dit non ?\n– Non…",
+    "reponse":"– …"
+  },
+  {
+    "base":"– Et avec ton mari, çà s’arrange ? ",
+    "reponse":"– Tu penses… pour l’émoustiller, j’avais mis une nuisette noire et un masque. Quand il est rentré, il m’a fait : Eh ! Zorro ! Qu’est-ce qu’on mange aujourd’hui ?"
+  },
+  {
+    "base":"Qu’est ce qu’une baguette avec une boussole ? ",
+    "reponse":"Du pain perdu"
+  },
+  {
+    "base":"Avec quoi ramasse t’on la papaye ?",
+    "reponse":"Avec une foufourche"
+  },
+  {
+    "base":"Que dit un citron quand il braque une banque ?",
+    "reponse":"Pas un zeste !"
+  },
+  {
+    "base":"J’ai fait une blague sur les magasins.",
+    "reponse":"Elle n’a pas supermarché"
+  },
+  {
+    "base":"Tu connais la blague de la chaise?",
+    "reponse":"Elle est pliante"
+  },
+  {
+    "base":"Qu’est-ce qu’un yaourt dans la forêt ?",
+    "reponse":"Un yaourt nature"
+  },
+  {
+    "base":"Pour ne plus puer de la gueule…",
+    "reponse":"Faut-il arrêter de dire de la merde ?"
+  },
+  {
+    "base":"Que fait un chinois sur une mobylette ?",
+    "reponse":"Nèèèèmmmmm, Nèèèèmmmmm, Nèèèèmmmmm"
+  },
+  {
+    "base":"Comment appelle-t-on un cochon qui rit ?",
+    "reponse":"Un portugais"
+  },
+  {
+    "base":"Melon et melèche qui construisent un drapeau.",
+    "reponse":"Melon achète le tissu et melèche le poteau."
+  },
+  {
+    "base":"J’ai raconté une blague à un Parisien…",
+    "reponse":"Il a pas ri…"
+  },
+  {
+    "base":"Comment appelle-t-on un chat dans l’espace ?",
+    "reponse":"Un chatellite"
+  },
+  {
+    "base":"Tu connais l’histoire du castré décapité ?",
+    "reponse":"C’est une histoire sans queue ni tête !"
+  },
+  {
+    "base":"Melon et Melèche sont en avion :",
+    "reponse":"Melon surveille les instruments et Melèche le manche."
+  },
+  {
+    "base":"Un jour Dieu dit à Casto de ramer.",
+    "reponse":"Et depuis, castorama"
+  },
+  {
+    "base":"Si je télécharge illégalement depuis la Martinique…",
+    "reponse":"Je suis un pirate des Caraïbes ?"
+  },
+  {
+    "base":"Melon et Melèche ont envie de se fumer un petit pet,",
+    "reponse":"Melon achète les feuilles, Melèche le bout."
+  },
+  {
+    "base":"Que fait-on aux voleurs de salades ?",
+    "reponse":"On laitue"
+  },
+  {
+    "base":"Melon et Melèche ont envie de se fumer un petit pet,",
+    "reponse":"Melon achète les feuilles, Melèche le bout."
   }
 ]

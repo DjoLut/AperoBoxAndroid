@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.aperobox.Dao.BoxDAO;
+import com.example.aperobox.Dao.network.JokeEntry;
 import com.example.aperobox.Model.Box;
 import com.example.aperobox.Model.LigneProduit;
 import com.example.aperobox.Model.Produit;
@@ -31,6 +32,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 
 public class BoxFragment extends Fragment {
 
@@ -100,9 +102,12 @@ public class BoxFragment extends Fragment {
             } catch (Exception e) {
                 Toast.makeText(getContext(), R.string.error_login_api, Toast.LENGTH_LONG).show();
                 Glide.with(this).load(Constantes.URL_IMAGE_API+Constantes.DEFAULT_END_URL_IMAGE_API).into(this.box_image);
-                this.box_name.setText(this.selectedBox.getNom());
-                this.box_price.setText(format.format(this.selectedBox.getPrix()));
-                this.box_description.setText(format.format(this.selectedBox.getDescription()));
+                this.box_name.setText(getString(R.string.box_fragment_box_error_chargement_api_name));
+                this.box_price.setText(getString(R.string.box_fragment_box_prix_gratuit));
+                List<JokeEntry> jokeEntry = JokeEntry.initJokeEntryList(getResources());
+                JokeEntry joke = jokeEntry.get(new Random().nextInt(jokeEntry.size()));
+                this.box_description.setText(getString(R.string.box_fragment_box_error_chargement_api_description) + "\n\n\n" + joke.getBase() + "\n\n\n\n" + joke.getReponse());
+
             }
         }
         //Box personnalisé
