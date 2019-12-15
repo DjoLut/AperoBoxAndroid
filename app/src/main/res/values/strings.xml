@@ -33,12 +33,17 @@
     <string name="switch_Dark_Mode">Dark mode</string>
 
     <!-- BoxFragment -->
-    <string name="personne2">2</string>
-    <string name="personne4">4</string>
-    <string name="personne6">6</string>
-    <string name="personne8">8</string>
-    <string name="personne10">10</string>
-    <string name="personne">Combien de personnes?</string>
+    <string name="box_fragment_box_personne2">2</string>
+    <string name="box_fragment_box_personne4">4</string>
+    <string name="box_fragment_box_personne6">6</string>
+    <string name="box_fragment_box_personne8">8</string>
+    <string name="box_fragment_box_personne10">10</string>
+    <string name="box_fragment_box_personne">Combien de personnes?</string>
+    <string name="box_fragment_box_personnalise_name">Box Personnalisée</string>
+    <string name="box_fragment_box_personnalise_description">Une box qui ne contient que ce que vous désirez.</string>
+    <string name="box_fragment_box_error_chargement_api_name">Box par défaut (erreur)</string>
+    <string name="box_fragment_box_error_chargement_api_description">Une erreur est survenue lors de l\'accès à aux données, voici </string>
+
 
     <!-- AProposFragment -->
     <string name="apropos_message">Application créé et inventée par deux étudiants d\'IG et trois étudiants de marketing de l\'HENALLux IESN de Namur</string>

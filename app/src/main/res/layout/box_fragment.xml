@@ -58,77 +58,92 @@
             android:padding="24dp"
             android:paddingTop="16dp">
 
-            <com.android.volley.toolbox.NetworkImageView
-                    android:id="@+id/product_image"
-                    android:layout_width="match_parent"
-                    android:layout_height="250dp"
-                    android:background="?attr/colorPrimaryDark"
-                    android:scaleType="centerCrop" />
 
-                <TextView
-                    android:id="@+id/box_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="32dp"
-                    android:textAppearance="@style/TextAppearance.aperoBox.Box.Title" />
-                <TextView
-                    android:id="@+id/box_price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="32dp"
-                    android:textAppearance="@style/TextAppearance.aperoBox.Box.Price" />
+            <ImageView
+                android:id="@+id/box_fragment_box_image"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:background="?attr/colorPrimaryDark"
+                android:scaleType="centerCrop"/>
 
-                <TextView
-                    android:id="@+id/box_description"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="32dp"
-                    android:textAppearance="@style/TextAppearance.aperoBox.Box.Description" />
+            <!--
+                <com.android.volley.toolbox.NetworkImageView
+                        android:id="@+id/product_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="250dp"
+                        android:background="?attr/colorPrimaryDark"
+                        android:scaleType="centerCrop" />
+                        -->
 
-                <TextView
-                    android:id="@+id/box_radio_group"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:text="@string/personne"
-                    android:textAppearance="@style/TextAppearance.aperoBox.Box.Description" />
-                <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:accessibilityPaneTitle="@string/personne"
-                    android:contentDescription="@string/personne"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/box_fragment_box_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="32dp"
+                        android:text="@string/box_fragment_box_personnalise_name"
+                        android:textAppearance="@style/TextAppearance.aperoBox.Box.Title" />
+                    <TextView
+                        android:id="@+id/box_fragment_box_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="32dp"
+                        android:text=""
+                        android:textAppearance="@style/TextAppearance.aperoBox.Box.Price" />
 
-                    <RadioButton android:id="@+id/radio_2"
+                    <TextView
+                        android:id="@+id/box_fragment_box_description"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/personne2"
-                        android:onClick="onRadioButtonClicked"/>
-                    <RadioButton android:id="@+id/radio_4"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="32dp"
+                        android:textAppearance="@style/TextAppearance.aperoBox.Box.Description" />
+
+                    <!--
+                    <TextView
+                        android:id="@+id/box_radio_group"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/personne4"
-                        android:onClick="onRadioButtonClicked"/>
-                    <RadioButton android:id="@+id/radio_6"
-                        android:layout_width="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="@string/personne"
+                        android:textAppearance="@style/TextAppearance.aperoBox.Box.Description" />
+                    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:accessibilityPaneTitle="@string/personne"
+                        android:contentDescription="@string/personne"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/personne6"
-                        android:onClick="onRadioButtonClicked"/>
-                    <RadioButton android:id="@+id/radio_8"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/personne8"
-                        android:onClick="onRadioButtonClicked"/>
-                    <RadioButton android:id="@+id/radio_10"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/personne10"
-                        android:onClick="onRadioButtonClicked"/>
-                </RadioGroup>
+                        android:layout_gravity="center_horizontal"
+                        android:orientation="horizontal">
+
+                        <RadioButton android:id="@+id/radio_2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/personne2"
+                            android:onClick="onRadioButtonClicked"/>
+                        <RadioButton android:id="@+id/radio_4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/personne4"
+                            android:onClick="onRadioButtonClicked"/>
+                        <RadioButton android:id="@+id/radio_6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/personne6"
+                            android:onClick="onRadioButtonClicked"/>
+                        <RadioButton android:id="@+id/radio_8"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/personne8"
+                            android:onClick="onRadioButtonClicked"/>
+                        <RadioButton android:id="@+id/radio_10"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/personne10"
+                            android:onClick="onRadioButtonClicked"/>
+                    </RadioGroup>
+
+                   -->
 
         </LinearLayout>
 

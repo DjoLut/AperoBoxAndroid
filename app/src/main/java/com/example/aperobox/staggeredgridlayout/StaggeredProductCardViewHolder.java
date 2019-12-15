@@ -1,6 +1,7 @@
 package com.example.aperobox.staggeredgridlayout;
 
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,7 +12,8 @@ import com.example.aperobox.R;
 
 public class StaggeredProductCardViewHolder extends RecyclerView.ViewHolder {
 
-    public NetworkImageView productImage;
+    //public NetworkImageView productImage;
+    public ImageView productImage;
     public TextView productTitle;
     public TextView productPrice;
 

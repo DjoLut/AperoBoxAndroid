@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.aperobox.Activity.BoxFragment;
 import com.example.aperobox.Activity.NavigationHost;
 import com.example.aperobox.R;
@@ -57,7 +58,12 @@ public class StaggeredProductCardRecyclerViewAdapter extends RecyclerView.Adapte
             BoxEntry product = productList.get(position);
             holder.productTitle.setText(product.title);
             holder.productPrice.setText(product.price);
-            imageRequester.setImageFromUrl(holder.productImage, product.url);
+            Glide.with(fragment).load(product.url).into(holder.productImage);
+
+
+            //imageRequester.setImageFromUrl(holder.productImage, product.url);
+
+
             //A modifier par id de la box
             final int id = 1;
 

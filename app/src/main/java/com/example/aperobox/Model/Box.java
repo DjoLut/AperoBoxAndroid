@@ -9,6 +9,7 @@ public class Box {
     private Double tva;
     private String description;
     private Double promotion;
+    private String image;
     private List<Commentaire> commentaires;
     private List<LigneProduit> ligneProduits;
 
@@ -54,6 +55,10 @@ public class Box {
     public void setPromotion(Double promotion) {
         this.promotion = promotion;
     }
+
+    public String getImage() { return image; }
+
+    public void setImage(String image) { this.image = image; }
 
     public List<Commentaire> getCommentaires() {
         return commentaires;

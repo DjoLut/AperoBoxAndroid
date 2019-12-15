@@ -24,6 +24,14 @@
             android:scaleType="centerCrop"
             /> -->
 
+        <ImageView
+            android:id="@+id/product_image"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/staggered_product_grid_card_height_landscape"
+            android:background="?attr/colorPrimaryDark"
+            android:scaleType="centerCrop"/>
+
+        <!--
         <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/product_image"
             android:layout_width="match_parent"
@@ -31,6 +39,8 @@
             android:background="?attr/colorPrimaryDark"
             android:scaleType="centerCrop"
             />
+            -->
+
 
         <LinearLayout
             android:layout_width="match_parent"
