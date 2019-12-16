@@ -30,6 +30,8 @@ public class Utilisateur {
 
     private List<Commande> commandes;
 
+    private List<UtilisateurRole> utilisateurRoles;
+
     public Utilisateur(String nom, String prenom, Date dateNaissance, String mail, Integer telephone, Integer gsm, String username, String motDePasse)
     {
         this.nom = nom;
@@ -126,6 +128,13 @@ public class Utilisateur {
         this.commandes = commandes;
     }
 
+    public List<UtilisateurRole> getUtilisateurRoles() {
+        return utilisateurRoles;
+    }
+
+    public void setUtilisateurRoles(List<UtilisateurRole> utilisateurRoles) {
+        this.utilisateurRoles = utilisateurRoles;
+    }
 
     public String getMail() {
         return mail;
