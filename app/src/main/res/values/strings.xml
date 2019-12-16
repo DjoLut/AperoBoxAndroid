@@ -69,7 +69,7 @@
     <string name="invalid_date_naissance">La date de naissance n\'est pas valable</string>
 
     <!-- Backdrop menu -->
-    <string name="menu_acceuil">Acceuil</string>
+    <string name="menu_acceuil">Accueil</string>
     <string name="menu_box_perso">Box personnalisé</string>
     <string name="menu_panier">Panier</string>
     <string name="menu_options">Options</string>

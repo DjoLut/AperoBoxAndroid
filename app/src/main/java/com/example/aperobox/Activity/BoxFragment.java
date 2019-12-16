@@ -249,6 +249,28 @@ public class BoxFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadBoxTask = new LoadBox();
+        loadBoxTask.execute();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
 
     @Override
     public void onDestroy() {
