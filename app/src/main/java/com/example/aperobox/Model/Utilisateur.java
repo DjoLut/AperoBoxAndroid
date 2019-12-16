@@ -6,19 +6,23 @@ import java.util.List;
 public class Utilisateur {
     private Integer id;
 
-    private String nomUtilisateur;
+    private String nom;
+
+    private String prenom;
+
+    private Date dateNaissance;
+
+    private String mail;
+
+    private Integer telephone;
+
+    private Integer gsm;
+
+    private String username;
 
     private String motDePasse;
 
     private String confMotDePasse;
-
-    private Date dateNaissance;
-
-    private String prenom;
-
-    private String nom;
-
-    private String email;
 
     private Adresse adresse;
 
@@ -26,20 +30,23 @@ public class Utilisateur {
 
     private List<Commande> commandes;
 
-    public Utilisateur(Integer id, String nomUtilisateur, String motDePasse, Date dateNaissance, String prenom, String nom, String email)
+    public Utilisateur(String nom, String prenom, Date dateNaissance, String mail, Integer telephone, Integer gsm, String username, String motDePasse)
     {
-        this.id = id;
-        this.nomUtilisateur = nomUtilisateur;
-        this.motDePasse = motDePasse;
-        this.dateNaissance = dateNaissance;
-        this.prenom = prenom;
         this.nom = nom;
-        this.email = email;
+        this.prenom = prenom;
+        this.dateNaissance = dateNaissance;
+        this.mail = mail;
+        this.telephone = telephone;
+        this.gsm = gsm;
+        this.username = username;
+        this.motDePasse = motDePasse;
+
+
     }
 
-    public Utilisateur(String nomUtilisateur, String motDePasse)
+    public Utilisateur(String username, String motDePasse)
     {
-        this.nomUtilisateur = nomUtilisateur;
+        this.username = username;
         this.motDePasse = motDePasse;
     }
 
@@ -47,9 +54,6 @@ public class Utilisateur {
         return id;
     }
 
-    public String getNomUtilisateur() {
-        return nomUtilisateur;
-    }
 
     public String getMotDePasse() {
         return motDePasse;
@@ -67,9 +71,6 @@ public class Utilisateur {
         return nom;
     }
 
-    public String getEmail() {
-        return email;
-    }
 
     public String getConfMotDePasse() {
         return confMotDePasse;
@@ -83,9 +84,6 @@ public class Utilisateur {
         this.id = id;
     }
 
-    public void setNomUtilisateur(String nomUtilisateur) {
-        this.nomUtilisateur = nomUtilisateur;
-    }
 
     public void setMotDePasse(String motDePasse) {
         this.motDePasse = motDePasse;
@@ -103,9 +101,6 @@ public class Utilisateur {
         this.nom = nom;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
     public void setConfMotDePasse(String confMotDePasse) {
         this.confMotDePasse = confMotDePasse;
@@ -129,5 +124,38 @@ public class Utilisateur {
 
     public void setCommandes(List<Commande> commandes) {
         this.commandes = commandes;
+    }
+
+
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
+    public Integer getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(Integer telephone) {
+        this.telephone = telephone;
+    }
+
+    public Integer getGsm() {
+        return gsm;
+    }
+
+    public void setGsm(Integer gsm) {
+        this.gsm = gsm;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

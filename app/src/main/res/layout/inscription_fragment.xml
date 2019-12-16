@@ -109,6 +109,21 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/inscription_mail_text_input"
+            style="@style/Widget.AperoBox.TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/email">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inscription_mail_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:maxLines="1" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/inscription_date_naissance_input"
             style="@style/Widget.AperoBox.TextInputLayout"
             android:layout_width="match_parent"
@@ -142,7 +157,8 @@
                 android:id="@+id/inscription_gsm_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
+                android:inputType="phone|number"
+                android:digits="0123456789"
                 android:maxLines="1" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -157,7 +173,8 @@
                 android:id="@+id/inscription_telephone_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
+                android:inputType="phone|number"
+                android:digits="0123456789"
                 android:maxLines="1" />
         </com.google.android.material.textfield.TextInputLayout>
 

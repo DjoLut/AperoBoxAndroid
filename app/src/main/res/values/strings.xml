@@ -61,8 +61,8 @@
     <string name="error_login_api">Impossible d\'accéder aux serveurs</string>
     <string name="error_no_internet">Une connexion internet est nécessaire.</string>
     <string name="invalid_username">Nom d\'utilisateur inconnu</string>
-    <string name="invalid_username_length">8 caractères minimum</string>
-    <string name="invalid_password_length">8 caractères minimum</string>
+    <string name="invalid_username_length">3 caractères minimum</string>
+    <string name="invalid_password_length">3 caractères minimum</string>
     <string name="invalid_password">Mauvais mot de passe</string>
     <string name="invalid_conf_password">Mots de passes différents</string>
     <string name="login_failed">"Échec de la connexion"</string>
