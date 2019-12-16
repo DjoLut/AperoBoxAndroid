@@ -56,8 +56,8 @@ public class BoxsGridFragment extends Fragment {
         recyclerView.setLayoutManager(gridLayoutManager);
         StaggeredProductCardRecyclerViewAdapter adapter = new StaggeredProductCardRecyclerViewAdapter(BoxEntry.initBoxEntryList(getResources()), this);
         recyclerView.setAdapter(adapter);
-        int largePadding = getResources().getDimensionPixelSize(R.dimen.staggered_product_grid_spacing_large);
-        int smallPadding = getResources().getDimensionPixelSize(R.dimen.staggered_product_grid_spacing_small);
+        int largePadding = getResources().getDimensionPixelSize(R.dimen.staggered_boxs_grid_spacing_large);
+        int smallPadding = getResources().getDimensionPixelSize(R.dimen.staggered_boxs_grid_spacing_small);
         recyclerView.addItemDecoration(new BoxsGridItemDecoration(largePadding, smallPadding));
 
         // Set cut corner background for API 23+
@@ -85,7 +85,7 @@ public class BoxsGridFragment extends Fragment {
         boxPersonnalise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((NavigationHost)getActivity()).navigateTo(new BoxFragment(),true);
+                ((NavigationHost)getActivity()).navigateTo(new BoxFragment(getContext()),true);
             }
         });
 

@@ -1,13 +1,16 @@
 package com.example.aperobox.Activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,6 +45,7 @@ public class BoxFragment extends Fragment {
     private TextView box_price;
     private TextView box_description;
     private ImageView box_image;
+    private final Context context;
 
     private Utilisateur utilisateur;
 
@@ -50,24 +54,27 @@ public class BoxFragment extends Fragment {
     private List<Produit> produits;
     private Box selectedBox;
     private BoxDAO boxDAO;
-    public BoxFragment(int boxId){
+    public BoxFragment(int boxId, Context context){
         this.boxDAO = new BoxDAO();
-        this.listBoxs = new ArrayList<>();
         this.boxId = boxId;
+        this.context = context;
     }
 
-    public BoxFragment(){
+    public BoxFragment(Context context){
         this.boxDAO = new BoxDAO();
         this.produits = new ArrayList<>();
+        this.context = context;
     }
 
-    public BoxFragment(Utilisateur utilisateur){
+    public BoxFragment(Utilisateur utilisateur, Context context){
+        this.context = context;
         this.utilisateur = utilisateur;
     }
 
-    public BoxFragment(int boxId, Utilisateur utilisateur){
+    public BoxFragment(int boxId, Utilisateur utilisateur, Context context){
         this.boxId = boxId;
         this.utilisateur = utilisateur;
+        this.context = context;
     }
 
     @Override
@@ -75,6 +82,13 @@ public class BoxFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }
+/*
+    private AsyncTask<Integer,null,Box> getBox(Integer id){
+
+    }
+
+
+ */
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -95,9 +109,9 @@ public class BoxFragment extends Fragment {
         if(boxId!=null) {
             try {
                 this.selectedBox = boxDAO.getBox(boxId);
-                Glide.with(this).load(Constantes.URL_IMAGE_API+this.selectedBox.getImage()).into(this.box_image);
+                Glide.with(this).load(Constantes.URL_IMAGE_API+this.selectedBox.getPhoto()).into(this.box_image);
                 this.box_name.setText(this.selectedBox.getNom());
-                this.box_price.setText(format.format(this.selectedBox.getPrix()));
+                this.box_price.setText(format.format(this.selectedBox.getPrixUnitaireHtva()));
                 this.box_description.setText(format.format(this.selectedBox.getDescription()));
             } catch (Exception e) {
                 Toast.makeText(getContext(), R.string.error_login_api, Toast.LENGTH_LONG).show();
@@ -188,7 +202,7 @@ public class BoxFragment extends Fragment {
         boxPersonnalise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((NavigationHost) getActivity()).navigateTo(new BoxFragment(), true);
+                ((NavigationHost) getActivity()).navigateTo(new BoxFragment(getContext()), true);
             }
         });
 
@@ -244,5 +258,43 @@ public class BoxFragment extends Fragment {
                 getContext().getResources().getDrawable(R.drawable.branded_menu), // Menu open icon
                 getContext().getResources().getDrawable(R.drawable.close_menu))); // Menu close icon
     }
+
+/*
+    private class LoadBox extends AsyncTask<String, Void, ArrayList<Box>>
+    {
+        @Override
+        protected ArrayList<Box> doInBackground(String... params)
+        {
+            BoxDAO boxDAO = new BoxDAO();
+            ArrayList<Box> boxes = new ArrayList<>();
+            try {
+                boxes = boxDAO.getAllBox();
+            }
+            catch (Exception e)
+            {
+                Toast.makeText(context, "Erreur", Toast.LENGTH_SHORT).show();
+            }
+            return boxes;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Box> boxes)
+        {
+            ArrayList<Box> allBoxes = new ArrayList<>();
+            for(Box b : boxes) {
+                allBoxes.add(b);
+            }
+            RecyclerView.Adapter adapter = new AllBoxAdapter(allBoxes, context);
+            boxToDisplay.setAdapter(adapter);
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+        }
+
+    }
+
+ */
 
 }

@@ -5,11 +5,11 @@ import java.util.List;
 public class Box {
     private Integer id;
     private String nom;
-    private Double prix;
+    private Double prixUnitaireHtva;
     private Double tva;
-    private String description;
     private Double promotion;
-    private String image;
+    private String description;
+    private String photo;
     private List<Commentaire> commentaires;
     private List<LigneProduit> ligneProduits;
 
@@ -32,14 +32,6 @@ public class Box {
         this.nom = nom;
     }
 
-    public Double getPrix() {
-        return prix;
-    }
-
-    public void setPrix(Double prix) {
-        this.prix = prix;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -55,10 +47,6 @@ public class Box {
     public void setPromotion(Double promotion) {
         this.promotion = promotion;
     }
-
-    public String getImage() { return image; }
-
-    public void setImage(String image) { this.image = image; }
 
     public List<Commentaire> getCommentaires() {
         return commentaires;
@@ -82,5 +70,21 @@ public class Box {
 
     public void setLigneProduits(List<LigneProduit> ligneProduits) {
         this.ligneProduits = ligneProduits;
+    }
+
+    public Double getPrixUnitaireHtva() {
+        return prixUnitaireHtva;
+    }
+
+    public void setPrixUnitaireHtva(Double prixUnitaireHtva) {
+        this.prixUnitaireHtva = prixUnitaireHtva;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 }
