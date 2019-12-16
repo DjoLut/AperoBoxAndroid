@@ -4,108 +4,137 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 
 import com.example.aperobox.R;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link CompteFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link CompteFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.Calendar;
+import java.util.Date;
+
+
 public class CompteFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    private OnFragmentInteractionListener mListener;
-
-    public CompteFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment CompteFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static CompteFragment newInstance(String param1, String param2) {
-        CompteFragment fragment = new CompteFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(
+            @NonNull final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.compte_fragment, container, false);
+        View view = inflater.inflate(R.layout.compte_fragment, container, false);
+
+        final TextInputLayout usernameTextInput = view.findViewById(R.id.compte_username_text_input);
+        final TextInputEditText usernameEditText = view.findViewById(R.id.compte_username_edit_text);
+
+        final TextInputLayout passwordTextInput = view.findViewById(R.id.compte_password_text_input);
+        final TextInputEditText passwordEditText = view.findViewById(R.id.compte_password_edit_text);
+
+        final TextInputLayout confPasswordTextInput = view.findViewById(R.id.compte_conf_password_text_input);
+        final TextInputEditText confPasswordEditText = view.findViewById(R.id.compte_conf_password_edit_text);
+
+        final TextInputLayout nomTextInput = view.findViewById(R.id.compte_nom_text_input);
+        final TextInputEditText nomEditText = view.findViewById(R.id.compte_nom_edit_text);
+
+        final TextInputLayout prenomTextInput = view.findViewById(R.id.compte_prenom_text_input);
+        final TextInputEditText prenomEditText = view.findViewById(R.id.compte_prenom_edit_text);
+
+        final TextInputLayout dateNaissanceTextInput = view.findViewById(R.id.compte_date_naissance_input);
+        final DatePicker dateNaissanceEditText = view.findViewById(R.id.compte_date_naissance_datePicker1);
+
+        MaterialButton inscriptionButton = view.findViewById(R.id.compte_button_inscription);
+
+        // Set an error if the password is less than 8 characters.
+        inscriptionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                boolean valid = true;
+                if (!isPasswordLengthValid(passwordEditText.getText())) {
+                    passwordTextInput.setError(getString(R.string.invalid_password_length));
+                    valid = false;
+                } else {
+                    passwordTextInput.setError(null); // Clear the error
+                }
+
+                if(!isConfPasswordValid(confPasswordEditText.getText(), passwordEditText.getText())) {
+                    confPasswordTextInput.setError(getString(R.string.invalid_conf_password));
+                    valid = false;
+                } else{
+                    confPasswordTextInput.setError(null);
+                }
+
+                if(!isUsernameLengthValid(usernameEditText.getText())){
+                    usernameTextInput.setError(getString(R.string.invalid_username_length));
+                    valid = false;
+                } else {
+                    usernameTextInput.setError(null);
+                }
+
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(dateNaissanceEditText.getYear(), dateNaissanceEditText.getMonth(), dateNaissanceEditText.getDayOfMonth());
+                if(!isDateNaissanceValid(calendar.getTime())){
+                    dateNaissanceTextInput.setError(getString(R.string.invalid_date_naissance));
+                    valid = false;
+                } else
+                    dateNaissanceTextInput.setError(null);
+
+
+
+                if(valid)
+                    ((NavigationHost) getActivity()).navigateTo(new LoginFragment(), false); // Navigate to the next Fragment
+            }
+        });
+
+        // Clear the error once more than 8 characters are typed.
+        passwordEditText.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                if (isPasswordLengthValid(passwordEditText.getText())) {
+                    passwordTextInput.setError(null); //Clear the error
+                }
+                return false;
+            }
+        });
+        usernameEditText.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(isUsernameLengthValid(usernameEditText.getText()))
+                    usernameTextInput.setError(null);
+                return false;
+            }
+        });
+
+        confPasswordEditText.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(isConfPasswordValid(confPasswordEditText.getText(), passwordEditText.getText()))
+                    confPasswordTextInput.setError(null);
+                return false;
+            }
+        });
+        return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+    private boolean isPasswordLengthValid(@Nullable Editable text) {
+        return text != null && text.length() >= 8;
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
+    private boolean isUsernameLengthValid(@Nullable Editable text) {
+        return text!=null && text.length() >=8;
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
+    private boolean isConfPasswordValid(@Nullable Editable text, @Nullable Editable text2) {
+        return text.equals(text2);
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+    private boolean isDateNaissanceValid(Date date){
+        return date.after(new Date());
     }
 }

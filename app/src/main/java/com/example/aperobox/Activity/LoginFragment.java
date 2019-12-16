@@ -51,8 +51,9 @@ public class LoginFragment extends Fragment {
                 } else
                     passwordTextInput.setError(null); // Clear the error
 
-                if(valid)
+                if(valid) {
                     ((NavigationHost) getActivity()).navigateTo(new BoxsGridFragment(), false); // Navigate to the next Fragment
+                }
             }
         });
 

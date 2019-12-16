@@ -112,7 +112,9 @@ public class BoxFragment extends Fragment {
         }
         //Box personnalisé
         else{
-
+            View boxPersonnalise = view.findViewById(R.id.menu_box_personnalise);
+            boxPersonnalise.setOnClickListener(null);
+            boxPersonnalise.setElevation((float)1);
 
             this.box_price.setText(format.format(32.24));
         }

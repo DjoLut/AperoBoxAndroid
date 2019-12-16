@@ -75,12 +75,14 @@ public class AProposFragment extends Fragment {
             }
         });
 
-        view.findViewById(R.id.menu_a_propos).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((NavigationHost) getActivity()).navigateTo(new AProposFragment(utilisateur), true);
-            }
-        });
+
+
+        //Delete listener for menu_a_propos
+        View a_propos = view.findViewById(R.id.menu_a_propos);
+        a_propos.setOnClickListener(null);
+        a_propos.setElevation((float)1);
+
+
 
         view.findViewById(R.id.menu_nous_contactez).setOnClickListener(new View.OnClickListener() {
             @Override

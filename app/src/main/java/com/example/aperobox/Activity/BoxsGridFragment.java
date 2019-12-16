@@ -77,12 +77,9 @@ public class BoxsGridFragment extends Fragment {
         }
 
         View acceuil = view.findViewById(R.id.menu_acceuil);
-        acceuil.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((NavigationHost)getActivity()).navigateTo(new BoxsGridFragment(),true);
-            }
-        });
+        acceuil.setOnClickListener(null);
+        acceuil.setElevation((float)1);
+
 
         View boxPersonnalise = view.findViewById(R.id.menu_box_personnalise);
         boxPersonnalise.setOnClickListener(new View.OnClickListener() {

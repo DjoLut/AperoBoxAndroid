@@ -22,14 +22,14 @@ public class MainActivity extends AppCompatActivity implements NavigationHost{
                     .add(R.id.container, new BoxsGridFragment())
                     .commit();
         }
-        if(UtilDAO.isInternetAvailable())
+        if(!UtilDAO.isInternetAvailable(getBaseContext()))
             Toast.makeText(this,R.string.error_no_internet,Toast.LENGTH_LONG).show();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        if(!UtilDAO.isInternetAvailable())
+        if(!UtilDAO.isInternetAvailable(getBaseContext()))
             Toast.makeText(this,R.string.error_no_internet,Toast.LENGTH_LONG).show();
     }
 
