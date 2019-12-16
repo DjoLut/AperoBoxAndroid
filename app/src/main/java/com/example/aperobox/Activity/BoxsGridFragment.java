@@ -2,6 +2,7 @@ package com.example.aperobox.Activity;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,15 +20,22 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.aperobox.Dao.BoxDAO;
+import com.example.aperobox.Model.Box;
 import com.example.aperobox.Model.Utilisateur;
 import com.example.aperobox.R;
 
 import com.example.aperobox.Dao.network.BoxEntry;
 import com.example.aperobox.staggeredgridlayout.StaggeredProductCardRecyclerViewAdapter;
 
+import java.util.ArrayList;
+
 public class BoxsGridFragment extends Fragment {
 
     private Utilisateur utilisateur;
+    private RecyclerView boxToDisplay;
+    private LoadBox loadBoxTask;
+    private View view;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,14 +47,14 @@ public class BoxsGridFragment extends Fragment {
     public View onCreateView(
             @NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment with the ProductGrid theme
-        View view = inflater.inflate(R.layout.boxs_grid_fragment, container, false);
+        view = inflater.inflate(R.layout.boxs_grid_fragment, container, false);
 
         // Set up the tool bar
         setUpToolbar(view);
 
         // Set up the RecyclerView
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
-        recyclerView.setHasFixedSize(true);
+        boxToDisplay = view.findViewById(R.id.recycler_view);
+        boxToDisplay.setHasFixedSize(true);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2, GridLayoutManager.HORIZONTAL, false);
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
@@ -53,18 +62,9 @@ public class BoxsGridFragment extends Fragment {
                 return position % 3 == 2 ? 2 : 1;
             }
         });
-        recyclerView.setLayoutManager(gridLayoutManager);
-        StaggeredProductCardRecyclerViewAdapter adapter = new StaggeredProductCardRecyclerViewAdapter(BoxEntry.initBoxEntryList(getResources()), this);
-        recyclerView.setAdapter(adapter);
-        int largePadding = getResources().getDimensionPixelSize(R.dimen.staggered_boxs_grid_spacing_large);
-        int smallPadding = getResources().getDimensionPixelSize(R.dimen.staggered_boxs_grid_spacing_small);
-        recyclerView.addItemDecoration(new BoxsGridItemDecoration(largePadding, smallPadding));
-
-        // Set cut corner background for API 23+
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            view.findViewById(R.id.product_grid)
-                .setBackgroundResource(R.drawable.product_grid_background_shape);
-        }
+        boxToDisplay.setLayoutManager(gridLayoutManager);
+        loadBoxTask = new LoadBox();
+        loadBoxTask.execute();
 
         return view;
     }
@@ -147,5 +147,53 @@ public class BoxsGridFragment extends Fragment {
         menuInflater.inflate(R.menu.toolbar_menu, menu);
         super.onCreateOptionsMenu(menu, menuInflater);
     }
+
+
+    private class LoadBox extends AsyncTask<String, Void, ArrayList<Box>>
+    {
+        @Override
+        protected ArrayList<Box> doInBackground(String... params)
+        {
+            BoxDAO boxDAO = new BoxDAO();
+            ArrayList<Box> boxes = new ArrayList<>();
+            try {
+                boxes = boxDAO.getAllBox();
+            }
+            catch (Exception e)
+            {
+                Toast.makeText(getContext(), "Erreur", Toast.LENGTH_SHORT).show();
+            }
+            return boxes;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Box> boxes)
+        {
+            ArrayList<Box> allBoxes = new ArrayList<>();
+            for(Box b : boxes) {
+                if(b.getAffichable()==1)
+                    allBoxes.add(b);
+            }
+            StaggeredProductCardRecyclerViewAdapter adapter = new StaggeredProductCardRecyclerViewAdapter(allBoxes, BoxsGridFragment.this);
+            boxToDisplay.setAdapter(adapter);
+            int largePadding = getResources().getDimensionPixelSize(R.dimen.staggered_boxs_grid_spacing_large);
+            int smallPadding = getResources().getDimensionPixelSize(R.dimen.staggered_boxs_grid_spacing_small);
+            boxToDisplay.addItemDecoration(new BoxsGridItemDecoration(largePadding, smallPadding));
+
+            // Set cut corner background for API 23+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                view.findViewById(R.id.product_grid)
+                        .setBackgroundResource(R.drawable.product_grid_background_shape);
+            }
+
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+        }
+
+    }
+
 
 }

@@ -10,10 +10,15 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.InetAddress;
 import java.net.URL;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 import javax.net.ssl.HttpsURLConnection;
 
 public class UtilDAO {
+
+    private static Locale locale = Locale.getDefault();
+    public static NumberFormat format = NumberFormat.getCurrencyInstance(locale);
 
     public static String getMultipleLines(String uri) throws Exception{
         URL url = new URL(uri);
@@ -62,21 +67,6 @@ public class UtilDAO {
     public static boolean isInternetAvailable(Context context) {
         ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo network = cm.getActiveNetworkInfo();
-        boolean internets = network!=null && (network.getType() == ConnectivityManager.TYPE_WIFI || network.getType() == ConnectivityManager.TYPE_MOBILE);
-        return internets;
-/*
-        boolean internet = (cm!=null && (cm.isActiveNetworkMetered() || cm.isDefaultNetworkActive()));
-        return internet;
-        /*
-        try {
-            InetAddress ipAddr = InetAddress.getByName("www.google.com");
-            //You can replace it with your name
-            return !ipAddr.equals("");
-
-        } catch (Exception e) {
-            return false;
-        }
-
-         */
+        return network!=null && (network.getType() == ConnectivityManager.TYPE_WIFI || network.getType() == ConnectivityManager.TYPE_MOBILE);
     }
 }

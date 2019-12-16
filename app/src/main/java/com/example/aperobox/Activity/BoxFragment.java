@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.aperobox.Dao.BoxDAO;
+import com.example.aperobox.Dao.UtilDAO;
 import com.example.aperobox.Dao.network.JokeEntry;
 import com.example.aperobox.Model.Box;
 import com.example.aperobox.Model.LigneProduit;
@@ -48,6 +49,7 @@ public class BoxFragment extends Fragment {
     private final Context context;
 
     private Utilisateur utilisateur;
+    private LoadBox loadBoxTask;
 
     private Integer boxId;
     private List<Box> listBoxs;
@@ -81,6 +83,10 @@ public class BoxFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        if(boxId!=null) {
+            loadBoxTask = new LoadBox();
+            loadBoxTask.execute();
+        }
     }
 /*
     private AsyncTask<Integer,null,Box> getBox(Integer id){
@@ -102,35 +108,13 @@ public class BoxFragment extends Fragment {
         this.box_price = view.findViewById(R.id.box_fragment_box_price);
         this.box_description = view.findViewById(R.id.box_fragment_box_description);
 
-        Locale locale = Locale.getDefault();
-        NumberFormat format = NumberFormat.getCurrencyInstance(locale);
-
-        //Box présélectionné;
-        if(boxId!=null) {
-            try {
-                this.selectedBox = boxDAO.getBox(boxId);
-                Glide.with(this).load(Constantes.URL_IMAGE_API+this.selectedBox.getPhoto()).into(this.box_image);
-                this.box_name.setText(this.selectedBox.getNom());
-                this.box_price.setText(format.format(this.selectedBox.getPrixUnitaireHtva()));
-                this.box_description.setText(format.format(this.selectedBox.getDescription()));
-            } catch (Exception e) {
-                Toast.makeText(getContext(), R.string.error_login_api, Toast.LENGTH_LONG).show();
-                Glide.with(this).load(Constantes.URL_IMAGE_API+Constantes.DEFAULT_END_URL_IMAGE_API).into(this.box_image);
-                this.box_name.setText(getString(R.string.box_fragment_box_error_chargement_api_name));
-                this.box_price.setText(getString(R.string.box_fragment_box_prix_gratuit));
-                List<JokeEntry> jokeEntry = JokeEntry.initJokeEntryList(getResources());
-                JokeEntry joke = jokeEntry.get(new Random().nextInt(jokeEntry.size()));
-                this.box_description.setText(getString(R.string.box_fragment_box_error_chargement_api_description) + "\n\n\n" + joke.getBase() + "\n\n\n\n" + joke.getReponse());
-
-            }
-        }
         //Box personnalisé
-        else{
+        if(boxId==null) {
             View boxPersonnalise = view.findViewById(R.id.menu_box_personnalise);
             boxPersonnalise.setOnClickListener(null);
             boxPersonnalise.setElevation((float)1);
 
-            this.box_price.setText(format.format(32.24));
+            this.box_price.setText(getString(R.string.box_fragment_box_prix_gratuit));
         }
 
 
@@ -151,37 +135,6 @@ public class BoxFragment extends Fragment {
 
         return somme;
     }
-
-    /*
-    public void onRadioButtonClicked(View view) {
-        // Is the button now checked?
-        boolean checked = ((RadioButton) view).isChecked();
-
-        // Check which radio button was clicked
-        switch(view.getId()) {
-            case R.id.radio_2:
-                if (checked)
-                    // Pirates are the best
-                    break;
-            case R.id.radio_4:
-                if (checked)
-                    // Ninjas rule
-                    break;
-            case R.id.radio_6:
-                if (checked)
-                    // Ninjas rule
-                    break;
-            case R.id.radio_8:
-                if (checked)
-                    // Ninjas rule
-                    break;
-            case R.id.radio_10:
-                if (checked)
-                    // Ninjas rule
-                    break;
-        }
-    }
-     */
 
     private void setUpToolbar(View view) {
         Toolbar toolbar = view.findViewById(R.id.box_app_bar);
@@ -259,42 +212,48 @@ public class BoxFragment extends Fragment {
                 getContext().getResources().getDrawable(R.drawable.close_menu))); // Menu close icon
     }
 
-/*
-    private class LoadBox extends AsyncTask<String, Void, ArrayList<Box>>
+
+    private class LoadBox extends AsyncTask<String, Void, Box>
     {
         @Override
-        protected ArrayList<Box> doInBackground(String... params)
-        {
+        protected Box doInBackground(String... params) {
             BoxDAO boxDAO = new BoxDAO();
-            ArrayList<Box> boxes = new ArrayList<>();
+            Box box = new Box();
             try {
-                boxes = boxDAO.getAllBox();
+                //String idBox = getIntent().getStringExtra("boxId");
+                box = boxDAO.getBox(Integer.valueOf(boxId));
+            } catch (Exception e) {
+                Toast.makeText(getContext(), "Erreur de chargement de la box", Toast.LENGTH_SHORT).show();
             }
-            catch (Exception e)
-            {
-                Toast.makeText(context, "Erreur", Toast.LENGTH_SHORT).show();
-            }
-            return boxes;
+            return box;
         }
 
         @Override
-        protected void onPostExecute(ArrayList<Box> boxes)
+        protected void onPostExecute(Box box)
         {
-            ArrayList<Box> allBoxes = new ArrayList<>();
-            for(Box b : boxes) {
-                allBoxes.add(b);
-            }
-            RecyclerView.Adapter adapter = new AllBoxAdapter(allBoxes, context);
-            boxToDisplay.setAdapter(adapter);
+            String url = box.getPhoto();
+            Glide
+                    .with(BoxFragment.this)
+                    .load(Constantes.URL_IMAGE_API+url)
+                    .override(300, 200)
+                    .error(R.drawable.ic_launcher_background)
+                    .into(box_image);
+            box_name.setText(box.getNom());
+            box_price.setText(UtilDAO.format.format(box.getPrixUnitaireHtva()));
+            box_description.setText(box.getDescription());
         }
 
         @Override
         protected void onCancelled() {
             super.onCancelled();
         }
-
     }
 
- */
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(loadBoxTask != null)
+            loadBoxTask.cancel(true);
+    }
 }

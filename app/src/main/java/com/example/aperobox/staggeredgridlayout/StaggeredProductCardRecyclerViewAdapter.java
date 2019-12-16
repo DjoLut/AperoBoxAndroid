@@ -11,11 +11,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.aperobox.Activity.BoxFragment;
 import com.example.aperobox.Activity.NavigationHost;
+import com.example.aperobox.Model.Box;
 import com.example.aperobox.R;
 import com.example.aperobox.Dao.network.ImageRequester;
 import com.example.aperobox.Dao.network.BoxEntry;
+import com.example.aperobox.Utility.Constantes;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Adapter used to show an asymmetric grid of products, with 2 items in the first column, and 1
@@ -24,13 +28,13 @@ import java.util.List;
 public class StaggeredProductCardRecyclerViewAdapter extends RecyclerView.Adapter<StaggeredProductCardViewHolder> {
 
     private Fragment fragment;
-    private List<BoxEntry> productList;
-    private ImageRequester imageRequester;
+    private List<Box> productList;
+    //private ImageRequester imageRequester;
 
-    public StaggeredProductCardRecyclerViewAdapter(List<BoxEntry> productList, Fragment fragment) {
+    public StaggeredProductCardRecyclerViewAdapter(List<Box> productList, Fragment fragment) {
         this.fragment = fragment;
         this.productList = productList;
-        imageRequester = ImageRequester.getInstance();
+        //imageRequester = ImageRequester.getInstance();
     }
 
     @Override
@@ -53,24 +57,21 @@ public class StaggeredProductCardRecyclerViewAdapter extends RecyclerView.Adapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull StaggeredProductCardViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull StaggeredProductCardViewHolder holder, final int position) {
         if (productList != null && position < productList.size()) {
-            BoxEntry product = productList.get(position);
-            holder.productTitle.setText(product.title);
-            holder.productPrice.setText(product.price);
-            Glide.with(fragment).load(product.url).into(holder.productImage);
-
+            Locale locale = Locale.getDefault();
+            NumberFormat format = NumberFormat.getCurrencyInstance(locale);
+            Box product = productList.get(position);
+            holder.productTitle.setText(product.getNom());
+            holder.productPrice.setText(format.format(product.getPrixUnitaireHtva()));
+            Glide.with(fragment).load(Constantes.URL_IMAGE_API + product.getPhoto()).into(holder.productImage);
 
             //imageRequester.setImageFromUrl(holder.productImage, product.url);
-
-
-            //A modifier par id de la box
-            final int id = 1;
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ((NavigationHost) fragment.getActivity()).navigateTo(new BoxFragment(id, fragment.getContext()), true);
+                    ((NavigationHost) fragment.getActivity()).navigateTo(new BoxFragment(productList.get(position).getId(), fragment.getContext()), true);
                 }
             });
         }

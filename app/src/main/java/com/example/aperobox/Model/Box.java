@@ -9,6 +9,7 @@ public class Box {
     private Double tva;
     private Double promotion;
     private String description;
+    private Integer affichable;
     private String photo;
     private List<Commentaire> commentaires;
     private List<LigneProduit> ligneProduits;
@@ -86,5 +87,13 @@ public class Box {
 
     public void setPhoto(String photo) {
         this.photo = photo;
+    }
+
+    public Integer getAffichable() {
+        return affichable;
+    }
+
+    public void setAffichable(Integer affichable) {
+        this.affichable = affichable;
     }
 }
