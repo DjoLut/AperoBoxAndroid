@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.aperobox.Activity.BoxFragment;
 import com.example.aperobox.Activity.NavigationHost;
+import com.example.aperobox.Dao.UtilDAO;
 import com.example.aperobox.Model.Box;
 import com.example.aperobox.R;
 import com.example.aperobox.Dao.network.ImageRequester;
@@ -29,12 +30,10 @@ public class StaggeredProductCardRecyclerViewAdapter extends RecyclerView.Adapte
 
     private Fragment fragment;
     private List<Box> productList;
-    //private ImageRequester imageRequester;
 
     public StaggeredProductCardRecyclerViewAdapter(List<Box> productList, Fragment fragment) {
         this.fragment = fragment;
         this.productList = productList;
-        //imageRequester = ImageRequester.getInstance();
     }
 
     @Override
@@ -59,14 +58,10 @@ public class StaggeredProductCardRecyclerViewAdapter extends RecyclerView.Adapte
     @Override
     public void onBindViewHolder(@NonNull StaggeredProductCardViewHolder holder, final int position) {
         if (productList != null && position < productList.size()) {
-            Locale locale = Locale.getDefault();
-            NumberFormat format = NumberFormat.getCurrencyInstance(locale);
             Box product = productList.get(position);
             holder.productTitle.setText(product.getNom());
-            holder.productPrice.setText(format.format(product.getPrixUnitaireHtva()));
+            holder.productPrice.setText(UtilDAO.format.format(product.getPrixUnitaireHtva()));
             Glide.with(fragment).load(Constantes.URL_IMAGE_API + product.getPhoto()).into(holder.productImage);
-
-            //imageRequester.setImageFromUrl(holder.productImage, product.url);
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

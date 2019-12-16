@@ -12,7 +12,6 @@ import com.example.aperobox.R;
 
 public class StaggeredProductCardViewHolder extends RecyclerView.ViewHolder {
 
-    //public NetworkImageView productImage;
     public ImageView productImage;
     public TextView productTitle;
     public TextView productPrice;

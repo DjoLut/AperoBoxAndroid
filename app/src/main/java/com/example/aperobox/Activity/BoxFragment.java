@@ -83,10 +83,6 @@ public class BoxFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        if(boxId!=null) {
-            loadBoxTask = new LoadBox();
-            loadBoxTask.execute();
-        }
     }
 /*
     private AsyncTask<Integer,null,Box> getBox(Integer id){
@@ -115,6 +111,10 @@ public class BoxFragment extends Fragment {
             boxPersonnalise.setElevation((float)1);
 
             this.box_price.setText(getString(R.string.box_fragment_box_prix_gratuit));
+            Glide.with(this).load(Constantes.URL_IMAGE_API+Constantes.DEFAULT_END_URL_IMAGE_API).into(this.box_image);
+        } else {
+            loadBoxTask = new LoadBox();
+            loadBoxTask.execute();
         }
 
 
@@ -252,8 +252,10 @@ public class BoxFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        loadBoxTask = new LoadBox();
-        loadBoxTask.execute();
+        if(boxId!=null) {
+            loadBoxTask = new LoadBox();
+            loadBoxTask.execute();
+        }
     }
 
     @Override
