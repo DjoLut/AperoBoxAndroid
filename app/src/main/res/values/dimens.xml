@@ -10,8 +10,8 @@
     <dimen name="boxs_grid_reveal_height">100dp</dimen>
 
     <!-- Dimens for staggered asymmetric grid layout cards-->
-    <dimen name="staggered_boxs_grid_spacing_large">30dp</dimen>
-    <dimen name="staggered_boxs_grid_spacing_small">26dp</dimen>
+    <dimen name="staggered_boxs_grid_spacing_large">20dp</dimen>
+    <dimen name="staggered_boxs_grid_spacing_small">16dp</dimen>
     <dimen name="staggered_boxs_grid_margin_top_first">72dp</dimen>
     <dimen name="staggered_boxs_grid_margin_top_second">56dp</dimen>
     <dimen name="staggered_boxs_grid_margin_top_third">152dp</dimen>

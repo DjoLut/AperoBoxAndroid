@@ -34,6 +34,22 @@ public class MainActivity extends AppCompatActivity implements NavigationHost{
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if(!UtilDAO.isInternetAvailable(getBaseContext()))
+            Toast.makeText(this,R.string.error_no_internet,Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    protected void onStop() { super.onStop(); }
+
+    @Override
+    protected void onDestroy() { super.onDestroy(); }
+
+    @Override
+    protected void onPause() { super.onPause(); }
+
+    @Override
     protected void onRestart() {
         super.onRestart();
     }

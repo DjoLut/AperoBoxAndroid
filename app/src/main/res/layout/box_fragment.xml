@@ -100,6 +100,24 @@
                         android:layout_marginBottom="32dp"
                         android:textAppearance="@style/TextAppearance.aperoBox.Box.Description" />
 
+
+                    <androidx.core.widget.NestedScrollView
+                        android:id="@+id/product_grid"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="56dp"
+                        android:background="@color/productGridBackgroundColor"
+                        android:elevation="8dp"
+                        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/box_fragment_produit_recycler_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
+
+                    </androidx.core.widget.NestedScrollView>
+
+
                     <!--
                     <TextView
                         android:id="@+id/box_radio_group"

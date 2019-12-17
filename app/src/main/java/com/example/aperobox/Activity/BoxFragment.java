@@ -13,6 +13,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -59,6 +61,13 @@ public class BoxFragment extends Fragment {
     public BoxFragment(int boxId, Context context){
         this.boxDAO = new BoxDAO();
         this.boxId = boxId;
+        this.context = context;
+    }
+
+    public BoxFragment(Box box, Context context){
+        this.boxDAO = new BoxDAO();
+        this.boxId = box.getId();
+        this.selectedBox = box;
         this.context = context;
     }
 
@@ -113,8 +122,10 @@ public class BoxFragment extends Fragment {
             this.box_price.setText(getString(R.string.box_fragment_box_prix_gratuit));
             Glide.with(this).load(Constantes.URL_IMAGE_API+Constantes.DEFAULT_END_URL_IMAGE_API).into(this.box_image);
         } else {
-            loadBoxTask = new LoadBox();
-            loadBoxTask.execute();
+            if(selectedBox==null) {
+                loadBoxTask = new LoadBox();
+                loadBoxTask.execute();
+            }
         }
 
 
@@ -134,6 +145,12 @@ public class BoxFragment extends Fragment {
             somme+= (produit.getPrix()+ produit.getPrix()*produit.getTva());
 
         return somme;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
+        menuInflater.inflate(R.menu.toolbar_menu, menu);
+        super.onCreateOptionsMenu(menu, menuInflater);
     }
 
     private void setUpToolbar(View view) {
@@ -253,8 +270,10 @@ public class BoxFragment extends Fragment {
     public void onResume() {
         super.onResume();
         if(boxId!=null) {
-            loadBoxTask = new LoadBox();
-            loadBoxTask.execute();
+            if(selectedBox!=null) {
+                loadBoxTask = new LoadBox();
+                loadBoxTask.execute();
+            }
         }
     }
 
