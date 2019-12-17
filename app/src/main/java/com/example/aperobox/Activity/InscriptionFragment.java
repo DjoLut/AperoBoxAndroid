@@ -18,9 +18,12 @@ import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.Toast;
 
+import com.bumptech.glide.load.HttpException;
+import com.bumptech.glide.util.Util;
 import com.example.aperobox.Dao.AdresseDAO;
 import com.example.aperobox.Dao.UtilDAO;
 import com.example.aperobox.Dao.UtilisateurDAO;
+import com.example.aperobox.Exception.HttpResultException;
 import com.example.aperobox.Model.Adresse;
 import com.example.aperobox.Model.Utilisateur;
 import com.example.aperobox.R;
@@ -37,6 +40,10 @@ import java.util.Date;
  * Fragment representing the register screen for AperoBox.
  */
 public class InscriptionFragment extends Fragment {
+
+    private Utilisateur newUser;
+    private Adresse newAdresse;
+
     @Override
     public View onCreateView(
             @NonNull final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -124,19 +131,18 @@ public class InscriptionFragment extends Fragment {
                 {
                     if(UtilDAO.isInternetAvailable(getContext()))
                     {
-                        /*Adresse newAdresse = new Adresse(
-                                25,
+                        newAdresse = new Adresse(
                                 rueEditText.getText().toString(),
                                 Integer.valueOf(numeroEditText.getText().toString()),
                                 localiteEditText.getText().toString(),
                                 Integer.valueOf(codePostalEditText.getText().toString()),
                                 "Belgique"
-                        );*/
+                        );
                         //java.sql.Date sqlDate = new java.sql.Date(calendar.getTime().getTime());
                         Integer tel = null;
                         if(telephoneEditText.getText().length() != 0)
                             tel = Integer.valueOf(telephoneEditText.getText().toString());
-                        Utilisateur newUser = new Utilisateur(
+                        newUser = new Utilisateur(
                                 nomEditText.getText().toString(),
                                 prenomEditText.getText().toString(),
                                 calendar.getTime(),
@@ -145,10 +151,10 @@ public class InscriptionFragment extends Fragment {
                                 Integer.valueOf(gsmEditText.getText().toString()),
                                 usernameEditText.getText().toString(),
                                 passwordEditText.getText().toString(),
-                                1
+                                newAdresse
                         );
-                        //new AjoutAdresse().execute(newAdresse);
-                        new Inscription().execute(newUser);
+                        new AjoutAdresse().execute(newAdresse);
+                        //new Inscription().execute(newUser);
                     }
                     else
                     {
@@ -227,7 +233,7 @@ public class InscriptionFragment extends Fragment {
         @Override
         protected void onPostExecute(Integer statusCode)
         {
-            if(statusCode == HttpURLConnection.HTTP_OK){
+            if(statusCode == 201){
                 Toast.makeText(getContext(), "Success inscription", Toast.LENGTH_SHORT).show();// TODO: faire ça avec @string
                 ((NavigationHost) getActivity()).navigateTo(new LoginFragment(), false);
             }else{
@@ -239,6 +245,7 @@ public class InscriptionFragment extends Fragment {
 
     private class AjoutAdresse extends AsyncTask<Adresse, Void, Adresse>
     {
+        HttpResultException exception;
         @Override
         protected Adresse doInBackground(Adresse ...params) {
             Adresse adresse = new Adresse();
@@ -247,11 +254,17 @@ public class InscriptionFragment extends Fragment {
             try {
                 adresse = adresseDAO.ajoutAdresse(params[0]);
             }
+            catch (HttpResultException e)
+            {
+                exception = e;
+                cancel(true);
+            }
             catch (Exception e)
             {
-                Toast.makeText(getContext(), "Erreur Inscription Adresse", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Erreur Inscription Adresse : ", Toast.LENGTH_SHORT).show();
             }
 
+            newUser.setAdresse(adresse.getId());
             return adresse;
         }
 
@@ -259,7 +272,7 @@ public class InscriptionFragment extends Fragment {
         protected void onPostExecute(Adresse adresse)
         {
             if(adresse.getId() != null){
-                new Inscription().execute();
+                new Inscription().execute(newUser);
             }else{
                 Toast.makeText(getContext(), "Erreur Inscription Adresse : ", Toast.LENGTH_SHORT).show();// TODO: faire ça avec @string
             }

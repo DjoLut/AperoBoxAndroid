@@ -3,6 +3,7 @@ package com.example.aperobox.Model;
 public class LigneProduit {
     private Integer id;
     private Integer quantite;
+
     private Box box;
     private Produit produit;
 

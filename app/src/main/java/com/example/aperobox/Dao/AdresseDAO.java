@@ -1,5 +1,6 @@
 package com.example.aperobox.Dao;
 
+import com.bumptech.glide.load.HttpException;
 import com.example.aperobox.Model.Adresse;
 import com.google.gson.Gson;
 import java.io.BufferedReader;
@@ -18,7 +19,7 @@ public class AdresseDAO {
 
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("POST");
-        connection.setDoInput(false);
+        connection.setDoInput(true);
         connection.setDoOutput(true);
         connection.setRequestProperty("Content-Type", "application/json");
 
@@ -28,11 +29,11 @@ public class AdresseDAO {
         outputStream.flush();
         outputStream.close();
 
-        if(connection.getResponseCode() == HttpURLConnection.HTTP_OK)
+        if(connection.getResponseCode() == 201)
         {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             StringBuilder stringBuilder = new StringBuilder();
-            String inputJsonString = "",line;
+            String inputJsonString = "", line;
             while((line = bufferedReader.readLine()) != null){
                 stringBuilder.append(line);
             }
@@ -42,9 +43,9 @@ public class AdresseDAO {
             return gson.fromJson(inputJsonString, Adresse.class);
         }
         else {
-            //throw new HttpResultException(connection.getResponseCode());
-            throw new Exception();
+            throw new HttpException(connection.getResponseCode());
         }
+
     }
 
 

@@ -10,7 +10,9 @@ import java.net.URL;
 
 public class UtilisateurDAO {
 
-
+    public int connection() {
+        return 1;
+    }
 
     public int inscription(Utilisateur newUser)throws Exception {
         int resultCode;

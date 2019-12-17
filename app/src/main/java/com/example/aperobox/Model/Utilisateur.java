@@ -26,13 +26,15 @@ public class Utilisateur {
 
     private Integer adresse;
 
+    private Adresse adresseComplete;
+
     private List<Commentaire> commentaires;
 
     private List<Commande> commandes;
 
     private List<UtilisateurRole> utilisateurRoles;
 
-    public Utilisateur(String nom, String prenom, Date dateNaissance, String mail, Integer telephone, Integer gsm, String username, String motDePasse, Integer adresse)
+    public Utilisateur(String nom, String prenom, Date dateNaissance, String mail, Integer telephone, Integer gsm, String username, String motDePasse, Adresse adresseComplete)
     {
         this.nom = nom;
         this.prenom = prenom;
@@ -42,7 +44,7 @@ public class Utilisateur {
         this.gsm = gsm;
         this.username = username;
         this.motDePasse = motDePasse;
-        this.adresse = adresse;
+        this.adresseComplete = adresseComplete;
     }
 
     public Utilisateur(String username, String motDePasse)
@@ -54,7 +56,6 @@ public class Utilisateur {
     public Integer getId() {
         return id;
     }
-
 
     public String getMotDePasse() {
         return motDePasse;
@@ -72,7 +73,6 @@ public class Utilisateur {
         return nom;
     }
 
-
     public String getConfMotDePasse() {
         return confMotDePasse;
     }
@@ -84,7 +84,6 @@ public class Utilisateur {
     public void setId(Integer id) {
         this.id = id;
     }
-
 
     public void setMotDePasse(String motDePasse) {
         this.motDePasse = motDePasse;
@@ -101,7 +100,6 @@ public class Utilisateur {
     public void setNom(String nom) {
         this.nom = nom;
     }
-
 
     public void setConfMotDePasse(String confMotDePasse) {
         this.confMotDePasse = confMotDePasse;
@@ -165,5 +163,13 @@ public class Utilisateur {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public Adresse getAdresseComplete() {
+        return adresseComplete;
+    }
+
+    public void setAdresseComplete(Adresse adresseComplete) {
+        this.adresseComplete = adresseComplete;
     }
 }
