@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.aperobox.Dao.BoxDAO;
 import com.example.aperobox.Dao.LigneProduitDAO;
+import com.example.aperobox.Dao.ProduitDAO;
 import com.example.aperobox.Dao.UtilDAO;
 import com.example.aperobox.Dao.network.JokeEntry;
 import com.example.aperobox.Model.Box;
@@ -220,18 +221,13 @@ public class BoxFragment extends Fragment {
 
     private class LoadBox extends AsyncTask<String, Void, Box>
     {
-        private Box boxEnCours;
         private List<Produit> produitList;
         @Override
         protected Box doInBackground(String... params) {
             BoxDAO boxDAO = new BoxDAO();
             Box box = new Box();
             try {
-                //String idBox = getIntent().getStringExtra("boxId");
                 box = boxDAO.getBox(Integer.valueOf(boxId));
-                //LoadLigneProduit loadLigneProduit = new LoadLigneProduit();
-                //loadLigneProduit.execute(box);
-                //box.setProduits(produitList);
             } catch (Exception e) {
                 Toast.makeText(getContext(), "Erreur de chargement de la box", Toast.LENGTH_LONG).show();
             }
@@ -241,6 +237,10 @@ public class BoxFragment extends Fragment {
         @Override
         protected void onPostExecute(Box box)
         {
+            LoadLigneProduit loadLigneProduit = new LoadLigneProduit();
+            loadLigneProduit.execute(box.getId());
+            if(produitList!=null)
+                box.setProduits(produitList);
             if(UtilDAO.isInternetAvailable(getContext())) {
                 String url = box.getPhoto();
                 Glide
@@ -267,27 +267,33 @@ public class BoxFragment extends Fragment {
             super.onCancelled();
         }
 
-        private class LoadLigneProduit extends AsyncTask<Box, Void, LigneProduit>
+        private class LoadLigneProduit extends AsyncTask<Integer, Void, List<LigneProduit>>
         {
 
             @Override
-            protected LigneProduit doInBackground(Box... params)
+            protected List<LigneProduit> doInBackground(Integer... params)
             {
                 LigneProduitDAO ligneProduitDAO = new LigneProduitDAO();
-                LigneProduit ligneProduit = null;
+                List<LigneProduit> ligneProduits = new ArrayList<>();
                 try {
-                    ligneProduit = ligneProduitDAO.getLigneProduit(params[0].getId());
+                    Integer box = params[0];
+                    ligneProduits = ligneProduitDAO.getLigneProduitByBoxId(box);
                 } catch (Exception e) {
                     Toast.makeText(getContext(), "Erreur de chargement de toute les boxs", Toast.LENGTH_SHORT).show();
                 }
-                return ligneProduit;
+                return ligneProduits;
             }
 
             @Override
-            protected void onPostExecute(LigneProduit ligneProduit)
+            protected void onPostExecute(List<LigneProduit> ligneProduits)
             {
-                LoadProduit loadProduit = new LoadProduit();
-                loadProduit.execute(ligneProduit);
+                produitList = new ArrayList<>();
+                if(ligneProduits!=null) {
+                    for(LigneProduit ligneProduit : ligneProduits) {
+                        LoadProduit loadProduit = new LoadProduit();
+                        loadProduit.execute(ligneProduit);
+                    }
+                }
             }
 
             @Override
@@ -301,10 +307,13 @@ public class BoxFragment extends Fragment {
                 @Override
                 protected Produit doInBackground(LigneProduit... params)
                 {
-                    //ProduitDAO produitDAO = new LigneProduitDAO();
+                    ProduitDAO produitDAO = new ProduitDAO();
                     Produit produit = null;
                     try {
-                        //produit = produitDAO.getProduitById(params[0].getProduit());
+                        LigneProduit ligneProduit = params[0];
+                        Integer idProduit = ligneProduit.getProduit();
+                        if(idProduit!=null)
+                            produit = produitDAO.getProduit(idProduit);
                     } catch (Exception e) {
                         Toast.makeText(getContext(), "Erreur de chargement de toute les boxs", Toast.LENGTH_SHORT).show();
                     }
@@ -314,7 +323,8 @@ public class BoxFragment extends Fragment {
                 @Override
                 protected void onPostExecute(Produit produit)
                 {
-                    produitList.add(produit);
+                    if(produit!=null)
+                        produitList.add(produit);
                 }
 
                 @Override
