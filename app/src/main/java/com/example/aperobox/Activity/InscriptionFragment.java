@@ -32,6 +32,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.net.HttpURLConnection;
+import java.time.DayOfWeek;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -126,6 +127,68 @@ public class InscriptionFragment extends Fragment {
                 } else
                     dateNaissanceTextInput.setError(null);
 
+                if(!isNomValid(nomEditText.getText())){
+                    nomTextInput.setError(getString(R.string.invalid_nom));
+                    valid = false;
+                } else {
+                    nomTextInput.setError(null);
+                }
+
+                if(!isPrenomValid(prenomEditText.getText())){
+                    prenomTextInput.setError(getString(R.string.invalid_prenom));
+                    valid = false;
+                } else {
+                    prenomTextInput.setError(null);
+                }
+
+                if(!isMailValid(mailEditText.getText())){
+                    mailTextInput.setError(getString(R.string.invalid_mail));
+                    valid = false;
+                } else {
+                    mailTextInput.setError(null);
+                }
+
+                if(!isGsmValid(gsmEditText.getText())){
+                    gsmTextInput.setError(getString(R.string.invalid_gsm));
+                    valid = false;
+                } else {
+                    gsmTextInput.setError(null);
+                }
+
+                if(!isTelephoneValid(telephoneEditText.getText())){
+                    telephoneTextInput.setError(getString(R.string.invalid_telephone));
+                    valid = false;
+                } else {
+                    telephoneTextInput.setError(null);
+                }
+
+                if(!isRueValid(rueEditText.getText())){
+                    rueTextInput.setError(getString(R.string.invalid_rue));
+                    valid = false;
+                } else {
+                    rueTextInput.setError(null);
+                }
+
+                if(!isNumeroValid(numeroEditText.getText())){
+                    numeroTextInput.setError(getString(R.string.invalid_numero));
+                    valid = false;
+                } else {
+                    numeroTextInput.setError(null);
+                }
+
+                if(!isLocaliteValid(localiteEditText.getText())){
+                    localiteTextInput.setError(getString(R.string.invalid_localite));
+                    valid = false;
+                } else {
+                    localiteTextInput.setError(null);
+                }
+
+                if(!isCodePostalValid(codePostalEditText.getText())){
+                    codePostalTextInput.setError(getString(R.string.invalid_codePostal));
+                    valid = false;
+                } else {
+                    codePostalTextInput.setError(null);
+                }
 
                 if(valid)
                 {
@@ -138,23 +201,21 @@ public class InscriptionFragment extends Fragment {
                                 Integer.valueOf(codePostalEditText.getText().toString()),
                                 "Belgique"
                         );
-                        //java.sql.Date sqlDate = new java.sql.Date(calendar.getTime().getTime());
-                        Integer tel = null;
+
+                        Long tel = null;
                         if(telephoneEditText.getText().length() != 0)
-                            tel = Integer.valueOf(telephoneEditText.getText().toString());
+                            tel = Long.valueOf(telephoneEditText.getText().toString());
                         newUser = new Utilisateur(
                                 nomEditText.getText().toString(),
                                 prenomEditText.getText().toString(),
                                 calendar.getTime(),
                                 mailEditText.getText().toString(),
                                 tel,
-                                Integer.valueOf(gsmEditText.getText().toString()),
+                                Long.valueOf(gsmEditText.getText().toString()),
                                 usernameEditText.getText().toString(),
-                                passwordEditText.getText().toString(),
-                                newAdresse
+                                passwordEditText.getText().toString()
                         );
                         new AjoutAdresse().execute(newAdresse);
-                        //new Inscription().execute(newUser);
                     }
                     else
                     {
@@ -196,11 +257,11 @@ public class InscriptionFragment extends Fragment {
     }
 
     private boolean isPasswordLengthValid(@Nullable Editable text) {
-        return text != null && text.length() >= 3;
+        return text != null && text.length() >= 3 && text.length() < 20;
     }
 
     private boolean isUsernameLengthValid(@Nullable Editable text) {
-        return text!=null && text.length() >= 3;
+        return text!=null && text.length() >= 3 && text.length() < 30;
     }
 
     private boolean isConfPasswordValid(@Nullable String text, @Nullable String text2) {
@@ -208,10 +269,49 @@ public class InscriptionFragment extends Fragment {
     }
 
     private boolean isDateNaissanceValid(Date date){
-        return date.before(new Date());
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.YEAR, -13);
+        return date.before(calendar.getTime());
+    }
+
+    private boolean isNomValid(@NonNull Editable nom) {
+        return nom!=null && nom.length() >= 2 && nom.length() < 50;
+    }
+
+    private boolean isPrenomValid(@NonNull Editable prenom) {
+        return prenom!=null && prenom.length() >= 2 && prenom.length() < 50;
+    }
+
+    private boolean isMailValid(@NonNull Editable mail) {
+        return mail!=null && mail.length() >= 2 && mail.length() < 50;
+    }
+
+    private boolean isTelephoneValid(@NonNull Editable telephone) {
+        return telephone.length() == 0 || telephone.length() == 9;
+    }
+
+    private boolean isGsmValid(@NonNull Editable gsm) {
+        return gsm!=null && gsm.length() == 10;
+    }
+
+    private boolean isRueValid(@NonNull Editable rue) {
+        return rue!=null && rue.length() >= 2 && rue.length() < 100;
+    }
+
+    private boolean isNumeroValid(@NonNull Editable numero) {
+        return numero!=null && numero.length() >= 1 && numero.length() < 6;
+    }
+
+    private boolean isLocaliteValid(@NonNull Editable text) {
+        return text!=null && text.length() >= 2 && text.length() < 20;
+    }
+
+    private boolean isCodePostalValid(@NonNull Editable numero) {
+        return numero!=null && numero.length() >= 1 && numero.length() < 8;
     }
 
 
+    //APPELS DES DAOS
     private class Inscription extends AsyncTask<Utilisateur, Void, Integer>
     {
         @Override
@@ -241,7 +341,6 @@ public class InscriptionFragment extends Fragment {
             }
         }
     }
-
 
     private class AjoutAdresse extends AsyncTask<Adresse, Void, Adresse>
     {
