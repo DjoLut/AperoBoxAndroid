@@ -115,7 +115,7 @@ public class BoxsGridFragment extends Fragment {
         boxPersonnalise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((NavigationHost)getActivity()).navigateTo(new BoxFragment(getContext()),true);
+                ((NavigationHost)getActivity()).navigateTo(new BoxFragment(),true);
             }
         });
 
@@ -154,13 +154,13 @@ public class BoxsGridFragment extends Fragment {
             }
         });
 
+        if(utilisateur!=null)
+            view.findViewById(R.id.menu_compte).setVisibility(View.INVISIBLE);
+        else
         view.findViewById(R.id.menu_compte).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(utilisateur==null)
-                    ((NavigationHost)getActivity()).navigateTo(new LoginFragment(),true);
-                else
-                    ((NavigationHost)getActivity()).navigateTo(new CompteFragment(),true);
+                ((NavigationHost)getActivity()).navigateTo(new LoginFragment(),true);
             }
         });
 
@@ -180,8 +180,9 @@ public class BoxsGridFragment extends Fragment {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_NO){
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY);
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                 }
+                else
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                 return false;
             }

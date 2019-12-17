@@ -64,7 +64,7 @@ public class AProposFragment extends Fragment {
         boxPersonnalise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((NavigationHost) getActivity()).navigateTo(new BoxFragment(getContext()), true);
+                ((NavigationHost) getActivity()).navigateTo(new BoxFragment(), true);
             }
         });
 
@@ -105,13 +105,13 @@ public class AProposFragment extends Fragment {
             }
         });
 
+        if(utilisateur!=null)
+            view.findViewById(R.id.menu_compte).setVisibility(View.INVISIBLE);
+        else
         view.findViewById(R.id.menu_compte).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (utilisateur == null)
-                    ((NavigationHost) getActivity()).navigateTo(new LoginFragment(), true);
-                else
-                    ((NavigationHost) getActivity()).navigateTo(new CompteFragment(), true);
+                ((NavigationHost) getActivity()).navigateTo(new LoginFragment(), true);
             }
         });
 

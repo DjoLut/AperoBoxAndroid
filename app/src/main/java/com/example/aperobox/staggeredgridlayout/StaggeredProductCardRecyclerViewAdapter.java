@@ -66,7 +66,7 @@ public class StaggeredProductCardRecyclerViewAdapter extends RecyclerView.Adapte
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ((NavigationHost) fragment.getActivity()).navigateTo(new BoxFragment(productList.get(position).getId(), fragment.getContext()), true);
+                    ((NavigationHost) fragment.getActivity()).navigateTo(new BoxFragment(productList.get(position).getId()), true);
                 }
             });
         }

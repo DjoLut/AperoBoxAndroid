@@ -1,6 +1,5 @@
 package com.example.aperobox.Activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -10,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -19,14 +17,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.aperobox.Dao.BoxDAO;
 import com.example.aperobox.Dao.UtilDAO;
-import com.example.aperobox.Dao.network.JokeEntry;
 import com.example.aperobox.Model.Box;
 import com.example.aperobox.Model.LigneProduit;
 import com.example.aperobox.Model.Produit;
@@ -34,11 +30,8 @@ import com.example.aperobox.Model.Utilisateur;
 import com.example.aperobox.R;
 import com.example.aperobox.Utility.Constantes;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.Random;
 
 public class BoxFragment extends Fragment {
 
@@ -48,44 +41,34 @@ public class BoxFragment extends Fragment {
     private TextView box_price;
     private TextView box_description;
     private ImageView box_image;
-    private final Context context;
 
     private Utilisateur utilisateur;
     private LoadBox loadBoxTask;
 
     private Integer boxId;
-    private List<Box> listBoxs;
     private List<Produit> produits;
     private Box selectedBox;
-    private BoxDAO boxDAO;
-    public BoxFragment(int boxId, Context context){
-        this.boxDAO = new BoxDAO();
+
+    public BoxFragment(int boxId){
         this.boxId = boxId;
-        this.context = context;
     }
 
-    public BoxFragment(Box box, Context context){
-        this.boxDAO = new BoxDAO();
+    public BoxFragment(Box box){
         this.boxId = box.getId();
         this.selectedBox = box;
-        this.context = context;
     }
 
-    public BoxFragment(Context context){
-        this.boxDAO = new BoxDAO();
+    public BoxFragment(){
         this.produits = new ArrayList<>();
-        this.context = context;
     }
 
-    public BoxFragment(Utilisateur utilisateur, Context context){
-        this.context = context;
+    public BoxFragment(Utilisateur utilisateur){
         this.utilisateur = utilisateur;
     }
 
-    public BoxFragment(int boxId, Utilisateur utilisateur, Context context){
+    public BoxFragment(int boxId, Utilisateur utilisateur){
         this.boxId = boxId;
         this.utilisateur = utilisateur;
-        this.context = context;
     }
 
     @Override
@@ -93,13 +76,7 @@ public class BoxFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }
-/*
-    private AsyncTask<Integer,null,Box> getBox(Integer id){
 
-    }
-
-
- */
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -169,12 +146,18 @@ public class BoxFragment extends Fragment {
         });
 
         View boxPersonnalise = view.findViewById(R.id.menu_box_personnalise);
-        boxPersonnalise.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((NavigationHost) getActivity()).navigateTo(new BoxFragment(getContext()), true);
-            }
-        });
+        boxPersonnalise.setElevation(1);
+        if(boxId==null)
+            boxPersonnalise.setOnClickListener(null);
+        else{
+            boxPersonnalise.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((NavigationHost) getActivity()).navigateTo(new BoxFragment(), true);
+                }
+            });
+        }
+
 
         View panier = view.findViewById(R.id.menu_panier);
         panier.setOnClickListener(new View.OnClickListener() {
@@ -211,13 +194,13 @@ public class BoxFragment extends Fragment {
             }
         });
 
+        if(utilisateur!=null)
+            view.findViewById(R.id.menu_compte).setVisibility(View.INVISIBLE);
+        else
         view.findViewById(R.id.menu_compte).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (utilisateur == null)
-                    ((NavigationHost) getActivity()).navigateTo(new LoginFragment(), true);
-                else
-                    ((NavigationHost) getActivity()).navigateTo(new CompteFragment(), true);
+                ((NavigationHost) getActivity()).navigateTo(new LoginFragment(), true);
             }
         });
 
