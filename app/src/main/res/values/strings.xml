@@ -60,6 +60,7 @@
     <!-- Error messages -->
     <string name="error_login_api">Impossible d\'accéder aux serveurs</string>
     <string name="error_no_internet">Une connexion internet est nécessaire.</string>
+    <string name="invalid_username_password">Nom d\'utilisateur ou mot de passe incorrect</string>
     <string name="invalid_username">Nom d\'utilisateur inconnu</string>
     <string name="invalid_username_length">3 caractères minimum et 30 maximum</string>
     <string name="invalid_password_length">3 caractères minimum et 20 maximum</string>
