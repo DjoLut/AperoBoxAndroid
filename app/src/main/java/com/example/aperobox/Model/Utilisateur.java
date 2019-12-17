@@ -14,9 +14,9 @@ public class Utilisateur {
 
     private String mail;
 
-    private Integer telephone;
+    private Long telephone;
 
-    private Integer gsm;
+    private Long gsm;
 
     private String username;
 
@@ -26,15 +26,13 @@ public class Utilisateur {
 
     private Integer adresse;
 
-    private Adresse adresseComplete;
-
     private List<Commentaire> commentaires;
 
     private List<Commande> commandes;
 
     private List<UtilisateurRole> utilisateurRoles;
 
-    public Utilisateur(String nom, String prenom, Date dateNaissance, String mail, Integer telephone, Integer gsm, String username, String motDePasse, Adresse adresseComplete)
+    public Utilisateur(String nom, String prenom, Date dateNaissance, String mail, Long telephone, Long gsm, String username, String motDePasse)
     {
         this.nom = nom;
         this.prenom = prenom;
@@ -44,7 +42,6 @@ public class Utilisateur {
         this.gsm = gsm;
         this.username = username;
         this.motDePasse = motDePasse;
-        this.adresseComplete = adresseComplete;
     }
 
     public Utilisateur(String username, String motDePasse)
@@ -141,19 +138,19 @@ public class Utilisateur {
         this.mail = mail;
     }
 
-    public Integer getTelephone() {
+    public Long getTelephone() {
         return telephone;
     }
 
-    public void setTelephone(Integer telephone) {
+    public void setTelephone(Long telephone) {
         this.telephone = telephone;
     }
 
-    public Integer getGsm() {
+    public Long getGsm() {
         return gsm;
     }
 
-    public void setGsm(Integer gsm) {
+    public void setGsm(Long gsm) {
         this.gsm = gsm;
     }
 
@@ -165,11 +162,4 @@ public class Utilisateur {
         this.username = username;
     }
 
-    public Adresse getAdresseComplete() {
-        return adresseComplete;
-    }
-
-    public void setAdresseComplete(Adresse adresseComplete) {
-        this.adresseComplete = adresseComplete;
-    }
 }
