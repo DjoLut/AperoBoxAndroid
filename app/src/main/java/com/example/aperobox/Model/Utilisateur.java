@@ -32,7 +32,7 @@ public class Utilisateur {
 
     private List<UtilisateurRole> utilisateurRoles;
 
-    public Utilisateur(String nom, String prenom, Date dateNaissance, String mail, Integer telephone, Integer gsm, String username, String motDePasse)
+    public Utilisateur(String nom, String prenom, Date dateNaissance, String mail, Integer telephone, Integer gsm, String username, String motDePasse, Adresse adresse)
     {
         this.nom = nom;
         this.prenom = prenom;
@@ -42,8 +42,7 @@ public class Utilisateur {
         this.gsm = gsm;
         this.username = username;
         this.motDePasse = motDePasse;
-
-
+        this.adresse = adresse;
     }
 
     public Utilisateur(String username, String motDePasse)

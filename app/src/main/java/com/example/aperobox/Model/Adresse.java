@@ -2,13 +2,21 @@ package com.example.aperobox.Model;
 
 public class Adresse {
     private Integer id;
-    private String pays;
-    private String localite;
     private String rue;
     private Integer numero;
+    private String localite;
     private Integer codePostal;
+    private String pays;
 
     public Adresse() {
+    }
+
+    public Adresse(String rue, Integer numero, String localite, Integer codePostal, String pays) {
+        this.rue = rue;
+        this.numero = numero;
+        this.localite = localite;
+        this.codePostal = codePostal;
+        this.pays = pays;
     }
 
     public Integer getId() {
@@ -58,4 +66,5 @@ public class Adresse {
     public void setCodePostal(Integer codePostal) {
         this.codePostal = codePostal;
     }
+
 }

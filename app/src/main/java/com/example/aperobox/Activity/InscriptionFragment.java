@@ -18,8 +18,10 @@ import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.Toast;
 
+import com.example.aperobox.Dao.AdresseDAO;
 import com.example.aperobox.Dao.UtilDAO;
 import com.example.aperobox.Dao.UtilisateurDAO;
+import com.example.aperobox.Model.Adresse;
 import com.example.aperobox.Model.Utilisateur;
 import com.example.aperobox.R;
 import com.google.android.material.button.MaterialButton;
@@ -68,6 +70,18 @@ public class InscriptionFragment extends Fragment {
         final TextInputLayout confPasswordTextInput = view.findViewById(R.id.inscription_conf_password_text_input);
         final TextInputEditText confPasswordEditText = view.findViewById(R.id.inscription_conf_password_edit_text);
 
+        final TextInputLayout rueTextInput = view.findViewById(R.id.inscription_rue_text_input);
+        final TextInputEditText rueEditText = view.findViewById(R.id.inscription_rue_edit_text);
+
+        final TextInputLayout numeroTextInput = view.findViewById(R.id.inscription_numero_text_input);
+        final TextInputEditText numeroEditText = view.findViewById(R.id.inscription_numero_edit_text);
+
+        final TextInputLayout localiteTextInput = view.findViewById(R.id.inscription_localite_text_input);
+        final TextInputEditText localiteEditText = view.findViewById(R.id.inscription_localite_edit_text);
+
+        final TextInputLayout codePostalTextInput = view.findViewById(R.id.inscription_code_postal_text_input);
+        final TextInputEditText codePostalEditText = view.findViewById(R.id.inscription_code_postal_edit_text);
+
         MaterialButton inscriptionButton = view.findViewById(R.id.inscription_button_inscription);
 
         // Set an error if the password is less than 8 characters.
@@ -110,7 +124,14 @@ public class InscriptionFragment extends Fragment {
                 {
                     if(UtilDAO.isInternetAvailable(getContext()))
                     {
-                        java.sql.Date sqlDate = new java.sql.Date(calendar.getTime().getTime());
+                        Adresse newAdresse = new Adresse(
+                                rueEditText.getText().toString(),
+                                Integer.valueOf(numeroEditText.getText().toString()),
+                                localiteEditText.getText().toString(),
+                                Integer.valueOf(codePostalEditText.getText().toString()),
+                                "Belgique"
+                        );
+                        //java.sql.Date sqlDate = new java.sql.Date(calendar.getTime().getTime());
                         Integer tel = null;
                         if(telephoneEditText.getText().length() != 0)
                             tel = Integer.valueOf(telephoneEditText.getText().toString());
@@ -122,10 +143,10 @@ public class InscriptionFragment extends Fragment {
                                 tel,
                                 Integer.valueOf(gsmEditText.getText().toString()),
                                 usernameEditText.getText().toString(),
-                                passwordEditText.getText().toString()
-
+                                passwordEditText.getText().toString(),
+                                newAdresse
                         );
-                        new Inscription().execute(newUser);
+                        new AjoutAdresse().execute(newUser);
                     }
                     else
                     {
@@ -187,17 +208,18 @@ public class InscriptionFragment extends Fragment {
     {
         @Override
         protected Integer doInBackground(Utilisateur ...params) {
-            Integer statusCode = null;
+            Integer statusCodeUtilisateur = null;
             UtilisateurDAO utilisateurDAO = new UtilisateurDAO();
 
             try {
-                statusCode = utilisateurDAO.inscription(params[0]);
+                statusCodeUtilisateur = utilisateurDAO.inscription(params[0]);
             }
             catch (Exception e)
             {
-                Toast.makeText(getContext(), "Erreur Inscription 1", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Erreur Inscription Utilisateur 1", Toast.LENGTH_SHORT).show();
             }
-            return statusCode;
+
+            return statusCodeUtilisateur;
         }
 
         @Override
@@ -207,7 +229,39 @@ public class InscriptionFragment extends Fragment {
                 Toast.makeText(getContext(), "Success inscription", Toast.LENGTH_SHORT).show();// TODO: faire ça avec @string
                 ((NavigationHost) getActivity()).navigateTo(new LoginFragment(), false);
             }else{
-                Toast.makeText(getContext(), "Erreur Inscription 3 : " + statusCode, Toast.LENGTH_SHORT).show();// TODO: faire ça avec @string
+                Toast.makeText(getContext(), "Erreur Inscription Utilisateur 2 : " + statusCode, Toast.LENGTH_SHORT).show();// TODO: faire ça avec @string
+            }
+        }
+    }
+
+
+    private class AjoutAdresse extends AsyncTask<Utilisateur, Void, Utilisateur>
+    {
+        @Override
+        protected Utilisateur doInBackground(Utilisateur ...params) {
+            Adresse adresse = null;
+            AdresseDAO adresseDAO = new AdresseDAO();
+            Utilisateur utilisateur = params[0];
+
+            try {
+                adresse = adresseDAO.ajoutAdresse(params[0].getAdresse());
+            }
+            catch (Exception e)
+            {
+                Toast.makeText(getContext(), "Erreur Inscription Adresse", Toast.LENGTH_SHORT).show();
+            }
+
+            utilisateur.setAdresse(adresse);
+            return utilisateur;
+        }
+
+        @Override
+        protected void onPostExecute(Utilisateur newUser)
+        {
+            if(newUser.getAdresse().getId() != null){
+                new Inscription().execute(newUser);
+            }else{
+                Toast.makeText(getContext(), "Erreur Inscription Adresse : ", Toast.LENGTH_SHORT).show();// TODO: faire ça avec @string
             }
         }
     }
