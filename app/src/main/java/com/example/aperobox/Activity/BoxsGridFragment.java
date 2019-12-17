@@ -1,10 +1,12 @@
 package com.example.aperobox.Activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -41,6 +43,7 @@ import java.util.List;
 public class BoxsGridFragment extends Fragment {
 
 
+    private SharedPreferences preferences;
 
     private ArrayList<Box> boxes;
     private Utilisateur utilisateur;
@@ -177,7 +180,9 @@ public class BoxsGridFragment extends Fragment {
             }
         });
 
-        if(utilisateur!=null)
+        preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        String access_token = preferences.getString("access_token", null);
+        if(access_token!=null)
             view.findViewById(R.id.menu_compte).setVisibility(View.INVISIBLE);
         else
         view.findViewById(R.id.menu_compte).setOnClickListener(new View.OnClickListener() {

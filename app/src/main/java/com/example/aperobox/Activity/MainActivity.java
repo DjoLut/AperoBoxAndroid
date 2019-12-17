@@ -3,7 +3,10 @@ package com.example.aperobox.Activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.widget.Toast;
 
 import com.example.aperobox.Dao.UtilDAO;
@@ -11,6 +14,7 @@ import com.example.aperobox.Dao.network.JokeEntry;
 import com.example.aperobox.R;
 
 public class MainActivity extends AppCompatActivity implements NavigationHost{
+    private SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +31,11 @@ public class MainActivity extends AppCompatActivity implements NavigationHost{
         }
         if(!UtilDAO.isInternetAvailable(getBaseContext()))
             Toast.makeText(this,R.string.error_no_internet,Toast.LENGTH_LONG).show();
+
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.clear();
+        editor.commit();
     }
 
     @Override
@@ -47,7 +56,9 @@ public class MainActivity extends AppCompatActivity implements NavigationHost{
     protected void onStop() { super.onStop(); }
 
     @Override
-    protected void onDestroy() { super.onDestroy(); }
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 
     @Override
     protected void onPause() { super.onPause(); }
