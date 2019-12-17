@@ -24,36 +24,39 @@ public class JokeEntry {
 
     private final String base;
     private final String reponse;
+    private static List<JokeEntry> list;
 
     private JokeEntry(String base, String reponse){
         this.base = base;
         this.reponse = reponse;
     }
 
-    public static List<JokeEntry> initJokeEntryList(Resources resources) {
-        InputStream inputStream = resources.openRawResource(R.raw.joke);
-        Writer writer = new StringWriter();
-        char[] buffer = new char[1024];
-        try {
-            Reader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
-            int pointer;
-            while ((pointer = reader.read(buffer)) != -1) {
-                writer.write(buffer, 0, pointer);
-            }
-        } catch (IOException exception) {
-            Log.e(TAG, "Error writing/reading from the JSON file.", exception);
-        } finally {
+    public static void initJokeEntryList(Resources resources) {
+        if(list==null) {
+            InputStream inputStream = resources.openRawResource(R.raw.joke);
+            Writer writer = new StringWriter();
+            char[] buffer = new char[1024];
             try {
-                inputStream.close();
+                Reader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+                int pointer;
+                while ((pointer = reader.read(buffer)) != -1) {
+                    writer.write(buffer, 0, pointer);
+                }
             } catch (IOException exception) {
-                Log.e(TAG, "Error closing the input stream.", exception);
+                Log.e(TAG, "Error writing/reading from the JSON file.", exception);
+            } finally {
+                try {
+                    inputStream.close();
+                } catch (IOException exception) {
+                    Log.e(TAG, "Error closing the input stream.", exception);
+                }
             }
+            String jsonProductsString = writer.toString();
+            Gson gson = new Gson();
+            Type jokeListType = new TypeToken<ArrayList<JokeEntry>>() {
+            }.getType();
+            list = gson.fromJson(jsonProductsString, jokeListType);
         }
-        String jsonProductsString = writer.toString();
-        Gson gson = new Gson();
-        Type jokeListType = new TypeToken<ArrayList<JokeEntry>>() {
-        }.getType();
-        return gson.fromJson(jsonProductsString, jokeListType);
     }
 
     public String getBase() {
@@ -62,5 +65,9 @@ public class JokeEntry {
 
     public String getReponse() {
         return reponse;
+    }
+
+    public static JokeEntry getRandom(){
+        return list.get(new Random().nextInt(list.size()));
     }
 }

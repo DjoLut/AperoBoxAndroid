@@ -38,6 +38,12 @@
             app:title="@string/aperobox" />
     </com.google.android.material.appbar.AppBarLayout>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/boxs_joke"
+        />
+
     <androidx.core.widget.NestedScrollView
         android:id="@+id/box_grid"
         android:layout_width="match_parent"
@@ -66,14 +72,6 @@
                 android:background="?attr/colorPrimaryDark"
                 android:scaleType="centerCrop"/>
 
-            <!--
-                <com.android.volley.toolbox.NetworkImageView
-                        android:id="@+id/product_image"
-                        android:layout_width="match_parent"
-                        android:layout_height="250dp"
-                        android:background="?attr/colorPrimaryDark"
-                        android:scaleType="centerCrop" />
-                        -->
 
                     <TextView
                         android:id="@+id/box_fragment_box_name"

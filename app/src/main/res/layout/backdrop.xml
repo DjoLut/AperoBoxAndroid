@@ -22,12 +22,6 @@
         android:layout_height="wrap_content"
         android:text="@string/menu_panier" />
 
-    <com.google.android.material.button.MaterialButton
-        style="@style/Widget.AperoBox.Button.TextButton"
-        android:id="@+id/menu_options"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/menu_options" />
 
     <com.google.android.material.button.MaterialButton
         style="@style/Widget.AperoBox.Button.TextButton"

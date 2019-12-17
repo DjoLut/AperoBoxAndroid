@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -24,6 +25,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.aperobox.Dao.BoxDAO;
+import com.example.aperobox.Dao.UtilDAO;
+import com.example.aperobox.Dao.network.JokeEntry;
 import com.example.aperobox.Model.Box;
 import com.example.aperobox.Model.Utilisateur;
 import com.example.aperobox.R;
@@ -50,24 +53,33 @@ public class BoxsGridFragment extends Fragment {
     public View onCreateView(
             @NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment with the ProductGrid theme
-        view = inflater.inflate(R.layout.boxs_grid_fragment, container, false);
+        if(UtilDAO.isInternetAvailable(getContext())) {
+            view = inflater.inflate(R.layout.boxs_grid_fragment, container, false);
+
+            // Set up the RecyclerView
+            boxToDisplay = view.findViewById(R.id.recycler_view);
+            boxToDisplay.setHasFixedSize(true);
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2, GridLayoutManager.HORIZONTAL, false);
+            gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+                @Override
+                public int getSpanSize(int position) {
+                    return position % 3 == 2 ? 2 : 1;
+                }
+            });
+            boxToDisplay.setLayoutManager(gridLayoutManager);
+            if (UtilDAO.isInternetAvailable(getContext())) {
+                loadBoxTask = new LoadBox();
+                loadBoxTask.execute();
+            } else {
+                Toast.makeText(getContext(), getString(R.string.error_no_internet), Toast.LENGTH_LONG).show();
+                setJoke(view);
+            }
+        }
+        else
+            view = inflater.inflate(R.layout.joke, container, false);
 
         // Set up the tool bar
         setUpToolbar(view);
-
-        // Set up the RecyclerView
-        boxToDisplay = view.findViewById(R.id.recycler_view);
-        boxToDisplay.setHasFixedSize(true);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2, GridLayoutManager.HORIZONTAL, false);
-        gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(int position) {
-                return position % 3 == 2 ? 2 : 1;
-            }
-        });
-        boxToDisplay.setLayoutManager(gridLayoutManager);
-        loadBoxTask = new LoadBox();
-        loadBoxTask.execute();
 
         return view;
     }
@@ -75,8 +87,13 @@ public class BoxsGridFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        loadBoxTask = new LoadBox();
-        loadBoxTask.execute();
+        if(UtilDAO.isInternetAvailable(getContext())) {
+            loadBoxTask = new LoadBox();
+            loadBoxTask.execute();
+        } else {
+            Toast.makeText(getContext(), getString(R.string.error_no_internet), Toast.LENGTH_SHORT).show();
+            setJoke(getView());
+        }
     }
 
     @Override
@@ -97,6 +114,8 @@ public class BoxsGridFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        if(loadBoxTask != null)
+            loadBoxTask.cancel(true);
     }
 
     private void setUpToolbar(View view) {
@@ -124,14 +143,6 @@ public class BoxsGridFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ((NavigationHost)getActivity()).navigateTo(new PanierFragment(),true);
-            }
-        });
-
-        View options = view.findViewById(R.id.menu_options);
-        options.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((NavigationHost)getActivity()).navigateTo(new OptionFragment(),true);
             }
         });
 
@@ -166,10 +177,17 @@ public class BoxsGridFragment extends Fragment {
 
         toolbar.setNavigationOnClickListener(new NavigationIconClickListener(
                 getContext(),
-                view.findViewById(R.id.product_grid),
+                view.findViewById(UtilDAO.isInternetAvailable(getContext())?R.id.product_grid:R.id.joke),
                 new AccelerateDecelerateInterpolator(),
                 getContext().getResources().getDrawable(R.drawable.branded_menu), // Menu open icon
                 getContext().getResources().getDrawable(R.drawable.close_menu))); // Menu close icon
+    }
+
+
+    private void setJoke(View view){
+        JokeEntry jokeEntry = JokeEntry.getRandom();
+        TextView textView = view.findViewById(R.id.boxs_joke);
+        textView.setText(jokeEntry.getBase()+"\n\n\n" + jokeEntry.getReponse());
     }
 
     @Override
@@ -179,12 +197,12 @@ public class BoxsGridFragment extends Fragment {
         icon.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_NO){
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                }
-                else
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                return false;
+            if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_NO){
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            }
+            else
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            return false;
             }
         });
         super.onCreateOptionsMenu(menu, menuInflater);
@@ -198,12 +216,12 @@ public class BoxsGridFragment extends Fragment {
         {
             BoxDAO boxDAO = new BoxDAO();
             ArrayList<Box> boxes = new ArrayList<>();
-            try {
-                boxes = boxDAO.getAllBox();
-            }
-            catch (Exception e)
-            {
-                Toast.makeText(getContext(), "Erreur", Toast.LENGTH_SHORT).show();
+            if(UtilDAO.isInternetAvailable(getContext())) {
+                try {
+                    boxes = boxDAO.getAllBox();
+                } catch (Exception e) {
+                    Toast.makeText(getContext(), "Erreur", Toast.LENGTH_SHORT).show();
+                }
             }
             return boxes;
         }

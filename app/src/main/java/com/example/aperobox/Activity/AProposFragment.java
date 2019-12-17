@@ -76,15 +76,6 @@ public class AProposFragment extends Fragment {
             }
         });
 
-        View options = view.findViewById(R.id.menu_options);
-        options.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((NavigationHost) getActivity()).navigateTo(new OptionFragment(), true);
-            }
-        });
-
-
 
         //Delete listener for menu_a_propos
         View a_propos = view.findViewById(R.id.menu_a_propos);

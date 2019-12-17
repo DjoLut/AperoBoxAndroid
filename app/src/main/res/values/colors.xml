@@ -4,17 +4,11 @@
     <color name="colorPrimary">#E0E0E0</color>
     <color name="colorPrimaryDark">#a4c639</color>
     <color name="colorAccent">#caeb5e</color>
-    <color name="colorAccentDark">#a4c639</color>
     <color name="textColorPrimary">#442C2E</color>
-    <color name="textColorPrimaryDark">#E0E0E0</color>
     <color name="toolbarIconColor">@color/textColorPrimary</color>
-    <color name="toolbarIconColorDark">@color/textColorPrimaryDark</color>
     <color name="loginPageBackgroundColor">#FFFFFF</color>
-    <color name="loginPageBackgroundColorDark">#020900</color>
     <color name="productGridBackgroundColor">#FFFBFA</color>
-    <color name="productGridBackgroundColorDark">#21271e</color>
     <color name="textInputOutlineColor">#a4c639</color>
-    <color name="textInputOutlineColorDark">#caeb5e</color>
 
     <!-- Dark colors -->
     <color name="darkcolorPrimary">#091e00</color>

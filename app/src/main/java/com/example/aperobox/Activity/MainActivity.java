@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.example.aperobox.Dao.UtilDAO;
+import com.example.aperobox.Dao.network.JokeEntry;
 import com.example.aperobox.R;
 
 public class MainActivity extends AppCompatActivity implements NavigationHost{
@@ -15,6 +16,8 @@ public class MainActivity extends AppCompatActivity implements NavigationHost{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        JokeEntry.initJokeEntryList(getResources());
 
         if (savedInstanceState == null) {
             getSupportFragmentManager()

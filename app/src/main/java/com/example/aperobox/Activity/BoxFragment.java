@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.aperobox.Dao.BoxDAO;
 import com.example.aperobox.Dao.UtilDAO;
+import com.example.aperobox.Dao.network.JokeEntry;
 import com.example.aperobox.Model.Box;
 import com.example.aperobox.Model.LigneProduit;
 import com.example.aperobox.Model.Produit;
@@ -32,6 +33,7 @@ import com.example.aperobox.Utility.Constantes;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class BoxFragment extends Fragment {
 
@@ -94,14 +96,20 @@ public class BoxFragment extends Fragment {
         if(boxId==null) {
             View boxPersonnalise = view.findViewById(R.id.menu_box_personnalise);
             boxPersonnalise.setOnClickListener(null);
-            boxPersonnalise.setElevation((float)1);
+            boxPersonnalise.setElevation(1);
 
             this.box_price.setText(getString(R.string.box_fragment_box_prix_gratuit));
-            Glide.with(this).load(Constantes.URL_IMAGE_API+Constantes.DEFAULT_END_URL_IMAGE_API).into(this.box_image);
+            if(UtilDAO.isInternetAvailable(getContext()))
+                Glide.with(this).load(Constantes.URL_IMAGE_API+Constantes.DEFAULT_END_URL_IMAGE_API).into(this.box_image);
         } else {
             if(selectedBox==null) {
-                loadBoxTask = new LoadBox();
-                loadBoxTask.execute();
+                if(UtilDAO.isInternetAvailable(getContext())) {
+                    loadBoxTask = new LoadBox();
+                    loadBoxTask.execute();
+                } else {
+                    Toast.makeText(getContext(), getString(R.string.error_no_internet), Toast.LENGTH_SHORT).show();
+                    setJoke(getView());
+                }
             }
         }
 
@@ -167,14 +175,6 @@ public class BoxFragment extends Fragment {
             }
         });
 
-        View options = view.findViewById(R.id.menu_options);
-        options.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((NavigationHost) getActivity()).navigateTo(new OptionFragment(), true);
-            }
-        });
-
         view.findViewById(R.id.menu_a_propos).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -223,7 +223,7 @@ public class BoxFragment extends Fragment {
                 //String idBox = getIntent().getStringExtra("boxId");
                 box = boxDAO.getBox(Integer.valueOf(boxId));
             } catch (Exception e) {
-                Toast.makeText(getContext(), "Erreur de chargement de la box", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Erreur de chargement de la box", Toast.LENGTH_LONG).show();
             }
             return box;
         }
@@ -231,13 +231,15 @@ public class BoxFragment extends Fragment {
         @Override
         protected void onPostExecute(Box box)
         {
-            String url = box.getPhoto();
-            Glide
-                    .with(BoxFragment.this)
-                    .load(Constantes.URL_IMAGE_API+url)
-                    .override(300, 200)
-                    .error(R.drawable.ic_launcher_background)
-                    .into(box_image);
+            if(UtilDAO.isInternetAvailable(getContext())) {
+                String url = box.getPhoto();
+                Glide
+                        .with(BoxFragment.this)
+                        .load(Constantes.URL_IMAGE_API + url)
+                        .override(300, 200)
+                        .error(R.drawable.ic_launcher_background)
+                        .into(box_image);
+            }
             box_name.setText(box.getNom());
             box_price.setText(UtilDAO.format.format(box.getPrixUnitaireHtva()));
             box_description.setText(box.getDescription());
@@ -249,15 +251,29 @@ public class BoxFragment extends Fragment {
         }
     }
 
+    private void setJoke(View view){
+        JokeEntry jokeEntry = JokeEntry.getRandom();
+        box_description.setText(jokeEntry.getBase()+"\n\n\n" + jokeEntry.getReponse());
+        box_price.setText(getString(R.string.box_fragment_box_prix_gratuit));
+        box_name.setText(getString(R.string.box_fragment_box_error_chargement_api_name));
+    }
+
     @Override
     public void onResume() {
         super.onResume();
-        if(boxId!=null) {
+        if(!UtilDAO.isInternetAvailable(getContext()))
+            setJoke(getView());
+        /*if(boxId!=null) {
             if(selectedBox!=null) {
-                loadBoxTask = new LoadBox();
-                loadBoxTask.execute();
+                if(UtilDAO.isInternetAvailable(getContext())) {
+                    loadBoxTask = new LoadBox();
+                    loadBoxTask.execute();
+                } else
+                    Toast.makeText(getContext(),getString(R.string.error_no_internet),Toast.LENGTH_SHORT).show();
             }
         }
+
+         */
     }
 
     @Override
