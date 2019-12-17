@@ -204,7 +204,8 @@
                 android:id="@+id/inscription_numero_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
+                android:inputType="phone|number"
+                android:digits="0123456789"
                 android:maxLines="1" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -234,7 +235,8 @@
                 android:id="@+id/inscription_code_postal_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
+                android:inputType="phone|number"
+                android:digits="0123456789"
                 android:maxLines="1" />
         </com.google.android.material.textfield.TextInputLayout>
 

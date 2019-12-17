@@ -124,13 +124,14 @@ public class InscriptionFragment extends Fragment {
                 {
                     if(UtilDAO.isInternetAvailable(getContext()))
                     {
-                        Adresse newAdresse = new Adresse(
+                        /*Adresse newAdresse = new Adresse(
+                                25,
                                 rueEditText.getText().toString(),
                                 Integer.valueOf(numeroEditText.getText().toString()),
                                 localiteEditText.getText().toString(),
                                 Integer.valueOf(codePostalEditText.getText().toString()),
                                 "Belgique"
-                        );
+                        );*/
                         //java.sql.Date sqlDate = new java.sql.Date(calendar.getTime().getTime());
                         Integer tel = null;
                         if(telephoneEditText.getText().length() != 0)
@@ -144,9 +145,10 @@ public class InscriptionFragment extends Fragment {
                                 Integer.valueOf(gsmEditText.getText().toString()),
                                 usernameEditText.getText().toString(),
                                 passwordEditText.getText().toString(),
-                                newAdresse
+                                1
                         );
-                        new AjoutAdresse().execute(newUser);
+                        //new AjoutAdresse().execute(newAdresse);
+                        new Inscription().execute(newUser);
                     }
                     else
                     {
@@ -235,31 +237,29 @@ public class InscriptionFragment extends Fragment {
     }
 
 
-    private class AjoutAdresse extends AsyncTask<Utilisateur, Void, Utilisateur>
+    private class AjoutAdresse extends AsyncTask<Adresse, Void, Adresse>
     {
         @Override
-        protected Utilisateur doInBackground(Utilisateur ...params) {
-            Adresse adresse = null;
+        protected Adresse doInBackground(Adresse ...params) {
+            Adresse adresse = new Adresse();
             AdresseDAO adresseDAO = new AdresseDAO();
-            Utilisateur utilisateur = params[0];
 
             try {
-                adresse = adresseDAO.ajoutAdresse(params[0].getAdresse());
+                adresse = adresseDAO.ajoutAdresse(params[0]);
             }
             catch (Exception e)
             {
                 Toast.makeText(getContext(), "Erreur Inscription Adresse", Toast.LENGTH_SHORT).show();
             }
 
-            utilisateur.setAdresse(adresse);
-            return utilisateur;
+            return adresse;
         }
 
         @Override
-        protected void onPostExecute(Utilisateur newUser)
+        protected void onPostExecute(Adresse adresse)
         {
-            if(newUser.getAdresse().getId() != null){
-                new Inscription().execute(newUser);
+            if(adresse.getId() != null){
+                new Inscription().execute();
             }else{
                 Toast.makeText(getContext(), "Erreur Inscription Adresse : ", Toast.LENGTH_SHORT).show();// TODO: faire ça avec @string
             }

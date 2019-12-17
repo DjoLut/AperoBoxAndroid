@@ -24,7 +24,7 @@ public class Utilisateur {
 
     private String confMotDePasse;
 
-    private Adresse adresse;
+    private Integer adresse;
 
     private List<Commentaire> commentaires;
 
@@ -32,7 +32,7 @@ public class Utilisateur {
 
     private List<UtilisateurRole> utilisateurRoles;
 
-    public Utilisateur(String nom, String prenom, Date dateNaissance, String mail, Integer telephone, Integer gsm, String username, String motDePasse, Adresse adresse)
+    public Utilisateur(String nom, String prenom, Date dateNaissance, String mail, Integer telephone, Integer gsm, String username, String motDePasse, Integer adresse)
     {
         this.nom = nom;
         this.prenom = prenom;
@@ -111,11 +111,11 @@ public class Utilisateur {
         this.commentaires = commentaires;
     }
 
-    public Adresse getAdresse() {
+    public Integer getAdresse() {
         return adresse;
     }
 
-    public void setAdresse(Adresse adresse) {
+    public void setAdresse(Integer adresse) {
         this.adresse = adresse;
     }
 
