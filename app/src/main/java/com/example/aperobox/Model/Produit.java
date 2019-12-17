@@ -6,9 +6,9 @@ public class Produit {
     private Integer id;
     private String nom;
     private Date datePeremption;
-    private Double prix;
+    private Double prixUnitaireHtva;
     private Double tva;
-    private Boolean alcool;
+    private Integer alcool;
 
     public Produit() {
     }
@@ -37,12 +37,12 @@ public class Produit {
         this.datePeremption = datePeremption;
     }
 
-    public Double getPrix() {
-        return prix;
+    public Double getPrixUnitaireHtva() {
+        return prixUnitaireHtva;
     }
 
-    public void setPrix(Double prix) {
-        this.prix = prix;
+    public void setPrixUnitaireHtva(Double prixUnitaireHtva) {
+        this.prixUnitaireHtva = prixUnitaireHtva;
     }
 
     public Double getTva() {
@@ -53,11 +53,11 @@ public class Produit {
         this.tva = tva;
     }
 
-    public Boolean getAlcool() {
+    public Integer getAlcool() {
         return alcool;
     }
 
-    public void setAlcool(Boolean alcool) {
+    public void setAlcool(Integer alcool) {
         this.alcool = alcool;
     }
 }

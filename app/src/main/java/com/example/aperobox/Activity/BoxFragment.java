@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.aperobox.Dao.BoxDAO;
+import com.example.aperobox.Dao.LigneProduitDAO;
 import com.example.aperobox.Dao.UtilDAO;
 import com.example.aperobox.Dao.network.JokeEntry;
 import com.example.aperobox.Model.Box;
@@ -132,7 +133,7 @@ public class BoxFragment extends Fragment {
         }
 
         for(Produit produit : produits)
-            somme+= (produit.getPrix()+ produit.getPrix()*produit.getTva());
+            somme+= (produit.getPrixUnitaireHtva()+ produit.getPrixUnitaireHtva()*produit.getTva());
 
         return somme;
     }*/
@@ -219,6 +220,8 @@ public class BoxFragment extends Fragment {
 
     private class LoadBox extends AsyncTask<String, Void, Box>
     {
+        private Box boxEnCours;
+        private List<Produit> produitList;
         @Override
         protected Box doInBackground(String... params) {
             BoxDAO boxDAO = new BoxDAO();
@@ -226,6 +229,9 @@ public class BoxFragment extends Fragment {
             try {
                 //String idBox = getIntent().getStringExtra("boxId");
                 box = boxDAO.getBox(Integer.valueOf(boxId));
+                //LoadLigneProduit loadLigneProduit = new LoadLigneProduit();
+                //loadLigneProduit.execute(box);
+                //box.setProduits(produitList);
             } catch (Exception e) {
                 Toast.makeText(getContext(), "Erreur de chargement de la box", Toast.LENGTH_LONG).show();
             }
@@ -259,6 +265,64 @@ public class BoxFragment extends Fragment {
         @Override
         protected void onCancelled() {
             super.onCancelled();
+        }
+
+        private class LoadLigneProduit extends AsyncTask<Box, Void, LigneProduit>
+        {
+
+            @Override
+            protected LigneProduit doInBackground(Box... params)
+            {
+                LigneProduitDAO ligneProduitDAO = new LigneProduitDAO();
+                LigneProduit ligneProduit = null;
+                try {
+                    ligneProduit = ligneProduitDAO.getLigneProduit(params[0].getId());
+                } catch (Exception e) {
+                    Toast.makeText(getContext(), "Erreur de chargement de toute les boxs", Toast.LENGTH_SHORT).show();
+                }
+                return ligneProduit;
+            }
+
+            @Override
+            protected void onPostExecute(LigneProduit ligneProduit)
+            {
+                LoadProduit loadProduit = new LoadProduit();
+                loadProduit.execute(ligneProduit);
+            }
+
+            @Override
+            protected void onCancelled() {
+                super.onCancelled();
+            }
+
+
+            private class LoadProduit extends AsyncTask<LigneProduit, Void, Produit>
+            {
+                @Override
+                protected Produit doInBackground(LigneProduit... params)
+                {
+                    //ProduitDAO produitDAO = new LigneProduitDAO();
+                    Produit produit = null;
+                    try {
+                        //produit = produitDAO.getProduitById(params[0].getProduit());
+                    } catch (Exception e) {
+                        Toast.makeText(getContext(), "Erreur de chargement de toute les boxs", Toast.LENGTH_SHORT).show();
+                    }
+                    return produit;
+                }
+
+                @Override
+                protected void onPostExecute(Produit produit)
+                {
+                    produitList.add(produit);
+                }
+
+                @Override
+                protected void onCancelled() {
+                    super.onCancelled();
+                }
+
+            }
         }
     }
 
