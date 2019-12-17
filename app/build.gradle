@@ -31,15 +31,8 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
-    //FOR ROOM
-    def room_version = "2.2.0-alpha01" // 2.1.0 for latest stable version
-    implementation "androidx.room:room-runtime:$room_version"
-    testImplementation "androidx.room:room-testing:$room_version"
-
     implementation 'com.google.code.gson:gson:2.8.0'
 
     implementation 'com.android.support:recyclerview-v7:+'
     implementation 'com.github.bumptech.glide:glide:4.9.0'
-    implementation 'com.android.volley:volley:1.1.1'
-    //implementation "io.swagger:swagger-codegen-cli:2.4.10"
 }

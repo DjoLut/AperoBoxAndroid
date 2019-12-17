@@ -7,7 +7,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.toolbox.NetworkImageView;
+
 import com.example.aperobox.R;
 
 public class StaggeredProductCardViewHolder extends RecyclerView.ViewHolder {
