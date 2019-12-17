@@ -1,7 +1,5 @@
 package com.example.aperobox.Model;
 
-import android.media.session.MediaSession;
-
 public class JwtToken {
     private String access_token;
     private Integer expires_in;

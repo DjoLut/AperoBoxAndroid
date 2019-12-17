@@ -1,12 +1,22 @@
 package com.example.aperobox.Activity;
 
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.bumptech.glide.util.Util;
+import com.example.aperobox.Dao.UtilisateurDAO;
+import com.example.aperobox.Exception.HttpResultException;
+import com.example.aperobox.Model.JwtToken;
+import com.example.aperobox.Model.LoginModel;
+import com.example.aperobox.Model.Utilisateur;
 import com.example.aperobox.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
@@ -20,6 +30,8 @@ import androidx.fragment.app.Fragment;
  * Fragment representing the login screen for AperoBox.
  */
 public class LoginFragment extends Fragment {
+
+    private SharedPreferences preferences;
 
     @Override
     public View onCreateView(
@@ -52,7 +64,11 @@ public class LoginFragment extends Fragment {
                     passwordTextInput.setError(null); // Clear the error
 
                 if(valid) {
-                    ((NavigationHost) getActivity()).navigateTo(new BoxsGridFragment(), false); // Navigate to the next Fragment
+                    LoginModel utilisateurConnection = new LoginModel(
+                            usernameEditText.getText().toString(),
+                            passwordEditText.getText().toString()
+                    );
+                    new Connection().execute(utilisateurConnection);
                 }
             }
         });
@@ -87,17 +103,60 @@ public class LoginFragment extends Fragment {
         return view;
     }
 
-    /*
-        In reality, this will have more complex logic including, but not limited to, actual
-        authentication of the username and password.
-     */
+
     private boolean isPasswordLengthValid(@Nullable Editable text) {
-        return text != null && text.length() >= 8;
+        return text != null && text.length() >= 3;
     }
 
     private boolean isUsernameLengthValid(@Nullable Editable text) {
-        return text!=null && text.length() >=8;
+        return text!=null && text.length() >= 3;
     }
+
+
+
+    private class Connection extends AsyncTask<LoginModel, Void, JwtToken> {
+
+        private HttpResultException exception;
+
+        @Override
+        protected JwtToken doInBackground(LoginModel... loginModels) {
+            UtilisateurDAO utilisateurDAO = new UtilisateurDAO();
+            JwtToken token = null;
+            try {
+                token = utilisateurDAO.connection(loginModels[0]);
+            } catch (HttpResultException e) {
+                exception = e;
+                cancel(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return token;
+        }
+
+        @Override
+        protected void onPostExecute(JwtToken token)
+        {
+            preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putString("access_token", token.getAccess_token());
+            if (editor.commit()) {
+                //new RefreshingToken().execute();
+                Toast.makeText(getContext(), "Success Login", Toast.LENGTH_LONG).show();
+                ((NavigationHost) getActivity()).navigateTo(new BoxsGridFragment(), false);
+            } else {
+                Toast.makeText(getContext(), "Erreur Login", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        @Override
+        protected void onCancelled() {
+            Toast.makeText(getContext(), exception.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+
+
 
     @Override
     public void onDestroy() {
