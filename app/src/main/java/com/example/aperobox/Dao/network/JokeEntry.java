@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Random;
 
 public class JokeEntry {
-    private static final String TAG = BoxEntry.class.getSimpleName();
+    private static final String TAG = JokeEntry.class.getSimpleName();
 
     private final String base;
     private final String reponse;

@@ -34,6 +34,7 @@ import com.example.aperobox.Utility.Constantes;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.zip.Inflater;
 
 public class BoxFragment extends Fragment {
 
@@ -50,6 +51,9 @@ public class BoxFragment extends Fragment {
     private Integer boxId;
     private List<Produit> produits;
     private Box selectedBox;
+
+    private View view;
+    private ViewGroup container;
 
     public BoxFragment(int boxId){
         this.boxId = boxId;
@@ -83,7 +87,8 @@ public class BoxFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.box_fragment, container, false);
-
+        this.view = view;
+        this.container = container;
         // Set up the tool bar
         setUpToolbar(view);
 
@@ -166,7 +171,6 @@ public class BoxFragment extends Fragment {
             });
         }
 
-
         View panier = view.findViewById(R.id.menu_panier);
         panier.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -240,8 +244,15 @@ public class BoxFragment extends Fragment {
                         .error(R.drawable.ic_launcher_background)
                         .into(box_image);
             }
+
+            view.findViewById(R.id.menu_box_personnalise);
             box_name.setText(box.getNom());
-            box_price.setText(UtilDAO.format.format(box.getPrixUnitaireHtva()));
+            String prix = UtilDAO.format.format(box.getPrixUnitaireHtva());
+            if(box.getPromotion()!=null) {
+                prix += " - " + Math.round(box.getPromotion() * 10000) / 100 + "% = ";
+                prix += UtilDAO.format.format(Math.round((box.getPrixUnitaireHtva() * box.getTva() * (1 - box.getPromotion()) * 100) / 100));
+            }
+            box_price.setText(prix);
             box_description.setText(box.getDescription());
         }
 

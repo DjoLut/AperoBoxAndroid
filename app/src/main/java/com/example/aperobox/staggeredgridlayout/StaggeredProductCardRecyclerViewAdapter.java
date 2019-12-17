@@ -14,13 +14,9 @@ import com.example.aperobox.Activity.NavigationHost;
 import com.example.aperobox.Dao.UtilDAO;
 import com.example.aperobox.Model.Box;
 import com.example.aperobox.R;
-import com.example.aperobox.Dao.network.ImageRequester;
-import com.example.aperobox.Dao.network.BoxEntry;
 import com.example.aperobox.Utility.Constantes;
 
-import java.text.NumberFormat;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Adapter used to show an asymmetric grid of products, with 2 items in the first column, and 1

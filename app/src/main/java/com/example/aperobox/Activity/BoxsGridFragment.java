@@ -31,7 +31,6 @@ import com.example.aperobox.Model.Box;
 import com.example.aperobox.Model.Utilisateur;
 import com.example.aperobox.R;
 
-import com.example.aperobox.Dao.network.BoxEntry;
 import com.example.aperobox.staggeredgridlayout.StaggeredProductCardRecyclerViewAdapter;
 
 import java.util.ArrayList;
@@ -43,6 +42,10 @@ public class BoxsGridFragment extends Fragment {
     private LoadBox loadBoxTask;
     private View view;
 
+    private LayoutInflater inflater;
+    private ViewGroup container;
+    private Boolean internetAvaillable;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,9 +55,17 @@ public class BoxsGridFragment extends Fragment {
     @Override
     public View onCreateView(
             @NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        this.inflater = inflater;
+        this.container = container;
+        internetAvaillable = UtilDAO.isInternetAvailable(getContext());
+        return setView();
+    }
+
+    private View setView(){
+        //container.removeView(view);
         // Inflate the layout for this fragment with the ProductGrid theme
         if(UtilDAO.isInternetAvailable(getContext())) {
-            view = inflater.inflate(R.layout.boxs_grid_fragment, container, false);
+            view = this.inflater.inflate(R.layout.boxs_grid_fragment, this.container, false);
 
             // Set up the RecyclerView
             boxToDisplay = view.findViewById(R.id.recycler_view);
@@ -67,16 +78,14 @@ public class BoxsGridFragment extends Fragment {
                 }
             });
             boxToDisplay.setLayoutManager(gridLayoutManager);
-            if (UtilDAO.isInternetAvailable(getContext())) {
-                loadBoxTask = new LoadBox();
-                loadBoxTask.execute();
-            } else {
-                Toast.makeText(getContext(), getString(R.string.error_no_internet), Toast.LENGTH_LONG).show();
-                setJoke(view);
-            }
+            loadBoxTask = new LoadBox();
+            loadBoxTask.execute();
         }
-        else
-            view = inflater.inflate(R.layout.joke, container, false);
+        else {
+            view = this.inflater.inflate(R.layout.joke, this.container, false);
+            Toast.makeText(getContext(), getString(R.string.error_no_internet), Toast.LENGTH_LONG).show();
+            setJoke(view);
+        }
 
         // Set up the tool bar
         setUpToolbar(view);
@@ -87,12 +96,9 @@ public class BoxsGridFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if(UtilDAO.isInternetAvailable(getContext())) {
-            loadBoxTask = new LoadBox();
-            loadBoxTask.execute();
-        } else {
-            Toast.makeText(getContext(), getString(R.string.error_no_internet), Toast.LENGTH_SHORT).show();
-            setJoke(getView());
+        if(internetAvaillable != UtilDAO.isInternetAvailable(getContext())) {
+            internetAvaillable = UtilDAO.isInternetAvailable(getContext());
+            setView();
         }
     }
 
@@ -199,9 +205,12 @@ public class BoxsGridFragment extends Fragment {
             public boolean onMenuItemClick(MenuItem item) {
             if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_NO){
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            }
-            else
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                return true;
+            }else
+                if(AppCompatDelegate.getDefaultNightMode()!=AppCompatDelegate.MODE_NIGHT_NO) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    return true;
+                }
             return false;
             }
         });
