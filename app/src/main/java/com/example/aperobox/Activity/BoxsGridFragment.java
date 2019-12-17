@@ -1,7 +1,6 @@
 package com.example.aperobox.Activity;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -25,18 +24,25 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.aperobox.Dao.BoxDAO;
+import com.example.aperobox.Dao.LigneProduitDAO;
 import com.example.aperobox.Dao.UtilDAO;
 import com.example.aperobox.Dao.network.JokeEntry;
 import com.example.aperobox.Model.Box;
+import com.example.aperobox.Model.LigneProduit;
+import com.example.aperobox.Model.Produit;
 import com.example.aperobox.Model.Utilisateur;
 import com.example.aperobox.R;
 
 import com.example.aperobox.staggeredgridlayout.StaggeredProductCardRecyclerViewAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class BoxsGridFragment extends Fragment {
 
+
+
+    private ArrayList<Box> boxes;
     private Utilisateur utilisateur;
     private RecyclerView boxToDisplay;
     private LoadBox loadBoxTask;
@@ -218,19 +224,20 @@ public class BoxsGridFragment extends Fragment {
     }
 
 
+
     private class LoadBox extends AsyncTask<String, Void, ArrayList<Box>>
     {
+        private Box boxEnCours;
+        private List<Produit> produitList;
         @Override
         protected ArrayList<Box> doInBackground(String... params)
         {
             BoxDAO boxDAO = new BoxDAO();
-            ArrayList<Box> boxes = new ArrayList<>();
-            if(UtilDAO.isInternetAvailable(getContext())) {
-                try {
-                    boxes = boxDAO.getAllBox();
-                } catch (Exception e) {
-                    Toast.makeText(getContext(), "Erreur", Toast.LENGTH_SHORT).show();
-                }
+            boxes = new ArrayList<>();
+            try {
+                boxes = boxDAO.getAllBox();
+            } catch (Exception e) {
+                Toast.makeText(getContext(), "Erreur de chargement de toute les boxs", Toast.LENGTH_SHORT).show();
             }
             return boxes;
         }
@@ -238,11 +245,18 @@ public class BoxsGridFragment extends Fragment {
         @Override
         protected void onPostExecute(ArrayList<Box> boxes)
         {
+            produitList = new ArrayList<>();
             ArrayList<Box> allBoxes = new ArrayList<>();
             for(Box b : boxes) {
-                if(b.getAffichable()==1)
-                    allBoxes.add(b);
+                if(b.getAffichable()==1) {
+                    boxEnCours = b;
+                    //LoadLigneProduit loadLigneProduit = new LoadLigneProduit();
+                    //loadLigneProduit.execute(boxEnCours);
+                    //boxEnCours.setProduits(produitList);
+                    allBoxes.add(boxEnCours);
+                }
             }
+
             StaggeredProductCardRecyclerViewAdapter adapter = new StaggeredProductCardRecyclerViewAdapter(allBoxes, BoxsGridFragment.this);
             boxToDisplay.setAdapter(adapter);
             int largePadding = getResources().getDimensionPixelSize(R.dimen.staggered_boxs_grid_spacing_large);
@@ -262,6 +276,64 @@ public class BoxsGridFragment extends Fragment {
             super.onCancelled();
         }
 
+
+        private class LoadLigneProduit extends AsyncTask<Box, Void, LigneProduit>
+        {
+
+            @Override
+            protected LigneProduit doInBackground(Box... params)
+            {
+                LigneProduitDAO ligneProduitDAO = new LigneProduitDAO();
+                LigneProduit ligneProduit = null;
+                try {
+                    ligneProduit = ligneProduitDAO.getLigneProduit(params[0].getId());
+                } catch (Exception e) {
+                    Toast.makeText(getContext(), "Erreur de chargement de toute les boxs", Toast.LENGTH_SHORT).show();
+                }
+                return ligneProduit;
+            }
+
+            @Override
+            protected void onPostExecute(LigneProduit ligneProduit)
+            {
+                LoadProduit loadProduit = new LoadProduit();
+                loadProduit.execute(ligneProduit);
+            }
+
+            @Override
+            protected void onCancelled() {
+                super.onCancelled();
+            }
+
+
+            private class LoadProduit extends AsyncTask<LigneProduit, Void, Produit>
+            {
+                @Override
+                protected Produit doInBackground(LigneProduit... params)
+                {
+                    //ProduitDAO produitDAO = new LigneProduitDAO();
+                    Produit produit = null;
+                    try {
+                        //produit = produitDAO.getProduitById(params[0].getProduit());
+                    } catch (Exception e) {
+                        Toast.makeText(getContext(), "Erreur de chargement de toute les boxs", Toast.LENGTH_SHORT).show();
+                    }
+                    return produit;
+                }
+
+                @Override
+                protected void onPostExecute(Produit produit)
+                {
+                    produitList.add(produit);
+                }
+
+                @Override
+                protected void onCancelled() {
+                    super.onCancelled();
+                }
+
+            }
+        }
     }
 
 

@@ -122,7 +122,7 @@ public class BoxFragment extends Fragment {
         return view;
     }
 
-    private double calculTotal(){
+    /*private double calculTotal(){
         double somme = 0;
         List<Produit> prod= this.produits;
         if(boxId!=null){
@@ -135,7 +135,7 @@ public class BoxFragment extends Fragment {
             somme+= (produit.getPrix()+ produit.getPrix()*produit.getTva());
 
         return somme;
-    }
+    }*/
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {

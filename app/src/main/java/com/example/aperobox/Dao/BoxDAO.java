@@ -6,6 +6,8 @@ import com.example.aperobox.Utility.Constantes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import org.json.JSONArray;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -17,9 +19,20 @@ import java.util.List;
 public class BoxDAO {
 
     public ArrayList<Box> getAllBox() throws Exception {
+        ArrayList<Box> boxes = new ArrayList<>();
+        Gson gson = new Gson();
+
         URL url = new URL(Constantes.URL_API + "Box");
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        BufferedReader buffer = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+
+        connection.setRequestMethod("GET");
+        connection.setDoInput(true);
+        connection.setDoOutput(false);
+        //connection.setRequestProperty("Authorization", "Bearer " + token);
+
+        InputStream inputStream = connection.getInputStream();
+        InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+        BufferedReader buffer = new BufferedReader(inputStreamReader);
         StringBuilder builder = new StringBuilder();
         String stringJSON = "", line;
         while ((line = buffer.readLine()) != null)
@@ -27,8 +40,16 @@ public class BoxDAO {
             builder.append(line);
         }
         buffer.close();
-        stringJSON = builder.toString();
-        return BoxJsonTranslator.jsonToBoxes(stringJSON);
+        connection.disconnect();
+
+        String inputStringJSON = builder.toString();
+        JSONArray jsonArray = new JSONArray(inputStringJSON);
+        for(int i = 0; i < jsonArray.length(); i++)
+        {
+            boxes.add(gson.fromJson(jsonArray.getJSONObject(i).toString(), Box.class));
+        }
+
+        return boxes;
     }
 
     public Box getBox(int id) throws Exception {

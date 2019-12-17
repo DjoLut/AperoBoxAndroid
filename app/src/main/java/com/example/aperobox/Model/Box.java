@@ -12,7 +12,7 @@ public class Box {
     private Integer affichable;
     private String photo;
     private List<Commentaire> commentaires;
-    private List<LigneProduit> ligneProduits;
+    private List<Produit> produits;
 
     public Box() {
     }
@@ -65,12 +65,12 @@ public class Box {
         this.tva = tva;
     }
 
-    public List<LigneProduit> getLigneProduits() {
-        return ligneProduits;
+    public List<Produit> getProduits() {
+        return produits;
     }
 
-    public void setLigneProduits(List<LigneProduit> ligneProduits) {
-        this.ligneProduits = ligneProduits;
+    public void setProduits(List<Produit> produits) {
+        this.produits = produits;
     }
 
     public Double getPrixUnitaireHtva() {
