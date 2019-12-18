@@ -28,7 +28,7 @@ public class BoxDAO {
         connection.setRequestMethod("GET");
         connection.setDoInput(true);
         connection.setDoOutput(false);
-        //connection.setRequestProperty("Authorization", "Bearer " + token);
+        connection.setRequestProperty("Content-Type", "application/json");
 
         InputStream inputStream = connection.getInputStream();
         InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
@@ -59,7 +59,7 @@ public class BoxDAO {
         connection.setRequestMethod("GET");
         connection.setDoInput(true);
         connection.setDoOutput(false);
-        //connection.setRequestProperty("Authorization", "Bearer " + token);
+        connection.setRequestProperty("Content-Type", "application/json");
 
         InputStream inputStream = connection.getInputStream();
         InputStreamReader inputStreamReader = new InputStreamReader(inputStream);

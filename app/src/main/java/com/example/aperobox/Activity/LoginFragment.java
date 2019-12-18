@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.bumptech.glide.util.Util;
+import com.example.aperobox.Dao.UtilDAO;
 import com.example.aperobox.Dao.UtilisateurDAO;
 import com.example.aperobox.Exception.HttpResultException;
 import com.example.aperobox.Model.JwtToken;
@@ -68,7 +69,9 @@ public class LoginFragment extends Fragment {
                             usernameEditText.getText().toString(),
                             passwordEditText.getText().toString()
                     );
-                    new Connection().execute(utilisateurConnection);
+
+                    if(UtilDAO.isInternetAvailable(getContext()))
+                        new Connection().execute(utilisateurConnection);
                 }
             }
         });
