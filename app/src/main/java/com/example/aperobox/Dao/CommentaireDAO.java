@@ -1,11 +1,15 @@
 package com.example.aperobox.Dao;
 
-import com.example.aperobox.Dao.JsonTranslator.CommentaireJsonTranslator;
 import com.example.aperobox.Model.Commentaire;
+import com.example.aperobox.Model.Utilisateur;
 import com.example.aperobox.Utility.Constantes;
-
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import org.json.JSONArray;
 import java.io.BufferedReader;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -13,9 +17,20 @@ import java.util.ArrayList;
 public class CommentaireDAO {
 
     public ArrayList<Commentaire> getAllCommentaireFromBox(int boxId) throws Exception {
+        ArrayList<Commentaire> commentaires = new ArrayList<>();
+        Gson gson = new Gson();
+
         URL url = new URL(Constantes.URL_API + "Commentaire/Box/" + boxId);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        BufferedReader buffer = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+
+        connection.setRequestMethod("GET");
+        connection.setDoInput(true);
+        connection.setDoOutput(false);
+        connection.setRequestProperty("Content-Type", "application/json");
+
+        InputStream inputStream = connection.getInputStream();
+        InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+        BufferedReader buffer = new BufferedReader(inputStreamReader);
         StringBuilder builder = new StringBuilder();
         String stringJSON = "", line;
         while ((line = buffer.readLine()) != null)
@@ -23,19 +38,37 @@ public class CommentaireDAO {
             builder.append(line);
         }
         buffer.close();
-        stringJSON = builder.toString();
-        return CommentaireJsonTranslator.jsonToCommentaires(stringJSON);
+        connection.disconnect();
+
+        String inputStringJSON = builder.toString();
+        JSONArray jsonArray = new JSONArray(inputStringJSON);
+        for(int i = 0; i < jsonArray.length(); i++)
+        {
+            commentaires.add(gson.fromJson(jsonArray.getJSONObject(i).toString(), Commentaire.class));
+        }
+
+        return commentaires;
     }
 
-    public Commentaire getCommentaire(int id) throws Exception {
-        URL url = new URL(Constantes.URL_API+"Commentaire/Box/Commentaire/"+id);
+    public int ajoutCommentaire(String token, Utilisateur newUser)throws Exception {
+        int resultCode;
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+        String outputJsonString = gson.toJson(newUser);
+        URL url = new URL("https://aperoboxapi.azurewebsites.net/api/Utilisateur/");
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        BufferedReader buffer = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-        String line;
-        if((line = buffer.readLine())!=null){
-            return CommentaireJsonTranslator.jsonToCommentaire(line);
-        }
-        return null;
+        connection.setRequestMethod("POST");
+        connection.setDoInput(false);
+        connection.setDoOutput(true);
+        connection.setRequestProperty("Authorization", "Bearer " + token);
+        connection.setRequestProperty("Content-Type", "application/json");
+        byte[] outputBytes = outputJsonString.getBytes("UTF-8");
+        OutputStream outputStream = connection.getOutputStream();
+        outputStream.write(outputBytes);
+        outputStream.flush();
+        outputStream.close();
+        resultCode = connection.getResponseCode();
+        connection.disconnect();
+        return resultCode;
     }
 
 }
