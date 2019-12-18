@@ -45,6 +45,9 @@
     <string name="box_fragment_box_error_chargement_api_name">Box (erreur)</string>
     <string name="box_fragment_box_error_chargement_api_description">Une erreur est survenue lors de l\'accès aux données.\nEn attendant son retour, voici une petit Joke de papa</string>
     <string name="box_fragment_box_prix_gratuit">Gratuit!</string>
+    <string name="box_fragment_produit_title">Produits</string>
+    <string name="box_fragment_produit_nom">produits</string>
+
 
 
     <!-- AProposFragment -->

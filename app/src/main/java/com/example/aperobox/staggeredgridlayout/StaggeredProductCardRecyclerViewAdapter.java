@@ -24,11 +24,11 @@ import java.util.List;
 public class StaggeredProductCardRecyclerViewAdapter extends RecyclerView.Adapter<StaggeredProductCardViewHolder> {
 
     private Fragment fragment;
-    private List<Box> productList;
+    private List<Box> boxList;
 
-    public StaggeredProductCardRecyclerViewAdapter(List<Box> productList, Fragment fragment) {
+    public StaggeredProductCardRecyclerViewAdapter(List<Box> boxList, Fragment fragment) {
         this.fragment = fragment;
-        this.productList = productList;
+        this.boxList = boxList;
     }
 
     @Override
@@ -52,8 +52,8 @@ public class StaggeredProductCardRecyclerViewAdapter extends RecyclerView.Adapte
 
     @Override
     public void onBindViewHolder(@NonNull StaggeredProductCardViewHolder holder, final int position) {
-        if (productList != null && position < productList.size()) {
-            Box product = productList.get(position);
+        if (boxList != null && position < boxList.size()) {
+            Box product = boxList.get(position);
             holder.productTitle.setText(product.getNom());
             holder.productPrice.setText(UtilDAO.format.format(product.getPrixUnitaireHtva()));
             Glide.with(fragment).load(Constantes.URL_IMAGE_API + product.getPhoto()).into(holder.productImage);
@@ -61,7 +61,7 @@ public class StaggeredProductCardRecyclerViewAdapter extends RecyclerView.Adapte
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ((NavigationHost) fragment.getActivity()).navigateTo(new BoxFragment(productList.get(position).getId()), true);
+                    ((NavigationHost) fragment.getActivity()).navigateTo(new BoxFragment(boxList.get(position).getId()), true);
                 }
             });
         }
@@ -69,6 +69,6 @@ public class StaggeredProductCardRecyclerViewAdapter extends RecyclerView.Adapte
 
     @Override
     public int getItemCount() {
-        return productList.size();
+        return boxList.size();
     }
 }

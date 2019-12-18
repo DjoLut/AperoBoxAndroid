@@ -4,6 +4,7 @@ package com.example.aperobox.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -39,6 +40,12 @@ public class AProposFragment extends Fragment {
         this.container = container;
 
         setUpToolbar(view);
+
+        // Set cut corner background for API 23+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            view.findViewById(R.id.apropos_grid)
+                    .setBackgroundResource(R.drawable.product_grid_background_shape);
+        }
         return view;
     }
 

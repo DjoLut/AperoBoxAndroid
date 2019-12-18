@@ -75,7 +75,7 @@
 
                     <TextView
                         android:id="@+id/box_fragment_box_name"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginBottom="32dp"
@@ -83,7 +83,7 @@
                         android:textAppearance="@style/TextAppearance.aperoBox.Box.Title" />
                     <TextView
                         android:id="@+id/box_fragment_box_price"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginBottom="32dp"
@@ -92,74 +92,17 @@
 
                     <TextView
                         android:id="@+id/box_fragment_box_description"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginBottom="32dp"
                         android:textAppearance="@style/TextAppearance.aperoBox.Box.Description" />
 
-
-                    <androidx.core.widget.NestedScrollView
-                        android:id="@+id/product_grid"
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/box_fragment_produit_recycler_view"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="56dp"
-                        android:background="@color/productGridBackgroundColor"
-                        android:elevation="8dp"
-                        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/box_fragment_produit_recycler_view"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent" />
-
-                    </androidx.core.widget.NestedScrollView>
-
-
-                    <!--
-                    <TextView
-                        android:id="@+id/box_radio_group"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:text="@string/personne"
-                        android:textAppearance="@style/TextAppearance.aperoBox.Box.Description" />
-                    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
-                        android:accessibilityPaneTitle="@string/personne"
-                        android:contentDescription="@string/personne"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:orientation="horizontal">
-
-                        <RadioButton android:id="@+id/radio_2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/personne2"
-                            android:onClick="onRadioButtonClicked"/>
-                        <RadioButton android:id="@+id/radio_4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/personne4"
-                            android:onClick="onRadioButtonClicked"/>
-                        <RadioButton android:id="@+id/radio_6"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/personne6"
-                            android:onClick="onRadioButtonClicked"/>
-                        <RadioButton android:id="@+id/radio_8"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/personne8"
-                            android:onClick="onRadioButtonClicked"/>
-                        <RadioButton android:id="@+id/radio_10"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/personne10"
-                            android:onClick="onRadioButtonClicked"/>
-                    </RadioGroup>
-
-                   -->
+                        android:minHeight="400dp"/>
 
         </LinearLayout>
 

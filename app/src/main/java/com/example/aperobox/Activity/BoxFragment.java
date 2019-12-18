@@ -4,17 +4,23 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -32,10 +38,15 @@ import com.example.aperobox.Model.Box;
 import com.example.aperobox.Model.LigneProduit;
 import com.example.aperobox.Model.Produit;
 import com.example.aperobox.Model.Utilisateur;
+import com.example.aperobox.Productlayout.ProductViewAdapter;
 import com.example.aperobox.R;
 import com.example.aperobox.Utility.Constantes;
 
+import java.io.Console;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import java.util.zip.Inflater;
@@ -53,23 +64,16 @@ public class BoxFragment extends Fragment {
     private LoadBox loadBoxTask;
 
     private Integer boxId;
-    private List<Produit> produits;
-    private Box selectedBox;
+    private LinkedHashMap<Produit, Integer> listeProduits;
+    private RecyclerView produitToDisplay;
 
     private View view;
-    private ViewGroup container;
 
     public BoxFragment(int boxId){
         this.boxId = boxId;
     }
 
-    public BoxFragment(Box box){
-        this.boxId = box.getId();
-        this.selectedBox = box;
-    }
-
     public BoxFragment(){
-        this.produits = new ArrayList<>();
     }
 
     public BoxFragment(Utilisateur utilisateur){
@@ -80,6 +84,61 @@ public class BoxFragment extends Fragment {
         this.boxId = boxId;
         this.utilisateur = utilisateur;
     }
+
+
+
+
+    private void setJoke(View view){
+        JokeEntry jokeEntry = JokeEntry.getRandom();
+        box_description.setText(jokeEntry.getBase()+"\n\n\n" + jokeEntry.getReponse());
+        box_price.setText(getString(R.string.box_fragment_box_prix_gratuit));
+        box_name.setText(getString(R.string.box_fragment_box_error_chargement_api_name));
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(!UtilDAO.isInternetAvailable(getContext()))
+            setJoke(getView());
+        /*if(boxId!=null) {
+            if(selectedBox!=null) {
+                if(UtilDAO.isInternetAvailable(getContext())) {
+                    loadBoxTask = new LoadBox();
+                    loadBoxTask.execute();
+                } else
+                    Toast.makeText(getContext(),getString(R.string.error_no_internet),Toast.LENGTH_SHORT).show();
+            }
+        }
+
+         */
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(loadBoxTask != null)
+            loadBoxTask.cancel(true);
+    }
+
+
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -92,7 +151,8 @@ public class BoxFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.box_fragment, container, false);
         this.view = view;
-        this.container = container;
+        produitToDisplay = view.findViewById(R.id.box_fragment_produit_recycler_view);
+
         // Set up the tool bar
         setUpToolbar(view);
 
@@ -108,20 +168,21 @@ public class BoxFragment extends Fragment {
             boxPersonnalise.setElevation(1);
 
             this.box_price.setText(getString(R.string.box_fragment_box_prix_gratuit));
-            if(UtilDAO.isInternetAvailable(getContext()))
-                Glide.with(this).load(Constantes.URL_IMAGE_API+Constantes.DEFAULT_END_URL_IMAGE_API).into(this.box_image);
+            if(UtilDAO.isInternetAvailable(getContext())) {
+                Glide.with(this).load(Constantes.URL_IMAGE_API + Constantes.DEFAULT_END_URL_IMAGE_API).into(this.box_image);
+                LoadProduit loadProduit = new LoadProduit();
+                loadProduit.execute();
+
+            }
         } else {
-            if(selectedBox==null) {
-                if(UtilDAO.isInternetAvailable(getContext())) {
-                    loadBoxTask = new LoadBox();
-                    loadBoxTask.execute();
-                } else {
-                    Toast.makeText(getContext(), getString(R.string.error_no_internet), Toast.LENGTH_SHORT).show();
-                    setJoke(getView());
-                }
+            if(UtilDAO.isInternetAvailable(getContext())) {
+                loadBoxTask = new LoadBox();
+                loadBoxTask.execute();
+            } else {
+                Toast.makeText(getContext(), getString(R.string.error_no_internet), Toast.LENGTH_SHORT).show();
+                setJoke(getView());
             }
         }
-
 
         return view;
     }
@@ -141,9 +202,157 @@ public class BoxFragment extends Fragment {
         return somme;
     }*/
 
+    private class LoadBox extends AsyncTask<String, Void, Box>
+    {
+        private List<Produit> produitList;
+        @Override
+        protected Box doInBackground(String... params) {
+            BoxDAO boxDAO = new BoxDAO();
+            Box box = new Box();
+            try {
+                box = boxDAO.getBox(Integer.valueOf(boxId));
+            } catch (Exception e) {
+                Toast.makeText(getContext(), "Erreur de chargement de la box", Toast.LENGTH_LONG).show();
+            }
+            return box;
+        }
+
+        @Override
+        protected void onPostExecute(Box box)
+        {
+            LoadProd loadProd= new LoadProd();
+            loadProd.execute();
+
+            if(UtilDAO.isInternetAvailable(getContext())) {
+                String url = box.getPhoto();
+                Glide
+                        .with(BoxFragment.this)
+                        .load(Constantes.URL_IMAGE_API + url)
+                        .override(300, 200)
+                        .error(R.drawable.ic_launcher_background)
+                        .into(box_image);
+            }
+
+            view.findViewById(R.id.menu_box_personnalise);
+            box_name.setText(box.getNom());
+            String prix = UtilDAO.format.format(box.getPrixUnitaireHtva());
+            if(box.getPromotion()!=null) {
+                prix += " - " + Math.round(box.getPromotion() * 10000) / 100 + "% = ";
+                prix += UtilDAO.format.format(Math.round((box.getPrixUnitaireHtva() * box.getTva() * (1 - box.getPromotion()) * 100) / 100));
+            }
+            box_price.setText(prix);
+            box_description.setText(box.getDescription());
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+        }
+        private class LoadProd extends AsyncTask<Void, Void, LinkedHashMap<Produit,Integer>>
+        {
+            @Override
+            protected LinkedHashMap<Produit, Integer> doInBackground(Void... params)
+            {
+                ProduitDAO produitDAO = new ProduitDAO();
+                try {
+                    listeProduits = produitDAO.getProduitByBoxId(boxId);
+                } catch (Exception e) {
+                    Toast.makeText(getContext(), "Erreur de chargement de toute les boxs", Toast.LENGTH_SHORT).show();
+                }
+                return listeProduits;
+            }
+
+            @Override
+            protected void onPostExecute(LinkedHashMap<Produit, Integer> produit)
+            {
+                // Set up the RecyclerView
+                RecyclerView.LayoutManager manager = new LinearLayoutManager(getContext());
+                //GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1, GridLayoutManager.VERTICAL, false);
+                produitToDisplay.setLayoutManager(manager);
+
+                ProductViewAdapter adapter = new ProductViewAdapter(listeProduits, boxId == 0, BoxFragment.this);
+                produitToDisplay.setAdapter(adapter);
+
+                // Set cut corner background for API 23+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    view.findViewById(R.id.box_grid)
+                            .setBackgroundResource(R.drawable.product_grid_background_shape);
+                }
+
+
+            }
+
+            @Override
+            protected void onCancelled() {
+                super.onCancelled();
+            }
+
+        }
+    }
+
+    private class LoadProduit extends AsyncTask<Void, Void, LinkedHashMap<Produit, Integer>>
+    {
+        @Override
+        protected LinkedHashMap<Produit, Integer> doInBackground(Void... params)
+        {
+            ProduitDAO produitDAO = new ProduitDAO();
+            listeProduits = new LinkedHashMap<>();
+            try {
+                listeProduits = produitDAO.getAllProduitBoxPersonnalise();
+            } catch (Exception e) {
+                Toast.makeText(getContext(), "Erreur de chargement de toute les boxs", Toast.LENGTH_SHORT).show();
+            }
+            return listeProduits;
+        }
+
+        @Override
+        protected void onPostExecute(LinkedHashMap<Produit, Integer> produit)
+        {
+
+            // Set up the RecyclerView
+            RecyclerView.LayoutManager manager = new LinearLayoutManager(getContext());
+            produitToDisplay.setLayoutManager(manager);
+
+            ProductViewAdapter adapter = new ProductViewAdapter(listeProduits, true, BoxFragment.this);
+            produitToDisplay.setAdapter(adapter);
+            int largePadding = getResources().getDimensionPixelSize(R.dimen.staggered_boxs_grid_spacing_large);
+            int smallPadding = getResources().getDimensionPixelSize(R.dimen.staggered_boxs_grid_spacing_small);
+            produitToDisplay.addItemDecoration(new BoxsGridItemDecoration(largePadding, smallPadding));
+            // Set cut corner background for API 23+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                view.findViewById(R.id.box_grid)
+                        .setBackgroundResource(R.drawable.product_grid_background_shape);
+            }
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+        }
+
+    }
+
+
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
-        menuInflater.inflate(R.menu.toolbar_menu, menu);
+        if(menu.size()==0) {
+            menuInflater.inflate(R.menu.toolbar_menu, menu);
+            MenuItem icon = menu.getItem(0);
+            icon.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_NO) {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                        return true;
+                    } else if (AppCompatDelegate.getDefaultNightMode() != AppCompatDelegate.MODE_NIGHT_NO) {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                        return true;
+                    }
+                    return false;
+                }
+            });
+        }
         super.onCreateOptionsMenu(menu, menuInflater);
     }
 
@@ -207,184 +416,18 @@ public class BoxFragment extends Fragment {
         if(access_token!=null)
             view.findViewById(R.id.menu_compte).setVisibility(View.INVISIBLE);
         else
-        view.findViewById(R.id.menu_compte).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((NavigationHost) getActivity()).navigateTo(new LoginFragment(), true);
-            }
-        });
+            view.findViewById(R.id.menu_compte).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((NavigationHost) getActivity()).navigateTo(new LoginFragment(), true);
+                }
+            });
 
         toolbar.setNavigationOnClickListener(new NavigationIconClickListener(
-        getContext(),
+                getContext(),
                 view.findViewById(R.id.box_grid),
                 new AccelerateDecelerateInterpolator(),
                 getContext().getResources().getDrawable(R.drawable.branded_menu), // Menu open icon
                 getContext().getResources().getDrawable(R.drawable.close_menu))); // Menu close icon
-    }
-
-
-    private class LoadBox extends AsyncTask<String, Void, Box>
-    {
-        private List<Produit> produitList;
-        @Override
-        protected Box doInBackground(String... params) {
-            BoxDAO boxDAO = new BoxDAO();
-            Box box = new Box();
-            try {
-                box = boxDAO.getBox(Integer.valueOf(boxId));
-            } catch (Exception e) {
-                Toast.makeText(getContext(), "Erreur de chargement de la box", Toast.LENGTH_LONG).show();
-            }
-            return box;
-        }
-
-        @Override
-        protected void onPostExecute(Box box)
-        {
-            LoadLigneProduit loadLigneProduit = new LoadLigneProduit();
-            loadLigneProduit.execute(box.getId());
-            if(produitList!=null)
-                box.setProduits(produitList);
-            if(UtilDAO.isInternetAvailable(getContext())) {
-                String url = box.getPhoto();
-                Glide
-                        .with(BoxFragment.this)
-                        .load(Constantes.URL_IMAGE_API + url)
-                        .override(300, 200)
-                        .error(R.drawable.ic_launcher_background)
-                        .into(box_image);
-            }
-
-            view.findViewById(R.id.menu_box_personnalise);
-            box_name.setText(box.getNom());
-            String prix = UtilDAO.format.format(box.getPrixUnitaireHtva());
-            if(box.getPromotion()!=null) {
-                prix += " - " + Math.round(box.getPromotion() * 10000) / 100 + "% = ";
-                prix += UtilDAO.format.format(Math.round((box.getPrixUnitaireHtva() * box.getTva() * (1 - box.getPromotion()) * 100) / 100));
-            }
-            box_price.setText(prix);
-            box_description.setText(box.getDescription());
-        }
-
-        @Override
-        protected void onCancelled() {
-            super.onCancelled();
-        }
-
-        private class LoadLigneProduit extends AsyncTask<Integer, Void, List<LigneProduit>>
-        {
-
-            @Override
-            protected List<LigneProduit> doInBackground(Integer... params)
-            {
-                LigneProduitDAO ligneProduitDAO = new LigneProduitDAO();
-                List<LigneProduit> ligneProduits = new ArrayList<>();
-                try {
-                    Integer box = params[0];
-                    ligneProduits = ligneProduitDAO.getLigneProduitByBoxId(box);
-                } catch (Exception e) {
-                    Toast.makeText(getContext(), "Erreur de chargement de toute les boxs", Toast.LENGTH_SHORT).show();
-                }
-                return ligneProduits;
-            }
-
-            @Override
-            protected void onPostExecute(List<LigneProduit> ligneProduits)
-            {
-                produitList = new ArrayList<>();
-                if(ligneProduits!=null) {
-                    for(LigneProduit ligneProduit : ligneProduits) {
-                        LoadProduit loadProduit = new LoadProduit();
-                        loadProduit.execute(ligneProduit);
-                    }
-                }
-            }
-
-            @Override
-            protected void onCancelled() {
-                super.onCancelled();
-            }
-
-
-            private class LoadProduit extends AsyncTask<LigneProduit, Void, Produit>
-            {
-                @Override
-                protected Produit doInBackground(LigneProduit... params)
-                {
-                    ProduitDAO produitDAO = new ProduitDAO();
-                    Produit produit = null;
-                    try {
-                        LigneProduit ligneProduit = params[0];
-                        Integer idProduit = ligneProduit.getProduit();
-                        if(idProduit!=null)
-                            produit = produitDAO.getProduit(idProduit);
-                    } catch (Exception e) {
-                        Toast.makeText(getContext(), "Erreur de chargement de toute les boxs", Toast.LENGTH_SHORT).show();
-                    }
-                    return produit;
-                }
-
-                @Override
-                protected void onPostExecute(Produit produit)
-                {
-                    if(produit!=null)
-                        produitList.add(produit);
-                }
-
-                @Override
-                protected void onCancelled() {
-                    super.onCancelled();
-                }
-
-            }
-        }
-    }
-
-    private void setJoke(View view){
-        JokeEntry jokeEntry = JokeEntry.getRandom();
-        box_description.setText(jokeEntry.getBase()+"\n\n\n" + jokeEntry.getReponse());
-        box_price.setText(getString(R.string.box_fragment_box_prix_gratuit));
-        box_name.setText(getString(R.string.box_fragment_box_error_chargement_api_name));
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if(!UtilDAO.isInternetAvailable(getContext()))
-            setJoke(getView());
-        /*if(boxId!=null) {
-            if(selectedBox!=null) {
-                if(UtilDAO.isInternetAvailable(getContext())) {
-                    loadBoxTask = new LoadBox();
-                    loadBoxTask.execute();
-                } else
-                    Toast.makeText(getContext(),getString(R.string.error_no_internet),Toast.LENGTH_SHORT).show();
-            }
-        }
-
-         */
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
-
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if(loadBoxTask != null)
-            loadBoxTask.cancel(true);
     }
 }
