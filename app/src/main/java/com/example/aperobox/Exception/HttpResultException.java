@@ -20,7 +20,7 @@ public class HttpResultException extends Exception {
         }
         if(statusCode >= HttpURLConnection.HTTP_BAD_REQUEST){
             if(statusCode == HttpURLConnection.HTTP_BAD_REQUEST || statusCode == HttpURLConnection.HTTP_UNAUTHORIZED){
-                return "Mauvais nom d'utilisateur et/ou mauvais mot de passe";//Resources.getSystem().getString(R.string.HttpConnection_Unauthorized);
+                return "Nom d\'utilisateur ou mot de passe incorrect";//Resources.getSystem().getString(R.string.HttpConnection_Unauthorized);
             }
             //return Resources.getSystem().getString(R.string.HttpUrlConnection_ClientError);
             return "erreur";
