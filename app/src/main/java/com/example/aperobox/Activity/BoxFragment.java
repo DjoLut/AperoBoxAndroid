@@ -45,6 +45,7 @@ import com.example.aperobox.Productlayout.ProductPersonnaliseViewAdapter;
 import com.example.aperobox.Productlayout.ProductViewAdapter;
 import com.example.aperobox.R;
 import com.example.aperobox.Utility.Constantes;
+import com.google.android.material.button.MaterialButton;
 
 import java.io.Console;
 import java.util.ArrayList;
@@ -453,7 +454,7 @@ public class BoxFragment extends Fragment {
         view.findViewById(R.id.menu_a_propos).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((NavigationHost) getActivity()).navigateTo(new AProposFragment(utilisateur), true);
+                ((NavigationHost) getActivity()).navigateTo(new AProposFragment(), true);
             }
         });
 
@@ -469,17 +470,37 @@ public class BoxFragment extends Fragment {
             }
         });
 
+        // Compte onclick listener
+        MaterialButton compte = view.findViewById(R.id.menu_compte);
         preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         String access_token = preferences.getString("access_token", null);
-        if(access_token!=null)
-            view.findViewById(R.id.menu_compte).setVisibility(View.INVISIBLE);
-        else
+        if(access_token!=null) {
+            compte.setVisibility(View.VISIBLE);
+            compte.setText(R.string.deconnection_title);
+            compte.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //  Add logout;
+                }
+            });
+            panier.setVisibility(View.VISIBLE);
+            panier.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((NavigationHost)getActivity()).navigateTo(new PanierFragment(), true);
+                }
+            });
+        }
+        else {
+            compte.setText(R.string.connexion_title);
+            panier.setVisibility(View.INVISIBLE);
             view.findViewById(R.id.menu_compte).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     ((NavigationHost) getActivity()).navigateTo(new LoginFragment(), true);
                 }
             });
+        }
 
         toolbar.setNavigationOnClickListener(new NavigationIconClickListener(
                 getContext(),

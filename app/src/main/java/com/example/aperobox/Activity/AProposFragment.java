@@ -23,16 +23,13 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 
 import com.example.aperobox.Model.Utilisateur;
 import com.example.aperobox.R;
+import com.google.android.material.button.MaterialButton;
 
 public class AProposFragment extends Fragment {
 
     private SharedPreferences preferences;
-    private Utilisateur utilisateur;
     private ViewGroup container;
 
-    public AProposFragment(@Nullable Utilisateur utilisateur) {
-        this.utilisateur = utilisateur;
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -106,17 +103,37 @@ public class AProposFragment extends Fragment {
             }
         });
 
+        // Compte onclick listener
+        MaterialButton compte = view.findViewById(R.id.menu_compte);
         preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         String access_token = preferences.getString("access_token", null);
-        if(access_token!=null)
-            view.findViewById(R.id.menu_compte).setVisibility(View.INVISIBLE);
-        else
-        view.findViewById(R.id.menu_compte).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((NavigationHost) getActivity()).navigateTo(new LoginFragment(), true);
-            }
-        });
+        if(access_token!=null) {
+            compte.setVisibility(View.VISIBLE);
+            compte.setText(R.string.deconnection_title);
+            compte.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //  Add logout;
+                }
+            });
+            panier.setVisibility(View.VISIBLE);
+            panier.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((NavigationHost)getActivity()).navigateTo(new PanierFragment(), true);
+                }
+            });
+        }
+        else {
+            compte.setText(R.string.connexion_title);
+            panier.setVisibility(View.INVISIBLE);
+            view.findViewById(R.id.menu_compte).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((NavigationHost) getActivity()).navigateTo(new LoginFragment(), true);
+                }
+            });
+        }
 
         toolbar.setNavigationOnClickListener(new NavigationIconClickListener(
                 getContext(),

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -6,252 +7,305 @@
     android:layout_height="match_parent"
     android:background="@color/loginPageBackgroundColor"
     tools:context=".Activity.InscriptionFragment">
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:background="@color/loginPageBackgroundColor"
+    tools:context=".Activity.InscriptionFragment">
+
 
     <LinearLayout
+        style="@style/Widget.AperoBox.Backdrop"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clipChildren="false"
-        android:clipToPadding="false"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:padding="24dp"
-        android:paddingTop="16dp">
+        android:paddingTop="88dp">
 
-        <ImageView
-            android:layout_width="194dp"
-            android:layout_height="104dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="48dp"
-            android:layout_marginBottom="16dp"
-            android:tint="?android:attr/textColorPrimary"
-            app:srcCompat="@drawable/aperoboxlogo" />
+        <include layout="@layout/backdrop" />
+    </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="32dp"
-            android:text="@string/inscription_title"
-            android:textAppearance="@style/TextAppearance.AperoBox.Title" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/inscription_username_text_input"
-            style="@style/Widget.AperoBox.TextInputLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/nom_utilisateur">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inscription_username_edit_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:maxLines="1" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/inscription_password_text_input"
-        style="@style/Widget.AperoBox.TextInputLayout"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/mot_de_passe"
-        app:errorEnabled="true">
+        app:elevation="0dp">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/inscription_password_edit_text"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/inscription_app_bar"
+            style="@style/Widget.AperoBox.Toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:paddingStart="12dp"
+            android:paddingLeft="12dp"
+            android:paddingEnd="12dp"
+            android:paddingRight="12dp"
+            app:contentInsetStart="0dp"
+            app:navigationIcon="@drawable/branded_menu"
+            app:title="@string/aperobox" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/inscription_grid"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="56dp"
+        android:paddingTop="10dp"
+        android:background="@color/productGridBackgroundColor"
+        android:elevation="8dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword" />
-        </com.google.android.material.textfield.TextInputLayout>
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            android:padding="24dp"
+            android:paddingTop="16dp">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/inscription_conf_password_text_input"
-            style="@style/Widget.AperoBox.TextInputLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/confirmation_mot_de_passe"
-            app:errorEnabled="true">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inscription_conf_password_edit_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/inscription_nom_text_input"
-            style="@style/Widget.AperoBox.TextInputLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/nom">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inscription_nom_edit_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:maxLines="1" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/inscription_prenom_text_input"
-            style="@style/Widget.AperoBox.TextInputLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/prenom">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inscription_prenom_edit_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:maxLines="1" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/inscription_mail_text_input"
-            style="@style/Widget.AperoBox.TextInputLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/email">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inscription_mail_edit_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
-                android:maxLines="1" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/inscription_date_naissance_input"
-            style="@style/Widget.AperoBox.TextInputLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="194dp"
+                android:layout_height="104dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="48dp"
+                android:layout_marginBottom="16dp"
+                android:tint="?android:attr/textColorPrimary"
+                app:srcCompat="@drawable/aperoboxlogo" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="8dp"
-                android:text="@string/date_naissance"
-                android:textAllCaps="true"
-                android:textSize="16sp" />
+                android:layout_marginBottom="32dp"
+                android:text="@string/inscription_title"
+                android:textAppearance="@style/TextAppearance.AperoBox.Title" />
 
-            <DatePicker
-                android:id="@+id/inscription_date_naissance_datePicker1"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inscription_username_text_input"
+                style="@style/Widget.AperoBox.TextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:datePickerMode="spinner"
-                android:calendarViewShown="false"/>
-        </com.google.android.material.textfield.TextInputLayout>
+                android:hint="@string/nom_utilisateur">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/inscription_gsm_text_input"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inscription_username_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/inscription_password_text_input"
             style="@style/Widget.AperoBox.TextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/gsm">
+            android:hint="@string/mot_de_passe"
+            app:errorEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inscription_gsm_edit_text"
+                android:id="@+id/inscription_password_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="phone|number"
-                android:digits="0123456789"
-                android:maxLines="1" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:inputType="textPassword" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/inscription_telephone_text_input"
-            style="@style/Widget.AperoBox.TextInputLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/telephone">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inscription_telephone_edit_text"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inscription_conf_password_text_input"
+                style="@style/Widget.AperoBox.TextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="phone|number"
-                android:digits="0123456789"
-                android:maxLines="1" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:hint="@string/confirmation_mot_de_passe"
+                app:errorEnabled="true">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/inscription_rue_text_input"
-            style="@style/Widget.AperoBox.TextInputLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/rue">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inscription_conf_password_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inscription_rue_edit_text"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inscription_nom_text_input"
+                style="@style/Widget.AperoBox.TextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
-                android:maxLines="1" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:hint="@string/nom">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/inscription_numero_text_input"
-            style="@style/Widget.AperoBox.TextInputLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/numero">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inscription_nom_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inscription_numero_edit_text"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inscription_prenom_text_input"
+                style="@style/Widget.AperoBox.TextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="phone|number"
-                android:digits="0123456789"
-                android:maxLines="1" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:hint="@string/prenom">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/inscription_localite_text_input"
-            style="@style/Widget.AperoBox.TextInputLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/localite">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inscription_prenom_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inscription_localite_edit_text"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inscription_mail_text_input"
+                style="@style/Widget.AperoBox.TextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
-                android:maxLines="1" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:hint="@string/email">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/inscription_code_postal_text_input"
-            style="@style/Widget.AperoBox.TextInputLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/code_postal">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inscription_mail_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inscription_code_postal_edit_text"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inscription_date_naissance_input"
+                style="@style/Widget.AperoBox.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/date_naissance"
+                    android:textAllCaps="true"
+                    android:textSize="16sp" />
+
+                <DatePicker
+                    android:id="@+id/inscription_date_naissance_datePicker1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:datePickerMode="spinner"
+                    android:calendarViewShown="false"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inscription_gsm_text_input"
+                style="@style/Widget.AperoBox.TextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="phone|number"
-                android:digits="0123456789"
-                android:maxLines="1" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:hint="@string/gsm">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inscription_gsm_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone|number"
+                    android:digits="0123456789"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/inscription_button_inscription"
-                style="@style/Widget.AperoBox.Button"
-                android:layout_width="wrap_content"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inscription_telephone_text_input"
+                style="@style/Widget.AperoBox.TextInputLayout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:text="@string/inscription" />
-        </RelativeLayout>
-    </LinearLayout>
-</ScrollView>
+                android:hint="@string/telephone">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inscription_telephone_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone|number"
+                    android:digits="0123456789"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inscription_rue_text_input"
+                style="@style/Widget.AperoBox.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/rue">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inscription_rue_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inscription_numero_text_input"
+                style="@style/Widget.AperoBox.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/numero">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inscription_numero_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone|number"
+                    android:digits="0123456789"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inscription_localite_text_input"
+                style="@style/Widget.AperoBox.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/localite">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inscription_localite_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inscription_code_postal_text_input"
+                style="@style/Widget.AperoBox.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/code_postal">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inscription_code_postal_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone|number"
+                    android:digits="0123456789"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/inscription_button_inscription"
+                    style="@style/Widget.AperoBox.Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:text="@string/inscription" />
+            </RelativeLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</FrameLayout>

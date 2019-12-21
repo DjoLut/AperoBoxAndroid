@@ -24,6 +24,7 @@
 
     <!-- Title/button/gen -->
     <string name="connexion_title">Connexion</string>
+    <string name="deconnection_title">Déconnexion</string>
     <string name="inscription_title">Inscription</string>
     <string name="compte_title">Mon compte</string>
     <string name="inscription">S\'inscrire</string>

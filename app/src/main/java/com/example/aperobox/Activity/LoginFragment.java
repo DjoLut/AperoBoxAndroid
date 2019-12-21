@@ -1,14 +1,20 @@
 package com.example.aperobox.Activity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Toast;
 
 import com.bumptech.glide.util.Util;
@@ -25,6 +31,9 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 /**
@@ -103,7 +112,109 @@ public class LoginFragment extends Fragment {
             }
         });
 
+        //Set up the toolbar
+        setUpToolbar(view);
+
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
+        menuInflater.inflate(R.menu.toolbar_menu, menu);
+        MenuItem icon = menu.getItem(0);
+        icon.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_NO) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    return true;
+                } else if (AppCompatDelegate.getDefaultNightMode() != AppCompatDelegate.MODE_NIGHT_NO) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    return true;
+                }
+                return false;
+            }
+        });
+        super.onCreateOptionsMenu(menu, menuInflater);
+    }
+
+    private void setUpToolbar(View view) {
+        Toolbar toolbar = view.findViewById(R.id.login_app_bar);
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        if (activity != null) {
+            activity.setSupportActionBar(toolbar);
+        }
+
+        View acceuil = view.findViewById(R.id.menu_acceuil);
+        acceuil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((NavigationHost) getActivity()).navigateTo(new BoxsGridFragment(), true);
+            }
+        });
+
+
+        View boxPersonnalise = view.findViewById(R.id.menu_box_personnalise);
+        boxPersonnalise.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((NavigationHost)getActivity()).navigateTo(new BoxFragment(),true);
+            }
+        });
+
+        view.findViewById(R.id.menu_a_propos).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((NavigationHost)getActivity()).navigateTo(new AProposFragment(),true);
+            }
+        });
+
+        view.findViewById(R.id.menu_nous_contactez).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("plain/text");
+                intent.setData(Uri.parse("mailto:"));
+                intent.putExtra(Intent.EXTRA_EMAIL, new String[] {getString(R.string.contact_mail)});
+                intent.putExtra(Intent.EXTRA_SUBJECT, R.string.contact_mail_sujet);
+                startActivity(Intent.createChooser(intent, getString(R.string.contact_mail_chooser)));
+            }
+        });
+
+        View panier = view.findViewById(R.id.menu_panier);
+        MaterialButton compte = view.findViewById(R.id.menu_compte);
+        compte.setElevation((float)1);
+        preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        String access_token = preferences.getString("access_token", null);
+        if(access_token!=null) {
+            compte.setVisibility(View.VISIBLE);
+            compte.setText(R.string.deconnection_title);
+            compte.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //  Add logout;
+                }
+            });
+            panier.setVisibility(View.VISIBLE);
+            panier.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((NavigationHost)getActivity()).navigateTo(new PanierFragment(), true);
+                }
+            });
+        }
+        else {
+            compte.setText(R.string.connexion_title);
+            panier.setVisibility(View.INVISIBLE);
+            view.findViewById(R.id.menu_compte).setOnClickListener(null);
+        }
+
+        toolbar.setNavigationOnClickListener(new NavigationIconClickListener(
+                getContext(),
+                view.findViewById(R.id.login_grid),
+                new AccelerateDecelerateInterpolator(),
+                getContext().getResources().getDrawable(R.drawable.branded_menu), // Menu open icon
+                getContext().getResources().getDrawable(R.drawable.close_menu))); // Menu close icon
     }
 
 
