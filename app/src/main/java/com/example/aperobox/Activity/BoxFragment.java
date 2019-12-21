@@ -24,20 +24,24 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.HttpException;
 import com.example.aperobox.Dao.BoxDAO;
 import com.example.aperobox.Dao.LigneProduitDAO;
 import com.example.aperobox.Dao.ProduitDAO;
 import com.example.aperobox.Dao.UtilDAO;
 import com.example.aperobox.Dao.network.JokeEntry;
+import com.example.aperobox.Exception.HttpResultException;
 import com.example.aperobox.Model.Box;
 import com.example.aperobox.Model.LigneProduit;
 import com.example.aperobox.Model.Produit;
 import com.example.aperobox.Model.Utilisateur;
+import com.example.aperobox.Productlayout.ProductPersonnaliseViewAdapter;
 import com.example.aperobox.Productlayout.ProductViewAdapter;
 import com.example.aperobox.R;
 import com.example.aperobox.Utility.Constantes;
@@ -59,6 +63,7 @@ public class BoxFragment extends Fragment {
     private TextView box_price;
     private TextView box_description;
     private ImageView box_image;
+    private Button button_ajout_panier;
 
     private Utilisateur utilisateur;
     private LoadBox loadBoxTask;
@@ -160,6 +165,16 @@ public class BoxFragment extends Fragment {
         this.box_name = view.findViewById(R.id.box_fragment_box_name);
         this.box_price = view.findViewById(R.id.box_fragment_box_price);
         this.box_description = view.findViewById(R.id.box_fragment_box_description);
+        this.button_ajout_panier = view.findViewById(R.id.box_fragment_box_button_ajout_panier);
+
+        this.button_ajout_panier.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //Ajout panier à gérer.
+
+            }
+        });
 
         //Box personnalisé
         if(boxId==null) {
@@ -204,7 +219,6 @@ public class BoxFragment extends Fragment {
 
     private class LoadBox extends AsyncTask<String, Void, Box>
     {
-        private List<Produit> produitList;
         @Override
         protected Box doInBackground(String... params) {
             BoxDAO boxDAO = new BoxDAO();
@@ -248,6 +262,7 @@ public class BoxFragment extends Fragment {
         protected void onCancelled() {
             super.onCancelled();
         }
+
         private class LoadProd extends AsyncTask<Void, Void, LinkedHashMap<Produit,Integer>>
         {
             @Override
@@ -256,6 +271,8 @@ public class BoxFragment extends Fragment {
                 ProduitDAO produitDAO = new ProduitDAO();
                 try {
                     listeProduits = produitDAO.getProduitByBoxId(boxId);
+                } catch (HttpResultException h){
+                    Toast.makeText(getContext(), h.getMessage(), Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
                     Toast.makeText(getContext(), "Erreur de chargement de toute les boxs", Toast.LENGTH_SHORT).show();
                 }
@@ -266,11 +283,11 @@ public class BoxFragment extends Fragment {
             protected void onPostExecute(LinkedHashMap<Produit, Integer> produit)
             {
                 // Set up the RecyclerView
-                RecyclerView.LayoutManager manager = new LinearLayoutManager(getContext());
-                //GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1, GridLayoutManager.VERTICAL, false);
-                produitToDisplay.setLayoutManager(manager);
+                //RecyclerView.LayoutManager manager = new LinearLayoutManager(getContext());
+                GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1, GridLayoutManager.VERTICAL, false);
+                produitToDisplay.setLayoutManager(gridLayoutManager);
 
-                ProductViewAdapter adapter = new ProductViewAdapter(listeProduits, boxId == 0, BoxFragment.this);
+                ProductViewAdapter adapter = new ProductViewAdapter(listeProduits, BoxFragment.this);
                 produitToDisplay.setAdapter(adapter);
 
                 // Set cut corner background for API 23+
@@ -313,7 +330,7 @@ public class BoxFragment extends Fragment {
             RecyclerView.LayoutManager manager = new LinearLayoutManager(getContext());
             produitToDisplay.setLayoutManager(manager);
 
-            ProductViewAdapter adapter = new ProductViewAdapter(listeProduits, true, BoxFragment.this);
+            ProductPersonnaliseViewAdapter adapter = new ProductPersonnaliseViewAdapter(listeProduits);
             produitToDisplay.setAdapter(adapter);
             int largePadding = getResources().getDimensionPixelSize(R.dimen.staggered_boxs_grid_spacing_large);
             int smallPadding = getResources().getDimensionPixelSize(R.dimen.staggered_boxs_grid_spacing_small);

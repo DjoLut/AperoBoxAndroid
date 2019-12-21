@@ -16,20 +16,12 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 
 public class ProductViewAdapter extends RecyclerView.Adapter<ProductViewHolder> {
-    private Fragment fragment;
-    private Boolean quantiteModifiable;
-    private LinkedHashMap<Produit, Integer> listeProduits;
     private Object[] produits;
     private Object[] quantites;
-    private Iterator<Produit> iterable;
 
-    public ProductViewAdapter(LinkedHashMap<Produit, Integer> listeProduits, Boolean quantiteModifiable, Fragment fragment) {
-        this.fragment = fragment;
-        this.listeProduits = listeProduits;
+    public ProductViewAdapter(LinkedHashMap<Produit, Integer> listeProduits, Fragment fragment) {
         this.produits = listeProduits.keySet().toArray();
         this.quantites = listeProduits.values().toArray();
-        iterable = listeProduits.keySet().iterator();
-        this.quantiteModifiable = quantiteModifiable;
     }
 
     @Override
@@ -47,11 +39,7 @@ public class ProductViewAdapter extends RecyclerView.Adapter<ProductViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, final int position) {
         if(produits!=null && position < produits.length){
-            /*holder.quantiteLayout.setHint(((Produit)produits[position]).getNom());
-            holder.quantiteTextInput.setText(((Integer)quantites[position]).toString());
-*/
-            if(!quantiteModifiable)
-                holder.quantiteTextInput.setEnabled(false);
+            holder.quantiteTextInput.setEnabled(false);
 
             ProductViewHolder produitHolder = (ProductViewHolder) holder;
             produitHolder.bind((Produit)produits[position], (Integer)quantites[position]);

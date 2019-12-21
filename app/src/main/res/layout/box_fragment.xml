@@ -49,6 +49,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="56dp"
+        android:paddingTop="10dp"
         android:background="@color/productGridBackgroundColor"
         android:elevation="8dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -73,36 +74,97 @@
                 android:scaleType="centerCrop"/>
 
 
-                    <TextView
-                        android:id="@+id/box_fragment_box_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginBottom="32dp"
-                        android:text="@string/box_fragment_box_personnalise_name"
-                        android:textAppearance="@style/TextAppearance.aperoBox.Box.Title" />
-                    <TextView
-                        android:id="@+id/box_fragment_box_price"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginBottom="32dp"
-                        android:text=""
-                        android:textAppearance="@style/TextAppearance.aperoBox.Box.Price" />
+            <TextView
+                android:id="@+id/box_fragment_box_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="32dp"
+                android:text="@string/box_fragment_box_personnalise_name"
+                android:textAppearance="@style/TextAppearance.aperoBox.Box.Title" />
+            <TextView
+                android:id="@+id/box_fragment_box_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="32dp"
+                android:text=""
+                android:textAppearance="@style/TextAppearance.aperoBox.Box.Price" />
 
-                    <TextView
-                        android:id="@+id/box_fragment_box_description"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginBottom="32dp"
-                        android:textAppearance="@style/TextAppearance.aperoBox.Box.Description" />
+            <TextView
+                android:id="@+id/box_fragment_box_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="32dp"
+                android:textAppearance="@style/TextAppearance.aperoBox.Box.Description" />
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/box_fragment_produit_recycler_view"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:minHeight="400dp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/box_fragment_produit_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="?android:attr/textColorPrimary"
+                android:outlineSpotShadowColor="@color/textColorPrimary"/>
+
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/box_fragment_box_quantite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textSize="25dp"
+                    android:text="@string/box_fragment_produit_quantite"
+                    android:layout_weight="1"
+                    android:textAppearance="@style/TextAppearance.aperoBox.Box.Description" />
+
+                <Button
+                    android:id="@+id/btn_less"
+                    android:layout_width="0sp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    style="@style/Widget.AperoBox.NumberSpinner.Button"
+                    android:text="-" />
+
+                <EditText
+                    android:id="@+id/et_number"
+                    android:layout_width="0sp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textAlignment="center"
+                    android:inputType="number"
+                    android:text="0" />
+
+                <Button
+                    android:id="@+id/btn_more"
+                    android:layout_width="0sp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    style="@style/Widget.AperoBox.NumberSpinner.Button"
+                    android:text="+" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/box_fragment_box_button_ajout_panier"
+                android:layout_width="match_parent"
+                android:paddingTop="16dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:minHeight="45dp"
+                android:text="@string/box_fragment_box_button_ajout_panier"
+                style="@style/Widget.AperoBox.Button"
+                />
+
 
         </LinearLayout>
 

@@ -47,6 +47,8 @@
     <string name="box_fragment_box_prix_gratuit">Gratuit!</string>
     <string name="box_fragment_produit_title">Produits</string>
     <string name="box_fragment_produit_nom">produits</string>
+    <string name="box_fragment_produit_quantite">Quantité :</string>
+    <string name="box_fragment_box_button_ajout_panier">Ajouter au panier</string>
 
 
 

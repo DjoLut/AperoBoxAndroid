@@ -46,6 +46,21 @@
         </item>
     </style>
 
+    <style name="Widget.AperoBox.NumberSpinner.Button" parent="Widget.MaterialComponents.Button">
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="backgroundTint">?attr/colorPrimaryDark</item>
+        <item name="android:stateListAnimator" tools:ignore="NewApi">
+            @animator/connexion_button_state_list_anim
+        </item>
+        <item name="android:layout_weight">0</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">0sp</item>
+    </style>
+
+    android:layout_width="0sp"
+    android:layout_height="match_parent"
+    android:layout_weight="1"
+
     <style name="Widget.AperoBox.Button.TextButton" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:textColor">?android:attr/textColorPrimary</item>
     </style>
