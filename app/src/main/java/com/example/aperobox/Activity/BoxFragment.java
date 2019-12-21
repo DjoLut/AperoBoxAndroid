@@ -70,7 +70,6 @@ public class BoxFragment extends Fragment {
     private Button button_plus;
     private Button button_moins;
 
-    private Utilisateur utilisateur;
     private LoadBox loadBoxTask;
 
     private Integer boxId;
@@ -87,14 +86,6 @@ public class BoxFragment extends Fragment {
     public BoxFragment(){
     }
 
-    public BoxFragment(Utilisateur utilisateur){
-        this.utilisateur = utilisateur;
-    }
-
-    public BoxFragment(int boxId, Utilisateur utilisateur){
-        this.boxId = boxId;
-        this.utilisateur = utilisateur;
-    }
 
 
 
