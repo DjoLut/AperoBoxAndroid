@@ -63,12 +63,16 @@ public class BoxFragment extends Fragment {
     private TextView box_price;
     private TextView box_description;
     private ImageView box_image;
+    private TextView box_quantite;
     private Button button_ajout_panier;
+    private Button button_plus;
+    private Button button_moins;
 
     private Utilisateur utilisateur;
     private LoadBox loadBoxTask;
 
     private Integer boxId;
+    private Integer quantite;
     private LinkedHashMap<Produit, Integer> listeProduits;
     private RecyclerView produitToDisplay;
 
@@ -166,6 +170,30 @@ public class BoxFragment extends Fragment {
         this.box_price = view.findViewById(R.id.box_fragment_box_price);
         this.box_description = view.findViewById(R.id.box_fragment_box_description);
         this.button_ajout_panier = view.findViewById(R.id.box_fragment_box_button_ajout_panier);
+        this.button_moins = view.findViewById(R.id.box_fragment_box_quantite_moins);
+        this.button_plus = view.findViewById(R.id.box_fragment_box_quantite_plus);
+        this.box_quantite = view.findViewById(R.id.box_fragment_box_quantite);
+        this.quantite = 0;
+
+
+        this.button_moins.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(quantite >0) {
+                    quantite--;
+                    box_quantite.setText(quantite.toString());
+                }
+            }
+        });
+
+        this.button_plus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                quantite++;
+                box_quantite.setText(quantite.toString());
+            }
+        });
+
 
         this.button_ajout_panier.setOnClickListener(new View.OnClickListener() {
             @Override
