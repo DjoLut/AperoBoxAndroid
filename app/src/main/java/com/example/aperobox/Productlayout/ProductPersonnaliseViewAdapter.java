@@ -26,6 +26,7 @@ public class ProductPersonnaliseViewAdapter extends RecyclerView.Adapter<Product
     }
 
     public static LinkedHashMap<Produit, Integer> getListeProduits(){
+
         return listeProduits;
     }
 
@@ -47,10 +48,6 @@ public class ProductPersonnaliseViewAdapter extends RecyclerView.Adapter<Product
             ProductPersonnaliseViewHolder produitHolder = (ProductPersonnaliseViewHolder) holder;
             produitHolder.bind((Produit)produits[position], position);
         }
-    }
-
-    private void onClickPlus(){
-
     }
 
     @Override

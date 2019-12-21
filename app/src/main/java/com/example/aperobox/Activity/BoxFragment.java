@@ -53,6 +53,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 import java.util.zip.Inflater;
 
 public class BoxFragment extends Fragment {
@@ -191,16 +192,6 @@ public class BoxFragment extends Fragment {
             public void onClick(View v) {
                 quantite++;
                 box_quantite.setText(quantite.toString());
-            }
-        });
-
-
-        this.button_ajout_panier.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                //Ajout panier à gérer.
-
             }
         });
 
@@ -358,7 +349,8 @@ public class BoxFragment extends Fragment {
             RecyclerView.LayoutManager manager = new LinearLayoutManager(getContext());
             produitToDisplay.setLayoutManager(manager);
 
-            ProductPersonnaliseViewAdapter adapter = new ProductPersonnaliseViewAdapter(listeProduits);
+            final ProductPersonnaliseViewAdapter adapter = new ProductPersonnaliseViewAdapter(listeProduits);
+            ProductPersonnaliseViewAdapter.listeProduits = produit;
             produitToDisplay.setAdapter(adapter);
             int largePadding = getResources().getDimensionPixelSize(R.dimen.staggered_boxs_grid_spacing_large);
             int smallPadding = getResources().getDimensionPixelSize(R.dimen.staggered_boxs_grid_spacing_small);
@@ -368,6 +360,27 @@ public class BoxFragment extends Fragment {
                 view.findViewById(R.id.box_grid)
                         .setBackgroundResource(R.drawable.product_grid_background_shape);
             }
+
+            button_ajout_panier.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listeProduits = ProductPersonnaliseViewAdapter.getListeProduits();
+                    Boolean isempty = true;
+                    for(Integer value : listeProduits.values()) {
+                        if (value != 0)
+                            isempty = false;
+                    }
+
+                    if(!isempty) {
+                        //Liste bien mise à jour
+                    } else{
+                        Toast.makeText(getContext(),R.string.box_fragment_box_personnalise_empty_quantite, Toast.LENGTH_LONG).show();
+                    }
+
+
+
+                }
+            });
         }
 
         @Override

@@ -49,6 +49,7 @@
     <string name="box_fragment_produit_nom">produits</string>
     <string name="box_fragment_produit_quantite">Quantité :</string>
     <string name="box_fragment_box_button_ajout_panier">Ajouter au panier</string>
+    <string name="box_fragment_box_personnalise_empty_quantite">Vous devez ajouter au moins un produit à votre box personnalisée pour pouvoir la commander</string>
 
 
 
