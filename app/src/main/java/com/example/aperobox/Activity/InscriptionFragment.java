@@ -468,7 +468,7 @@ public class InscriptionFragment extends Fragment {
             compte.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //  Add logout;
+                    //No logout;
                 }
             });
             panier.setVisibility(View.VISIBLE);
