@@ -2,6 +2,7 @@ package com.example.aperobox.Activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -71,10 +72,15 @@ public class BoxFragment extends Fragment {
     private Button button_moins;
 
     private LoadBox loadBoxTask;
+    private Box selectedBox;
+    private Double sommeHTVA;
+    private Double promotion;
 
+    private LayoutInflater inflater;
+    private ViewGroup container;
     private Integer boxId;
     private Integer quantite;
-    private LinkedHashMap<Produit, Integer> listeProduits;
+    public static LinkedHashMap<Produit, Integer> listeProduits;
     private RecyclerView produitToDisplay;
 
     private View view;
@@ -87,7 +93,24 @@ public class BoxFragment extends Fragment {
     }
 
 
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        container.removeView(view);
+        // Checks the orientation of the screen
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            this.view = inflater.inflate(R.layout.box_fragment_landscape, container, false);
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+            this.view = inflater.inflate(R.layout.box_fragment, container, false);
+        }
 
+        /*if(boxId==null)
+            setViewPersonnalise();
+        else
+            setView();*/
+
+        container.addView(view);
+    }
 
 
     private void setJoke(View view){
@@ -153,6 +176,8 @@ public class BoxFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.box_fragment, container, false);
         this.view = view;
+        this.inflater = inflater;
+        this.container = container;
         produitToDisplay = view.findViewById(R.id.box_fragment_produit_recycler_view);
 
         // Set up the tool bar
@@ -166,13 +191,14 @@ public class BoxFragment extends Fragment {
         this.button_moins = view.findViewById(R.id.box_fragment_box_quantite_moins);
         this.button_plus = view.findViewById(R.id.box_fragment_box_quantite_plus);
         this.box_quantite = view.findViewById(R.id.box_fragment_box_quantite);
-        this.quantite = 0;
+        this.quantite = 1;
+        this.box_quantite.setText(quantite.toString());
 
 
         this.button_moins.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(quantite >0) {
+                if(quantite >1) {
                     quantite--;
                     box_quantite.setText(quantite.toString());
                 }
@@ -210,23 +236,32 @@ public class BoxFragment extends Fragment {
             }
         }
 
+        int largePadding = getResources().getDimensionPixelSize(R.dimen.staggered_boxs_grid_spacing_large);
+        int smallPadding = getResources().getDimensionPixelSize(R.dimen.staggered_boxs_grid_spacing_small);
+        produitToDisplay.addItemDecoration(new BoxsGridItemDecoration(largePadding, smallPadding));
+
+        // Set cut corner background for API 23+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            view.findViewById(R.id.box_grid)
+                    .setBackgroundResource(R.drawable.product_grid_background_shape);
+        }
+
         return view;
     }
 
-    /*private double calculTotal(){
-        double somme = 0;
-        List<Produit> prod= this.produits;
+    private void calculTotal(){
+        sommeHTVA = 0.0;
+        promotion = 0.0;
         if(boxId!=null){
-            prod = new ArrayList<>();
-            for(LigneProduit ligneProduit : selectedBox.getLigneProduits())
-            prod.add(ligneProduit.getProduit());
+            sommeHTVA = (selectedBox.getPrixUnitaireHtva()*(1+selectedBox.getTva())) * quantite;
+            if(selectedBox.getPromotion()!=null)
+                promotion = sommeHTVA*(1-selectedBox.getPromotion());
+        } else {
+            for(Produit produit: listeProduits.keySet()) {
+                sommeHTVA += produit.getPrixUnitaireHtva() * (1+produit.getTva()) * listeProduits.get(produit) * quantite;
+            }
         }
-
-        for(Produit produit : produits)
-            somme+= (produit.getPrixUnitaireHtva()+ produit.getPrixUnitaireHtva()*produit.getTva());
-
-        return somme;
-    }*/
+    }
 
     private class LoadBox extends AsyncTask<String, Void, Box>
     {
@@ -245,6 +280,7 @@ public class BoxFragment extends Fragment {
         @Override
         protected void onPostExecute(Box box)
         {
+            selectedBox = box;
             LoadProd loadProd= new LoadProd();
             loadProd.execute();
 
@@ -258,14 +294,7 @@ public class BoxFragment extends Fragment {
                         .into(box_image);
             }
 
-            view.findViewById(R.id.menu_box_personnalise);
             box_name.setText(box.getNom());
-            String prix = UtilDAO.format.format(box.getPrixUnitaireHtva());
-            if(box.getPromotion()!=null) {
-                prix += " - " + Math.round(box.getPromotion() * 10000) / 100 + "% = ";
-                prix += UtilDAO.format.format(Math.round((box.getPrixUnitaireHtva() * box.getTva() * (1 - box.getPromotion()) * 100) / 100));
-            }
-            box_price.setText(prix);
             box_description.setText(box.getDescription());
         }
 
@@ -293,21 +322,8 @@ public class BoxFragment extends Fragment {
             @Override
             protected void onPostExecute(LinkedHashMap<Produit, Integer> produit)
             {
-                // Set up the RecyclerView
-                //RecyclerView.LayoutManager manager = new LinearLayoutManager(getContext());
-                GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1, GridLayoutManager.VERTICAL, false);
-                produitToDisplay.setLayoutManager(gridLayoutManager);
 
-                ProductViewAdapter adapter = new ProductViewAdapter(listeProduits, BoxFragment.this);
-                produitToDisplay.setAdapter(adapter);
-
-                // Set cut corner background for API 23+
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    view.findViewById(R.id.box_grid)
-                            .setBackgroundResource(R.drawable.product_grid_background_shape);
-                }
-
-
+                setView();
             }
 
             @Override
@@ -316,6 +332,60 @@ public class BoxFragment extends Fragment {
             }
 
         }
+    }
+
+    private void affichePrix(){
+        calculTotal();
+        String prix;
+        if(sommeHTVA!=0) {
+            prix = UtilDAO.format.format(Math.round(sommeHTVA*100.0)/100.0);
+            if (promotion != 0) {
+                prix += " - " +UtilDAO.format.format(Math.round(promotion*100.0)/100.0);
+                prix += " = " + UtilDAO.format.format(Math.round((sommeHTVA-promotion)*100.0)/100.0);
+            }
+        } else
+            prix = getString(R.string.box_fragment_box_prix_gratuit);
+        box_price.setText(prix);
+    }
+
+    private void setView(){
+        affichePrix();
+
+        // Set up the RecyclerView
+        //RecyclerView.LayoutManager manager = new LinearLayoutManager(getContext());
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1, GridLayoutManager.VERTICAL, false);
+        produitToDisplay.setLayoutManager(gridLayoutManager);
+
+        ProductViewAdapter adapter = new ProductViewAdapter(listeProduits, BoxFragment.this);
+        produitToDisplay.setAdapter(adapter);
+    }
+
+    private void setViewPersonnalise(){
+        affichePrix();
+
+        // Set up the RecyclerView
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1, GridLayoutManager.VERTICAL, false);
+        produitToDisplay.setLayoutManager(gridLayoutManager);
+
+        final ProductPersonnaliseViewAdapter adapter = new ProductPersonnaliseViewAdapter();
+        produitToDisplay.setAdapter(adapter);
+
+        button_ajout_panier.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Boolean isempty = true;
+                for(Integer value : listeProduits.values()) {
+                    if (value != 0)
+                        isempty = false;
+                }
+
+                if(!isempty) {
+                    //Liste bien mise à jour
+                } else{
+                    Toast.makeText(getContext(),R.string.box_fragment_box_personnalise_empty_quantite, Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
     private class LoadProduit extends AsyncTask<Void, Void, LinkedHashMap<Produit, Integer>>
@@ -336,43 +406,7 @@ public class BoxFragment extends Fragment {
         @Override
         protected void onPostExecute(LinkedHashMap<Produit, Integer> produit)
         {
-
-            // Set up the RecyclerView
-            RecyclerView.LayoutManager manager = new LinearLayoutManager(getContext());
-            produitToDisplay.setLayoutManager(manager);
-
-            final ProductPersonnaliseViewAdapter adapter = new ProductPersonnaliseViewAdapter(listeProduits);
-            ProductPersonnaliseViewAdapter.listeProduits = produit;
-            produitToDisplay.setAdapter(adapter);
-            int largePadding = getResources().getDimensionPixelSize(R.dimen.staggered_boxs_grid_spacing_large);
-            int smallPadding = getResources().getDimensionPixelSize(R.dimen.staggered_boxs_grid_spacing_small);
-            produitToDisplay.addItemDecoration(new BoxsGridItemDecoration(largePadding, smallPadding));
-            // Set cut corner background for API 23+
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                view.findViewById(R.id.box_grid)
-                        .setBackgroundResource(R.drawable.product_grid_background_shape);
-            }
-
-            button_ajout_panier.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    listeProduits = ProductPersonnaliseViewAdapter.getListeProduits();
-                    Boolean isempty = true;
-                    for(Integer value : listeProduits.values()) {
-                        if (value != 0)
-                            isempty = false;
-                    }
-
-                    if(!isempty) {
-                        //Liste bien mise à jour
-                    } else{
-                        Toast.makeText(getContext(),R.string.box_fragment_box_personnalise_empty_quantite, Toast.LENGTH_LONG).show();
-                    }
-
-
-
-                }
-            });
+            setViewPersonnalise();
         }
 
         @Override

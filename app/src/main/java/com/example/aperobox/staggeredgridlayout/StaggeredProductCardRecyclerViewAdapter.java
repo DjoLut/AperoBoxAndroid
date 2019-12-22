@@ -55,7 +55,24 @@ public class StaggeredProductCardRecyclerViewAdapter extends RecyclerView.Adapte
         if (boxList != null && position < boxList.size()) {
             Box product = boxList.get(position);
             holder.productTitle.setText(product.getNom());
-            holder.productPrice.setText(UtilDAO.format.format(product.getPrixUnitaireHtva()));
+
+            Double sommeHTVA = 0.0;
+            Double promotion = 0.0;
+            sommeHTVA = (product.getPrixUnitaireHtva()*(1+product.getTva())) * 1;
+            if(product.getPromotion()!=null)
+                promotion = sommeHTVA*(1-product.getPromotion());
+
+            String prix;
+            if(sommeHTVA!=0) {
+                prix = UtilDAO.format.format(Math.round(sommeHTVA*100.0)/100.0);
+                if (promotion != 0) {
+                    prix += " - " +UtilDAO.format.format(Math.round(promotion*100.0)/100.0);
+                    prix += " = " + UtilDAO.format.format(Math.round((sommeHTVA-promotion)*100.0)/100.0);
+                }
+            } else
+                prix = fragment.getString(R.string.box_fragment_box_prix_gratuit);
+
+            holder.productPrice.setText(prix);
             Glide.with(fragment).load(Constantes.URL_IMAGE_API + product.getPhoto()).into(holder.productImage);
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {

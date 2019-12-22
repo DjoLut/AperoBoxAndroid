@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.aperobox.Activity.BoxFragment;
 import com.example.aperobox.Model.Produit;
 import com.example.aperobox.R;
 
@@ -16,18 +17,11 @@ import java.util.Set;
 
 public class ProductPersonnaliseViewAdapter extends RecyclerView.Adapter<ProductPersonnaliseViewHolder> {
     public static Produit[] produits;
-    public static LinkedHashMap<Produit, Integer> listeProduits;
 
-    public ProductPersonnaliseViewAdapter(LinkedHashMap<Produit, Integer> listeProduits) {
-        Set<Produit> set = listeProduits.keySet();
-        produits = new Produit[listeProduits.size()];
+    public ProductPersonnaliseViewAdapter() {
+        Set<Produit> set = BoxFragment.listeProduits.keySet();
+        produits = new Produit[BoxFragment.listeProduits.size()];
         produits = set.toArray(produits);
-        this.listeProduits = listeProduits;
-    }
-
-    public static LinkedHashMap<Produit, Integer> getListeProduits(){
-
-        return listeProduits;
     }
 
     @Override

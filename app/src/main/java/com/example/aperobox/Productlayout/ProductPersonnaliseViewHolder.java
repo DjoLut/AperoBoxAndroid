@@ -8,6 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.aperobox.Activity.BoxFragment;
 import com.example.aperobox.Model.Produit;
 import com.example.aperobox.R;
 
@@ -32,7 +33,7 @@ public class ProductPersonnaliseViewHolder extends RecyclerView.ViewHolder {
     public void bind(Produit produit, final Integer position){
         quantiteLayout.setText(produit.getNom());
         Produit produit1 = ProductPersonnaliseViewAdapter.produits[position];
-        Integer integer = ProductPersonnaliseViewAdapter.listeProduits.get(produit1);
+        Integer integer = BoxFragment.listeProduits.get(produit1);
         quantiteTextInput.setText(integer.toString());
 
         plus.setOnClickListener(new View.OnClickListener() {
@@ -41,7 +42,7 @@ public class ProductPersonnaliseViewHolder extends RecyclerView.ViewHolder {
                 try {
                     Integer integer = Integer.parseInt(quantiteTextInput.getText().toString());
                     integer++;
-                    ProductPersonnaliseViewAdapter.listeProduits.put(ProductPersonnaliseViewAdapter.produits[position], integer);
+                    BoxFragment.listeProduits.put(ProductPersonnaliseViewAdapter.produits[position], integer);
                     quantiteTextInput.setText(integer.toString());
                 } catch(NumberFormatException e) {
                     quantiteTextInput.setText("bug");
@@ -58,7 +59,7 @@ public class ProductPersonnaliseViewHolder extends RecyclerView.ViewHolder {
                     Integer integer = Integer.parseInt(quantiteTextInput.getText().toString());
                     if(integer>0) {
                         integer--;
-                        ProductPersonnaliseViewAdapter.listeProduits.put(((Produit[]) ProductPersonnaliseViewAdapter.produits)[position], integer);
+                        BoxFragment.listeProduits.put(((Produit[]) ProductPersonnaliseViewAdapter.produits)[position], integer);
                         quantiteTextInput.setText(integer.toString());
                     }
                 } catch(NumberFormatException e) {
