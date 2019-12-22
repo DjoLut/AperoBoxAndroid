@@ -22,6 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.Toast;
 
 import com.example.aperobox.Model.Utilisateur;
 import com.example.aperobox.R;
@@ -131,7 +132,11 @@ public class AProposFragment extends Fragment {
             compte.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //  Add logout;
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.clear();
+                    editor.commit();
+                    Toast.makeText(getContext(), "Déconnecté", Toast.LENGTH_LONG).show();
+                    ((NavigationHost) getActivity()).navigateTo(new BoxsGridFragment(), true);
                 }
             });
             panier.setVisibility(View.VISIBLE);
