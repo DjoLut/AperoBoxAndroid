@@ -221,7 +221,8 @@ public class InscriptionFragment extends Fragment {
                                 tel,
                                 Long.valueOf(gsmEditText.getText().toString()),
                                 usernameEditText.getText().toString(),
-                                passwordEditText.getText().toString()
+                                passwordEditText.getText().toString(),
+                                confPasswordEditText.getText().toString()
                         );
                         new AjoutAdresse().execute(newAdresse);
                     }

@@ -1,111 +1,189 @@
 package com.example.aperobox.Activity;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-
+import androidx.recyclerview.widget.RecyclerView;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.TextView;
+import com.example.aperobox.Model.Box;
 import com.example.aperobox.R;
+import com.example.aperobox.Utility.Constantes;
+import com.google.android.material.button.MaterialButton;
+import java.util.Map;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link PanierFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link PanierFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class PanierFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private SharedPreferences preferences;
+    private Map<Box, Integer> box;
+    private TextView box_name;
+    private RecyclerView boxToDisplay;
+    private View view;
 
-    private OnFragmentInteractionListener mListener;
+
 
     public PanierFragment() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment PanierFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static PanierFragment newInstance(String param1, String param2) {
-        PanierFragment fragment = new PanierFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.panier_fragment, container, false);
-    }
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.panier_fragment, container, false);
+        this.view = view;
+        boxToDisplay = view.findViewById(R.id.panier_fragment_produit_recycler_view);
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+        setUpToolbar(view);
+
+        this.box_name = view.findViewById(R.id.panier_fragment_nom_text_view);
+
+        return view;
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+    public void onResume() { super.onResume(); }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    public void onDestroy() { super.onDestroy(); }
+
+
+
+
+
+
+
+
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
+        if(menu.size()==0) {
+            menuInflater.inflate(R.menu.toolbar_menu, menu);
+            MenuItem icon = menu.getItem(0);
+            icon.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_NO) {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                        return true;
+                    } else if (AppCompatDelegate.getDefaultNightMode() != AppCompatDelegate.MODE_NIGHT_NO) {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                        return true;
+                    }
+                    return false;
+                }
+            });
+        }
+        super.onCreateOptionsMenu(menu, menuInflater);
+    }
+
+    private void setUpToolbar(View view) {
+        Toolbar toolbar = view.findViewById(R.id.panier_app_bar);
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        if (activity != null) {
+            activity.setSupportActionBar(toolbar);
+        }
+
+        View acceuil = view.findViewById(R.id.menu_acceuil);
+        acceuil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((NavigationHost) getActivity()).navigateTo(new BoxsGridFragment(), true);
+            }
+        });
+
+
+        View boxPersonnalise = view.findViewById(R.id.menu_box_personnalise);
+        boxPersonnalise.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((NavigationHost) getActivity()).navigateTo(new BoxFragment(), true);
+            }
+        });
+
+        view.findViewById(R.id.menu_a_propos).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((NavigationHost) getActivity()).navigateTo(new AProposFragment(), true);
+            }
+        });
+
+        view.findViewById(R.id.menu_nous_contactez).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("plain/text");
+                intent.setData(Uri.parse("mailto:"));
+                intent.putExtra(Intent.EXTRA_EMAIL, new String[]{getString(R.string.contact_mail)});
+                intent.putExtra(Intent.EXTRA_SUBJECT, R.string.contact_mail_sujet);
+                startActivity(Intent.createChooser(intent, getString(R.string.contact_mail_chooser)));
+            }
+        });
+
+        View panier = view.findViewById(R.id.menu_panier);
+        MaterialButton compte = view.findViewById(R.id.menu_compte);
+        compte.setElevation((float) 1);
+        preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        String access_token = preferences.getString("access_token", null);
+        if (access_token != null) {
+            compte.setVisibility(View.VISIBLE);
+            compte.setText(R.string.deconnection_title);
+            compte.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //  Add logout;
+                }
+            });
+            panier.setVisibility(View.VISIBLE);
+            panier.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((NavigationHost) getActivity()).navigateTo(new PanierFragment(), true);
+                }
+            });
         } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+            compte.setText(R.string.connexion_title);
+            panier.setVisibility(View.INVISIBLE);
+            view.findViewById(R.id.menu_compte).setOnClickListener(null);
         }
-    }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        toolbar.setNavigationOnClickListener(new NavigationIconClickListener(
+                getContext(),
+                view.findViewById(R.id.panier_grid),
+                new AccelerateDecelerateInterpolator(),
+                getContext().getResources().getDrawable(R.drawable.branded_menu), // Menu open icon
+                getContext().getResources().getDrawable(R.drawable.close_menu))); // Menu close icon
     }
 }
