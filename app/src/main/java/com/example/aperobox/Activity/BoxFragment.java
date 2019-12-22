@@ -47,6 +47,7 @@ import java.util.Map;
 public class BoxFragment extends Fragment {
 
     private static final String SAVED_BUNDLE_TAG = "boxfragment";
+    private Bundle bundle;
 
     private SharedPreferences preferences;
     //View
@@ -71,6 +72,7 @@ public class BoxFragment extends Fragment {
     private Integer quantite;
     public static Map<Produit, Integer> listeProduits;
     private RecyclerView produitToDisplay;
+    private BoxDAO boxDAO;
 
     private View view;
 
@@ -86,6 +88,15 @@ public class BoxFragment extends Fragment {
     @Override
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if(bundle==null && listeProduits!=null) {
+            bundle = new Bundle();
+        }
+        outState.putBundle(SAVED_BUNDLE_TAG, bundle);
     }
 
     @Override
@@ -113,6 +124,22 @@ public class BoxFragment extends Fragment {
 
         setRetainInstance(true);
 
+        this.quantite = 1;
+        this.boxDAO = new BoxDAO();
+
+        if(UtilDAO.isInternetAvailable(getContext())) {
+            if (boxId == null) {
+                loadProduit = new LoadProduit();
+                loadProduit.execute();
+            } else {
+                loadBoxTask = new LoadBox();
+                loadBoxTask.execute();
+            }
+        } else {
+            Toast.makeText(getContext(), getString(R.string.error_no_internet), Toast.LENGTH_SHORT).show();
+            setJoke();
+        }
+
         setHasOptionsMenu(true);
     }
 
@@ -134,21 +161,6 @@ public class BoxFragment extends Fragment {
         this.button_moins = view.findViewById(R.id.box_fragment_box_quantite_moins);
         this.button_plus = view.findViewById(R.id.box_fragment_box_quantite_plus);
         this.box_quantite = view.findViewById(R.id.box_fragment_box_quantite);
-
-        this.quantite = 1;
-
-        if(UtilDAO.isInternetAvailable(getContext())) {
-            if (boxId == null) {
-                loadProduit = new LoadProduit();
-                loadProduit.execute();
-            } else {
-                loadBoxTask = new LoadBox();
-                loadBoxTask.execute();
-            }
-        } else {
-            Toast.makeText(getContext(), getString(R.string.error_no_internet), Toast.LENGTH_SHORT).show();
-            setJoke();
-        }
 
         setView();
 
@@ -173,6 +185,49 @@ public class BoxFragment extends Fragment {
                 quantite = Integer.parseInt(box_quantite.getText().toString());
                 quantite++;
                 box_quantite.setText(quantite.toString());
+            }
+        });
+
+
+        button_ajout_panier.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+                String access_token = preferences.getString("access_token", null);
+                if(access_token != null)
+                {
+                    if(Integer.valueOf(box_quantite.getText().toString()) != 0) {
+                        if(boxId==null){
+                            Boolean isempty = true;
+                            for(Integer value : listeProduits.values()) {
+                                if (value != 0)
+                                    isempty = false;
+                            }
+
+                            if(!isempty) {
+                                //Liste bien mise à jour
+                            } else{
+                                Toast.makeText(getContext(),R.string.box_fragment_box_personnalise_empty_quantite, Toast.LENGTH_LONG).show();
+                            }
+                        } else {
+                            panier = SingletonPanier.getUniquePanier();
+                            if (boxId != null) {
+                                panier.addBox(selectedBox, Integer.valueOf(box_quantite.getText().toString()));
+                            } else {
+                                //panier.addBox(listeProduits, Integer.valueOf(box_quantite.getText().toString()));
+                            }
+                            Toast.makeText(getContext(), R.string.box_fragment_box_ajouter, Toast.LENGTH_LONG).show();
+                        }
+                    } else{
+                        Toast.makeText(getContext(),R.string.box_fragment_box__empty_quantite, Toast.LENGTH_LONG).show();
+                    }
+                }
+                else
+                {
+                    Toast.makeText(getContext(),R.string.box_fragment_connection_obligatoire, Toast.LENGTH_LONG).show();
+                }
+
             }
         });
 
@@ -206,68 +261,19 @@ public class BoxFragment extends Fragment {
     {
         @Override
         protected Box doInBackground(String... params) {
-            BoxDAO boxDAO = new BoxDAO();
-            Box box = new Box();
             try {
-                box = boxDAO.getBox(Integer.valueOf(boxId));
+                selectedBox = boxDAO.getBox(Integer.valueOf(boxId));
             } catch (Exception e) {
                 Toast.makeText(getContext(), "Erreur de chargement de la box", Toast.LENGTH_LONG).show();
             }
-            return box;
+            return selectedBox;
         }
 
         @Override
         protected void onPostExecute(final Box box)
         {
-            selectedBox = box;
             loadProd= new LoadProd();
             loadProd.execute();
-
-            if(UtilDAO.isInternetAvailable(getContext())) {
-                String url = box.getPhoto();
-                Glide
-                        .with(BoxFragment.this)
-                        .load(Constantes.URL_IMAGE_API + url)
-                        .override(300, 200)
-                        .error(R.drawable.ic_launcher_background)
-                        .into(box_image);
-            }
-
-            view.findViewById(R.id.menu_box_personnalise);
-            box_name.setText(box.getNom());
-            String prix = UtilDAO.format.format(box.getPrixUnitaireHtva());
-            if(box.getPromotion()!=null) {
-                prix += " - " + Math.round(box.getPromotion() * 10000) / 100 + "% = ";
-                prix += UtilDAO.format.format(Math.round((box.getPrixUnitaireHtva() * box.getTva() * (1 - box.getPromotion()) * 100) / 100));
-            }
-            box_price.setText(prix);
-            box_description.setText(box.getDescription());
-
-
-
-            button_ajout_panier.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-                    String access_token = preferences.getString("access_token", null);
-                    if(access_token != null)
-                    {
-                        if(Integer.valueOf(box_quantite.getText().toString()) != 0) {
-                            panier = SingletonPanier.getUniquePanier();
-                            panier.addBox(box, Integer.valueOf(box_quantite.getText().toString()));
-                            Toast.makeText(getContext(),R.string.box_fragment_box_ajouter, Toast.LENGTH_LONG).show();
-                        } else{
-                            Toast.makeText(getContext(),R.string.box_fragment_box__empty_quantite, Toast.LENGTH_LONG).show();
-                        }
-                    }
-                    else
-                    {
-                        Toast.makeText(getContext(),R.string.box_fragment_connection_obligatoire, Toast.LENGTH_LONG).show();
-                    }
-
-                }
-            });
-
 
             setViwBoxBox();
         }
@@ -513,23 +519,6 @@ public class BoxFragment extends Fragment {
 
         final ProductPersonnaliseViewAdapter adapter = new ProductPersonnaliseViewAdapter();
         produitToDisplay.setAdapter(adapter);
-
-        button_ajout_panier.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Boolean isempty = true;
-                for(Integer value : listeProduits.values()) {
-                    if (value != 0)
-                        isempty = false;
-                }
-
-                if(!isempty) {
-                    //Liste bien mise à jour
-                } else{
-                    Toast.makeText(getContext(),R.string.box_fragment_box_personnalise_empty_quantite, Toast.LENGTH_LONG).show();
-                }
-            }
-        });
     }
 
     private void setViwBoxBox(){
@@ -544,6 +533,7 @@ public class BoxFragment extends Fragment {
         }
 
         box_name.setText(selectedBox.getNom());
+        affichePrix();
         box_description.setText(selectedBox.getDescription());
     }
 
