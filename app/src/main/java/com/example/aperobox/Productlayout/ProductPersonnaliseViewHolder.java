@@ -20,6 +20,7 @@ public class ProductPersonnaliseViewHolder extends RecyclerView.ViewHolder {
     public EditText quantiteTextInput;
     public Button plus;
     public Button moins;
+    private Integer quantite;
 
 
     ProductPersonnaliseViewHolder(@NonNull View itemView){
@@ -31,19 +32,20 @@ public class ProductPersonnaliseViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(Produit produit, final Integer position){
+        quantite = 0;
         quantiteLayout.setText(produit.getNom());
         Produit produit1 = ProductPersonnaliseViewAdapter.produits[position];
-        Integer integer = BoxFragment.listeProduits.get(produit1);
-        quantiteTextInput.setText(integer.toString());
+        quantite = BoxFragment.listeProduits.get(produit1);
+        quantiteTextInput.setText(quantite.toString());
 
         plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
-                    Integer integer = Integer.parseInt(quantiteTextInput.getText().toString());
-                    integer++;
-                    BoxFragment.listeProduits.put(ProductPersonnaliseViewAdapter.produits[position], integer);
-                    quantiteTextInput.setText(integer.toString());
+                    quantite = Integer.parseInt(quantiteTextInput.getText().toString());
+                    quantite++;
+                    BoxFragment.listeProduits.put(ProductPersonnaliseViewAdapter.produits[position], quantite);
+                    quantiteTextInput.setText(quantite.toString());
                 } catch(NumberFormatException e) {
                     quantiteTextInput.setText("bug");
                 } catch(NullPointerException e) {
@@ -56,11 +58,11 @@ public class ProductPersonnaliseViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View v) {
                 try {
-                    Integer integer = Integer.parseInt(quantiteTextInput.getText().toString());
-                    if(integer>0) {
-                        integer--;
-                        BoxFragment.listeProduits.put(((Produit[]) ProductPersonnaliseViewAdapter.produits)[position], integer);
-                        quantiteTextInput.setText(integer.toString());
+                    quantite = Integer.parseInt(quantiteTextInput.getText().toString());
+                    if(quantite>0) {
+                        quantite--;
+                        BoxFragment.listeProduits.put(((Produit[]) ProductPersonnaliseViewAdapter.produits)[position], quantite);
+                        quantiteTextInput.setText(quantite.toString());
                     }
                 } catch(NumberFormatException e) {
                     quantiteTextInput.setText("bug");

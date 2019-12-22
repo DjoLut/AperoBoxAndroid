@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
@@ -60,6 +61,8 @@ import java.util.zip.Inflater;
 
 public class BoxFragment extends Fragment {
 
+    private static final String SAVED_BUNDLE_TAG = "boxfragment";
+
     private SharedPreferences preferences;
     //View
     private TextView box_name;
@@ -72,9 +75,12 @@ public class BoxFragment extends Fragment {
     private Button button_moins;
 
     private LoadBox loadBoxTask;
+    private LoadProd loadProd;
+    private LoadProduit loadProduit;
     private Box selectedBox;
     private Double sommeHTVA;
     private Double promotion;
+
 
     private Integer boxId;
     private Integer quantite;
@@ -84,25 +90,23 @@ public class BoxFragment extends Fragment {
     private View view;
 
     public BoxFragment(int boxId){
+
         this.boxId = boxId;
     }
 
     public BoxFragment(){
     }
 
-
-    private void setJoke(View view){
-        JokeEntry jokeEntry = JokeEntry.getRandom();
-        box_description.setText(jokeEntry.getBase()+"\n\n\n" + jokeEntry.getReponse());
-        box_price.setText(getString(R.string.box_fragment_box_prix_gratuit));
-        box_name.setText(getString(R.string.box_fragment_box_error_chargement_api_name));
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
     }
 
     @Override
     public void onResume() {
         super.onResume();
         if(!UtilDAO.isInternetAvailable(getContext()))
-            setJoke(getView());
+            setJoke();
         /*if(boxId!=null) {
             if(selectedBox!=null) {
                 if(UtilDAO.isInternetAvailable(getContext())) {
@@ -117,32 +121,23 @@ public class BoxFragment extends Fragment {
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
-
-
-    @Override
     public void onDestroy() {
         super.onDestroy();
         if(loadBoxTask != null)
             loadBoxTask.cancel(true);
+        if(loadProd != null)
+            loadProd.cancel(true);
+        if(loadProduit!=null)
+            loadProduit.cancel(true);
     }
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setRetainInstance(true);
+
         setHasOptionsMenu(true);
     }
 
@@ -164,13 +159,32 @@ public class BoxFragment extends Fragment {
         this.button_moins = view.findViewById(R.id.box_fragment_box_quantite_moins);
         this.button_plus = view.findViewById(R.id.box_fragment_box_quantite_plus);
         this.box_quantite = view.findViewById(R.id.box_fragment_box_quantite);
+
         this.quantite = 1;
-        this.box_quantite.setText(quantite.toString());
 
+        if(UtilDAO.isInternetAvailable(getContext())) {
+            if (boxId == null) {
+                loadProduit = new LoadProduit();
+                loadProduit.execute();
+            } else {
+                loadBoxTask = new LoadBox();
+                loadBoxTask.execute();
+            }
+        } else {
+            Toast.makeText(getContext(), getString(R.string.error_no_internet), Toast.LENGTH_SHORT).show();
+            setJoke();
+        }
 
+        setView();
+
+        return view;
+    }
+
+    private void setView(){
         this.button_moins.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                quantite = Integer.parseInt(box_quantite.getText().toString());
                 if(quantite >1) {
                     quantite--;
                     box_quantite.setText(quantite.toString());
@@ -181,31 +195,23 @@ public class BoxFragment extends Fragment {
         this.button_plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                quantite = Integer.parseInt(box_quantite.getText().toString());
                 quantite++;
                 box_quantite.setText(quantite.toString());
             }
         });
 
+        this.box_quantite.setText(quantite.toString());
+
         //Box personnalisé
         if(boxId==null) {
-            View boxPersonnalise = view.findViewById(R.id.menu_box_personnalise);
-            boxPersonnalise.setOnClickListener(null);
-            boxPersonnalise.setElevation(1);
-
-            this.box_price.setText(getString(R.string.box_fragment_box_prix_gratuit));
-            if(UtilDAO.isInternetAvailable(getContext())) {
-                Glide.with(this).load(Constantes.URL_IMAGE_API + Constantes.DEFAULT_END_URL_IMAGE_API).into(this.box_image);
-                LoadProduit loadProduit = new LoadProduit();
-                loadProduit.execute();
-
-            }
+            setViewBoxPersonnaliseBox();
+            if(listeProduits!=null)
+                setViewBoxPersonnaliseProduit();
         } else {
-            if(UtilDAO.isInternetAvailable(getContext())) {
-                loadBoxTask = new LoadBox();
-                loadBoxTask.execute();
-            } else {
-                Toast.makeText(getContext(), getString(R.string.error_no_internet), Toast.LENGTH_SHORT).show();
-                setJoke(getView());
+            if(selectedBox!=null){
+                setViwBoxBox();
+                setViewBoxProduit();
             }
         }
 
@@ -218,23 +224,8 @@ public class BoxFragment extends Fragment {
             view.findViewById(R.id.box_grid)
                     .setBackgroundResource(R.drawable.product_grid_background_shape);
         }
-
-        return view;
     }
 
-    private void calculTotal(){
-        sommeHTVA = 0.0;
-        promotion = 0.0;
-        if(boxId!=null){
-            sommeHTVA = (selectedBox.getPrixUnitaireHtva()*(1+selectedBox.getTva())) * quantite;
-            if(selectedBox.getPromotion()!=null)
-                promotion = sommeHTVA*(1-selectedBox.getPromotion());
-        } else {
-            for(Produit produit: listeProduits.keySet()) {
-                sommeHTVA += produit.getPrixUnitaireHtva() * (1+produit.getTva()) * listeProduits.get(produit) * quantite;
-            }
-        }
-    }
 
     private class LoadBox extends AsyncTask<String, Void, Box>
     {
@@ -254,21 +245,38 @@ public class BoxFragment extends Fragment {
         protected void onPostExecute(Box box)
         {
             selectedBox = box;
-            LoadProd loadProd= new LoadProd();
+            loadProd= new LoadProd();
             loadProd.execute();
 
-            if(UtilDAO.isInternetAvailable(getContext())) {
-                String url = box.getPhoto();
-                Glide
-                        .with(BoxFragment.this)
-                        .load(Constantes.URL_IMAGE_API + url)
-                        .override(300, 200)
-                        .error(R.drawable.ic_launcher_background)
-                        .into(box_image);
-            }
+            setViwBoxBox();
+        }
 
-            box_name.setText(box.getNom());
-            box_description.setText(box.getDescription());
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+        }
+    }
+
+    private class LoadProd extends AsyncTask<Void, Void, LinkedHashMap<Produit,Integer>>
+    {
+        @Override
+        protected LinkedHashMap<Produit, Integer> doInBackground(Void... params)
+        {
+            ProduitDAO produitDAO = new ProduitDAO();
+            try {
+                listeProduits = produitDAO.getProduitByBoxId(boxId);
+            } catch (HttpResultException h){
+                Toast.makeText(getContext(), h.getMessage(), Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                Toast.makeText(getContext(), "Erreur de chargement de toute les boxs", Toast.LENGTH_SHORT).show();
+            }
+            return listeProduits;
+        }
+
+        @Override
+        protected void onPostExecute(LinkedHashMap<Produit, Integer> produit)
+        {
+            setViewBoxProduit();
         }
 
         @Override
@@ -276,58 +284,7 @@ public class BoxFragment extends Fragment {
             super.onCancelled();
         }
 
-        private class LoadProd extends AsyncTask<Void, Void, LinkedHashMap<Produit,Integer>>
-        {
-            @Override
-            protected LinkedHashMap<Produit, Integer> doInBackground(Void... params)
-            {
-                ProduitDAO produitDAO = new ProduitDAO();
-                try {
-                    listeProduits = produitDAO.getProduitByBoxId(boxId);
-                } catch (HttpResultException h){
-                    Toast.makeText(getContext(), h.getMessage(), Toast.LENGTH_SHORT).show();
-                } catch (Exception e) {
-                    Toast.makeText(getContext(), "Erreur de chargement de toute les boxs", Toast.LENGTH_SHORT).show();
-                }
-                return listeProduits;
-            }
-
-            @Override
-            protected void onPostExecute(LinkedHashMap<Produit, Integer> produit)
-            {
-                affichePrix();
-
-                // Set up the RecyclerView
-                //RecyclerView.LayoutManager manager = new LinearLayoutManager(getContext());
-                GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1, GridLayoutManager.VERTICAL, false);
-                produitToDisplay.setLayoutManager(gridLayoutManager);
-
-                ProductViewAdapter adapter = new ProductViewAdapter(listeProduits, BoxFragment.this);
-                produitToDisplay.setAdapter(adapter);
-            }
-
-            @Override
-            protected void onCancelled() {
-                super.onCancelled();
-            }
-
-        }
     }
-
-    private void affichePrix(){
-        calculTotal();
-        String prix;
-        if(sommeHTVA!=0) {
-            prix = UtilDAO.format.format(Math.round(sommeHTVA*100.0)/100.0);
-            if (promotion != 0) {
-                prix += " - " +UtilDAO.format.format(Math.round(promotion*100.0)/100.0);
-                prix += " = " + UtilDAO.format.format(Math.round((sommeHTVA-promotion)*100.0)/100.0);
-            }
-        } else
-            prix = getString(R.string.box_fragment_box_prix_gratuit);
-        box_price.setText(prix);
-    }
-
 
     private class LoadProduit extends AsyncTask<Void, Void, LinkedHashMap<Produit, Integer>>
     {
@@ -347,31 +304,7 @@ public class BoxFragment extends Fragment {
         @Override
         protected void onPostExecute(LinkedHashMap<Produit, Integer> produit)
         {
-            affichePrix();
-
-            // Set up the RecyclerView
-            GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1, GridLayoutManager.VERTICAL, false);
-            produitToDisplay.setLayoutManager(gridLayoutManager);
-
-            final ProductPersonnaliseViewAdapter adapter = new ProductPersonnaliseViewAdapter();
-            produitToDisplay.setAdapter(adapter);
-
-            button_ajout_panier.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Boolean isempty = true;
-                    for(Integer value : listeProduits.values()) {
-                        if (value != 0)
-                            isempty = false;
-                    }
-
-                    if(!isempty) {
-                        //Liste bien mise à jour
-                    } else{
-                        Toast.makeText(getContext(),R.string.box_fragment_box_personnalise_empty_quantite, Toast.LENGTH_LONG).show();
-                    }
-                }
-            });
+            setViewBoxPersonnaliseProduit();
         }
 
         @Override
@@ -403,6 +336,41 @@ public class BoxFragment extends Fragment {
             });
         }
         super.onCreateOptionsMenu(menu, menuInflater);
+    }
+
+    private void calculTotal(){
+        sommeHTVA = 0.0;
+        promotion = 0.0;
+        if(boxId!=null){
+            sommeHTVA = (selectedBox.getPrixUnitaireHtva()*(1+selectedBox.getTva())) * quantite;
+            if(selectedBox.getPromotion()!=null)
+                promotion = sommeHTVA*(1-selectedBox.getPromotion());
+        } else {
+            for(Produit produit: listeProduits.keySet()) {
+                sommeHTVA += produit.getPrixUnitaireHtva() * (1+produit.getTva()) * listeProduits.get(produit) * quantite;
+            }
+        }
+    }
+
+    public void affichePrix(){
+        calculTotal();
+        String prix;
+        if(sommeHTVA!=0) {
+            prix = UtilDAO.format.format(Math.round(sommeHTVA*100.0)/100.0);
+            if (promotion != 0) {
+                prix += " - " +UtilDAO.format.format(Math.round(promotion*100.0)/100.0);
+                prix += " = " + UtilDAO.format.format(Math.round((sommeHTVA-promotion)*100.0)/100.0);
+            }
+        } else
+            prix = getString(R.string.box_fragment_box_prix_gratuit);
+        box_price.setText(prix);
+    }
+
+    private void setJoke(){
+        JokeEntry jokeEntry = JokeEntry.getRandom();
+        box_description.setText(jokeEntry.getBase()+"\n\n\n" + jokeEntry.getReponse());
+        box_price.setText(getString(R.string.box_fragment_box_prix_gratuit));
+        box_name.setText(getString(R.string.box_fragment_box_error_chargement_api_name));
     }
 
     private void setUpToolbar(View view) {
@@ -502,5 +470,81 @@ public class BoxFragment extends Fragment {
                 new AccelerateDecelerateInterpolator(),
                 getContext().getResources().getDrawable(R.drawable.branded_menu), // Menu open icon
                 getContext().getResources().getDrawable(R.drawable.close_menu))); // Menu close icon
+    }
+
+    private void setViewBoxPersonnaliseBox(){
+        View boxPersonnalise = view.findViewById(R.id.menu_box_personnalise);
+        boxPersonnalise.setOnClickListener(null);
+        boxPersonnalise.setElevation(1);
+
+        this.box_price.setText(getString(R.string.box_fragment_box_prix_gratuit));
+        if(UtilDAO.isInternetAvailable(getContext())) {
+            Glide.with(this).load(Constantes.URL_IMAGE_API + Constantes.DEFAULT_END_URL_IMAGE_API).into(this.box_image);
+        }
+    }
+
+    private void setViewBoxPersonnaliseProduit(){
+        affichePrix();
+
+        // Set up the RecyclerView
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1, GridLayoutManager.VERTICAL, false);
+        produitToDisplay.setLayoutManager(gridLayoutManager);
+
+        final ProductPersonnaliseViewAdapter adapter = new ProductPersonnaliseViewAdapter();
+        produitToDisplay.setAdapter(adapter);
+
+        button_ajout_panier.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Boolean isempty = true;
+                for(Integer value : listeProduits.values()) {
+                    if (value != 0)
+                        isempty = false;
+                }
+
+                if(!isempty) {
+                    //Liste bien mise à jour
+                } else{
+                    Toast.makeText(getContext(),R.string.box_fragment_box_personnalise_empty_quantite, Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+
+    private void setViwBoxBox(){
+        if(UtilDAO.isInternetAvailable(getContext())) {
+            String url = selectedBox.getPhoto();
+            Glide
+                    .with(BoxFragment.this)
+                    .load(Constantes.URL_IMAGE_API + url)
+                    .override(300, 200)
+                    .error(R.drawable.ic_launcher_background)
+                    .into(box_image);
+        }
+
+        box_name.setText(selectedBox.getNom());
+        box_description.setText(selectedBox.getDescription());
+    }
+
+    private void setViewBoxProduit(){
+        if(listeProduits!=null) {
+            affichePrix();
+
+            // Set up the RecyclerView
+            //RecyclerView.LayoutManager manager = new LinearLayoutManager(getContext());
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1, GridLayoutManager.VERTICAL, false);
+            produitToDisplay.setLayoutManager(gridLayoutManager);
+
+            ProductViewAdapter adapter = new ProductViewAdapter(listeProduits, BoxFragment.this);
+            produitToDisplay.setAdapter(adapter);
+        } else {
+            if(selectedBox==null){
+                LoadBox loadBox = new LoadBox();
+                loadBox.execute();
+            } else {
+                LoadProd loadProd= new LoadProd();
+                loadProd.execute();
+            }
+        }
     }
 }
