@@ -76,8 +76,6 @@ public class BoxFragment extends Fragment {
     private Double sommeHTVA;
     private Double promotion;
 
-    private LayoutInflater inflater;
-    private ViewGroup container;
     private Integer boxId;
     private Integer quantite;
     public static LinkedHashMap<Produit, Integer> listeProduits;
@@ -90,26 +88,6 @@ public class BoxFragment extends Fragment {
     }
 
     public BoxFragment(){
-    }
-
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        container.removeView(view);
-        // Checks the orientation of the screen
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            this.view = inflater.inflate(R.layout.box_fragment_landscape, container, false);
-        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
-            this.view = inflater.inflate(R.layout.box_fragment, container, false);
-        }
-
-        /*if(boxId==null)
-            setViewPersonnalise();
-        else
-            setView();*/
-
-        container.addView(view);
     }
 
 
@@ -162,9 +140,6 @@ public class BoxFragment extends Fragment {
     }
 
 
-
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -176,8 +151,6 @@ public class BoxFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.box_fragment, container, false);
         this.view = view;
-        this.inflater = inflater;
-        this.container = container;
         produitToDisplay = view.findViewById(R.id.box_fragment_produit_recycler_view);
 
         // Set up the tool bar
@@ -322,8 +295,15 @@ public class BoxFragment extends Fragment {
             @Override
             protected void onPostExecute(LinkedHashMap<Produit, Integer> produit)
             {
+                affichePrix();
 
-                setView();
+                // Set up the RecyclerView
+                //RecyclerView.LayoutManager manager = new LinearLayoutManager(getContext());
+                GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1, GridLayoutManager.VERTICAL, false);
+                produitToDisplay.setLayoutManager(gridLayoutManager);
+
+                ProductViewAdapter adapter = new ProductViewAdapter(listeProduits, BoxFragment.this);
+                produitToDisplay.setAdapter(adapter);
             }
 
             @Override
@@ -348,45 +328,6 @@ public class BoxFragment extends Fragment {
         box_price.setText(prix);
     }
 
-    private void setView(){
-        affichePrix();
-
-        // Set up the RecyclerView
-        //RecyclerView.LayoutManager manager = new LinearLayoutManager(getContext());
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1, GridLayoutManager.VERTICAL, false);
-        produitToDisplay.setLayoutManager(gridLayoutManager);
-
-        ProductViewAdapter adapter = new ProductViewAdapter(listeProduits, BoxFragment.this);
-        produitToDisplay.setAdapter(adapter);
-    }
-
-    private void setViewPersonnalise(){
-        affichePrix();
-
-        // Set up the RecyclerView
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1, GridLayoutManager.VERTICAL, false);
-        produitToDisplay.setLayoutManager(gridLayoutManager);
-
-        final ProductPersonnaliseViewAdapter adapter = new ProductPersonnaliseViewAdapter();
-        produitToDisplay.setAdapter(adapter);
-
-        button_ajout_panier.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Boolean isempty = true;
-                for(Integer value : listeProduits.values()) {
-                    if (value != 0)
-                        isempty = false;
-                }
-
-                if(!isempty) {
-                    //Liste bien mise à jour
-                } else{
-                    Toast.makeText(getContext(),R.string.box_fragment_box_personnalise_empty_quantite, Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-    }
 
     private class LoadProduit extends AsyncTask<Void, Void, LinkedHashMap<Produit, Integer>>
     {
@@ -406,7 +347,31 @@ public class BoxFragment extends Fragment {
         @Override
         protected void onPostExecute(LinkedHashMap<Produit, Integer> produit)
         {
-            setViewPersonnalise();
+            affichePrix();
+
+            // Set up the RecyclerView
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1, GridLayoutManager.VERTICAL, false);
+            produitToDisplay.setLayoutManager(gridLayoutManager);
+
+            final ProductPersonnaliseViewAdapter adapter = new ProductPersonnaliseViewAdapter();
+            produitToDisplay.setAdapter(adapter);
+
+            button_ajout_panier.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Boolean isempty = true;
+                    for(Integer value : listeProduits.values()) {
+                        if (value != 0)
+                            isempty = false;
+                    }
+
+                    if(!isempty) {
+                        //Liste bien mise à jour
+                    } else{
+                        Toast.makeText(getContext(),R.string.box_fragment_box_personnalise_empty_quantite, Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
         }
 
         @Override
