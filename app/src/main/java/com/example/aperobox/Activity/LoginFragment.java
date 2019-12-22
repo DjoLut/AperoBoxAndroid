@@ -257,16 +257,16 @@ public class LoginFragment extends Fragment {
             editor.putString("access_token", token.getAccess_token());
             if (editor.commit()) {
                 //new RefreshingToken().execute();
-                Toast.makeText(getContext(), "Success Login", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), R.string.login_success, Toast.LENGTH_LONG).show();
                 ((NavigationHost) getActivity()).navigateTo(new BoxsGridFragment(), false);
             } else {
-                Toast.makeText(getContext(), "Erreur Login", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.login_failed, Toast.LENGTH_SHORT).show();
             }
         }
 
         @Override
         protected void onCancelled() {
-            Toast.makeText(getContext(), exception.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.login_failed, Toast.LENGTH_SHORT).show();
         }
     }
 

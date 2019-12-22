@@ -51,8 +51,9 @@
     <string name="box_fragment_produit_quantite">Quantité :</string>
     <string name="box_fragment_box_button_ajout_panier">Ajouter au panier</string>
     <string name="box_fragment_box_personnalise_empty_quantite">Vous devez ajouter au moins un produit à votre box personnalisée pour pouvoir la commander</string>
-
-
+    <string name="box_fragment_box__empty_quantite">Vous devez avoir une quantité de box supérieur à 0 pour pouvoir commander</string>
+    <string name="box_fragment_connection_obligatoire">Vous devez être connecté pour ajouter une box</string>
+    <string name="box_fragment_box_ajouter">Box ajoutée(s)</string>
 
     <!-- AProposFragment -->
     <string name="apropos_message">Application créé et inventée par deux étudiants d\'IG et trois étudiants de marketing de l\'HENALLux IESN de Namur</string>
@@ -73,7 +74,8 @@
     <string name="invalid_password_length">3 caractères minimum et 20 maximum</string>
     <string name="invalid_password">Mauvais mot de passe</string>
     <string name="invalid_conf_password">Mots de passes différents</string>
-    <string name="login_failed">"Échec de la connexion"</string>
+    <string name="login_failed">Échec de la connexion</string>
+    <string name="login_success">Succès de la connexion</string>
     <string name="invalid_date_naissance">La date de naissance n\'est pas valable (minimum 13 ans)</string>
     <string name="invalid_nom">2 caractères minimum et 50 maximum</string>
     <string name="invalid_prenom">2 caractères minimum et 50 maximum</string>

@@ -6,6 +6,12 @@
     <TextView
         android:id="@+id/panier_fragment_nom_text_view"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/panier_fragment_box_quantite_edit_text"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:inputType="number"
+        android:textAlignment="center" />
 </LinearLayout>

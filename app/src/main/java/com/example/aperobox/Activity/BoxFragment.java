@@ -7,17 +7,13 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -30,34 +26,23 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.HttpException;
 import com.example.aperobox.Dao.BoxDAO;
-import com.example.aperobox.Dao.LigneProduitDAO;
 import com.example.aperobox.Dao.ProduitDAO;
 import com.example.aperobox.Dao.UtilDAO;
 import com.example.aperobox.Dao.network.JokeEntry;
 import com.example.aperobox.Exception.HttpResultException;
 import com.example.aperobox.Model.Box;
-import com.example.aperobox.Model.LigneProduit;
+import com.example.aperobox.Model.Panier;
 import com.example.aperobox.Model.Produit;
-import com.example.aperobox.Model.Utilisateur;
 import com.example.aperobox.Productlayout.ProductPersonnaliseViewAdapter;
 import com.example.aperobox.Productlayout.ProductViewAdapter;
 import com.example.aperobox.R;
+import com.example.aperobox.application.SingletonPanier;
 import com.example.aperobox.Utility.Constantes;
 import com.google.android.material.button.MaterialButton;
-
-import java.io.Console;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
-import java.util.zip.Inflater;
+import java.util.Map;
 
 public class BoxFragment extends Fragment {
 
@@ -84,13 +69,14 @@ public class BoxFragment extends Fragment {
 
     private Integer boxId;
     private Integer quantite;
-    public static LinkedHashMap<Produit, Integer> listeProduits;
+    public static Map<Produit, Integer> listeProduits;
     private RecyclerView produitToDisplay;
 
     private View view;
 
-    public BoxFragment(int boxId){
+    private Panier panier;
 
+    public BoxFragment(int boxId){
         this.boxId = boxId;
     }
 
@@ -107,17 +93,6 @@ public class BoxFragment extends Fragment {
         super.onResume();
         if(!UtilDAO.isInternetAvailable(getContext()))
             setJoke();
-        /*if(boxId!=null) {
-            if(selectedBox!=null) {
-                if(UtilDAO.isInternetAvailable(getContext())) {
-                    loadBoxTask = new LoadBox();
-                    loadBoxTask.execute();
-                } else
-                    Toast.makeText(getContext(),getString(R.string.error_no_internet),Toast.LENGTH_SHORT).show();
-            }
-        }
-
-         */
     }
 
     @Override
@@ -242,11 +217,57 @@ public class BoxFragment extends Fragment {
         }
 
         @Override
-        protected void onPostExecute(Box box)
+        protected void onPostExecute(final Box box)
         {
             selectedBox = box;
             loadProd= new LoadProd();
             loadProd.execute();
+
+            if(UtilDAO.isInternetAvailable(getContext())) {
+                String url = box.getPhoto();
+                Glide
+                        .with(BoxFragment.this)
+                        .load(Constantes.URL_IMAGE_API + url)
+                        .override(300, 200)
+                        .error(R.drawable.ic_launcher_background)
+                        .into(box_image);
+            }
+
+            view.findViewById(R.id.menu_box_personnalise);
+            box_name.setText(box.getNom());
+            String prix = UtilDAO.format.format(box.getPrixUnitaireHtva());
+            if(box.getPromotion()!=null) {
+                prix += " - " + Math.round(box.getPromotion() * 10000) / 100 + "% = ";
+                prix += UtilDAO.format.format(Math.round((box.getPrixUnitaireHtva() * box.getTva() * (1 - box.getPromotion()) * 100) / 100));
+            }
+            box_price.setText(prix);
+            box_description.setText(box.getDescription());
+
+
+
+            button_ajout_panier.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+                    String access_token = preferences.getString("access_token", null);
+                    if(access_token != null)
+                    {
+                        if(Integer.valueOf(box_quantite.getText().toString()) != 0) {
+                            panier = SingletonPanier.getUniquePanier();
+                            panier.addBox(box, Integer.valueOf(box_quantite.getText().toString()));
+                            Toast.makeText(getContext(),R.string.box_fragment_box_ajouter, Toast.LENGTH_LONG).show();
+                        } else{
+                            Toast.makeText(getContext(),R.string.box_fragment_box__empty_quantite, Toast.LENGTH_LONG).show();
+                        }
+                    }
+                    else
+                    {
+                        Toast.makeText(getContext(),R.string.box_fragment_connection_obligatoire, Toast.LENGTH_LONG).show();
+                    }
+
+                }
+            });
+
 
             setViwBoxBox();
         }
@@ -257,24 +278,24 @@ public class BoxFragment extends Fragment {
         }
     }
 
-    private class LoadProd extends AsyncTask<Void, Void, LinkedHashMap<Produit,Integer>>
-    {
-        @Override
-        protected LinkedHashMap<Produit, Integer> doInBackground(Void... params)
+        private class LoadProd extends AsyncTask<Void, Void, Map<Produit,Integer>>
         {
-            ProduitDAO produitDAO = new ProduitDAO();
-            try {
-                listeProduits = produitDAO.getProduitByBoxId(boxId);
-            } catch (HttpResultException h){
-                Toast.makeText(getContext(), h.getMessage(), Toast.LENGTH_SHORT).show();
-            } catch (Exception e) {
-                Toast.makeText(getContext(), "Erreur de chargement de toute les boxs", Toast.LENGTH_SHORT).show();
+            @Override
+            protected Map<Produit, Integer> doInBackground(Void... params)
+            {
+                ProduitDAO produitDAO = new ProduitDAO();
+                try {
+                    listeProduits = produitDAO.getProduitByBoxId(boxId);
+                } catch (HttpResultException h){
+                    Toast.makeText(getContext(), h.getMessage(), Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    Toast.makeText(getContext(), "Erreur de chargement de toute les boxs", Toast.LENGTH_SHORT).show();
+                }
+                return listeProduits;
             }
-            return listeProduits;
-        }
 
         @Override
-        protected void onPostExecute(LinkedHashMap<Produit, Integer> produit)
+        protected void onPostExecute(Map<Produit, Integer> produit)
         {
             setViewBoxProduit();
         }
@@ -286,13 +307,13 @@ public class BoxFragment extends Fragment {
 
     }
 
-    private class LoadProduit extends AsyncTask<Void, Void, LinkedHashMap<Produit, Integer>>
+    private class LoadProduit extends AsyncTask<Void, Void, Map<Produit, Integer>>
     {
         @Override
-        protected LinkedHashMap<Produit, Integer> doInBackground(Void... params)
+        protected Map<Produit, Integer> doInBackground(Void... params)
         {
             ProduitDAO produitDAO = new ProduitDAO();
-            listeProduits = new LinkedHashMap<>();
+            listeProduits = new HashMap<>();
             try {
                 listeProduits = produitDAO.getAllProduitBoxPersonnalise();
             } catch (Exception e) {
@@ -302,7 +323,7 @@ public class BoxFragment extends Fragment {
         }
 
         @Override
-        protected void onPostExecute(LinkedHashMap<Produit, Integer> produit)
+        protected void onPostExecute(Map<Produit, Integer> produit)
         {
             setViewBoxPersonnaliseProduit();
         }

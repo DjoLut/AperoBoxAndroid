@@ -7,14 +7,26 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.aperobox.Model.Box;
+import com.example.aperobox.Model.Panier;
 import com.example.aperobox.R;
+import com.example.aperobox.application.SingletonPanier;
+
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Map;
 
 public class PanierViewAdapter extends RecyclerView.Adapter<PanierViewHolder> {
-    private Map<Box, Integer> box;
+    private Panier panier = SingletonPanier.getUniquePanier();
+    private ArrayList<Box> box = new ArrayList<>();
+    private ArrayList<Integer> quantite = new ArrayList<>();
 
-    public PanierViewAdapter(Map<Box, Integer> box, Fragment fragment) {
-        this.box = box;
+    public PanierViewAdapter(Panier panier, Fragment fragment) {
+        for (Iterator<Map.Entry<Box, Integer>> it = panier.getBox().entrySet().iterator(); it.hasNext();)
+        {
+            Map.Entry<Box, Integer> entry = it.next();
+            this.box.add(entry.getKey());
+            this.quantite.add(entry.getValue());
+        }
     }
 
     @Override
@@ -31,12 +43,12 @@ public class PanierViewAdapter extends RecyclerView.Adapter<PanierViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull PanierViewHolder holder, final int position) {
-        holder.panierBoxNomTextView.setText(box.get(position));
-
+        holder.panierBoxNomTextView.setText(box.get(position).getNom());
+        holder.panierBoxQuantiteEditText.setText(quantite.get(position).toString());
     }
 
     @Override
     public int getItemCount() {
-        return box.size();
+        return panier.getBox().size();
     }
 }

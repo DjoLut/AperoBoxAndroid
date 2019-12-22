@@ -1,6 +1,5 @@
 package com.example.aperobox.Activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -9,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
@@ -18,46 +18,50 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import com.example.aperobox.Model.Box;
+import com.example.aperobox.Model.Panier;
+import com.example.aperobox.PanierLayout.PanierViewAdapter;
 import com.example.aperobox.R;
-import com.example.aperobox.Utility.Constantes;
+import com.example.aperobox.application.SingletonPanier;
 import com.google.android.material.button.MaterialButton;
-import java.util.Map;
 
 public class PanierFragment extends Fragment {
-
+    private ViewGroup container;
+    private LayoutInflater inflater;
     private SharedPreferences preferences;
-    private Map<Box, Integer> box;
-    private TextView box_name;
     private RecyclerView boxToDisplay;
-    private View view;
-
-
+    private Panier panier = SingletonPanier.getUniquePanier();
 
     public PanierFragment() {
     }
 
-
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.panier_fragment, container, false);
-        this.view = view;
+        this.inflater = inflater;
+        this.container = container;
+
+        View view = inflater.inflate(R.layout.panier_fragment, this.container, false);
+
         boxToDisplay = view.findViewById(R.id.panier_fragment_produit_recycler_view);
+        boxToDisplay.setHasFixedSize(true);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2, GridLayoutManager.HORIZONTAL, false);
+        boxToDisplay.setLayoutManager(gridLayoutManager);
+
+        PanierViewAdapter adapter = new PanierViewAdapter(panier, PanierFragment.this);
+        boxToDisplay.setAdapter(adapter);
 
         setUpToolbar(view);
 
-        this.box_name = view.findViewById(R.id.panier_fragment_nom_text_view);
-
         return view;
     }
+
 
     @Override
     public void onResume() { super.onResume(); }

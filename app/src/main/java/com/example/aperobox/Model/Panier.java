@@ -1,28 +1,38 @@
 package com.example.aperobox.Model;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 public class Panier {
-    private Map<Box, Integer> box;
+    private Map<Box, Integer> boxes;
 
     public Panier()
     {
-        box = new HashMap<>();
+        boxes = new HashMap<>();
     }
 
     public Map<Box, Integer> getBox()
     {
-        return box;
+        return boxes;
     }
 
     public void setBox(Map<Box, Integer> box)
     {
-        this.box = box;
+        this.boxes = box;
     }
 
     public void deleteAll()
     {
-        box.clear();
+        boxes.clear();
+    }
+
+    public void addBox(Box box, int quantite)
+    {
+        /*for (Iterator<Map.Entry<Box, Integer>> it = boxes.entrySet().iterator(); it.hasNext();)
+        {
+            ;
+        }*/
+        boxes.put(box, quantite);
     }
 }

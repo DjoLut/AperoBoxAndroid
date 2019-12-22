@@ -14,12 +14,13 @@ import com.example.aperobox.R;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class ProductViewAdapter extends RecyclerView.Adapter<ProductViewHolder> {
     private Object[] produits;
     private Object[] quantites;
 
-    public ProductViewAdapter(LinkedHashMap<Produit, Integer> listeProduits, Fragment fragment) {
+    public ProductViewAdapter(Map<Produit, Integer> listeProduits, Fragment fragment) {
         this.produits = listeProduits.keySet().toArray();
         this.quantites = listeProduits.values().toArray();
     }

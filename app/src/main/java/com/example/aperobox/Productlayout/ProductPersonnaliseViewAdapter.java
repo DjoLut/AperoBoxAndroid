@@ -13,6 +13,7 @@ import com.example.aperobox.Model.Produit;
 import com.example.aperobox.R;
 
 import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Set;
 
 public class ProductPersonnaliseViewAdapter extends RecyclerView.Adapter<ProductPersonnaliseViewHolder> {
