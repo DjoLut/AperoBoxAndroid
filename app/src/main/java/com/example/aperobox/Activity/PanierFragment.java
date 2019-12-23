@@ -24,6 +24,7 @@ import com.example.aperobox.Model.Panier;
 import com.example.aperobox.PanierLayout.PanierBoxViewAdapter;
 import com.example.aperobox.PanierLayout.PanierProduitViewAdapter;
 import com.example.aperobox.R;
+import com.example.aperobox.application.AperoBoxApplication;
 import com.example.aperobox.application.SingletonPanier;
 import com.google.android.material.button.MaterialButton;
 
@@ -44,6 +45,11 @@ public class PanierFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        if (AperoBoxApplication.getInstance().isNightModeEnabled()) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
         setHasOptionsMenu(true);
     }
 
@@ -88,7 +94,6 @@ public class PanierFragment extends Fragment {
         return view;
     }
 
-
     @Override
     public void onResume() { super.onResume(); }
 
@@ -110,15 +115,6 @@ public class PanierFragment extends Fragment {
     @Override
     public void onDestroy() { super.onDestroy(); }
 
-
-
-
-
-
-
-
-
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
         if(menu.size()==0) {
@@ -127,14 +123,9 @@ public class PanierFragment extends Fragment {
             icon.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
-                    if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_NO) {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                        return true;
-                    } else if (AppCompatDelegate.getDefaultNightMode() != AppCompatDelegate.MODE_NIGHT_NO) {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                        return true;
-                    }
-                    return false;
+                    AperoBoxApplication.getInstance().setIsNightModeEnabled(!AperoBoxApplication.getInstance().isNightModeEnabled());
+                    getFragmentManager().beginTransaction().detach(PanierFragment.this).attach(PanierFragment.this).commit();
+                    return true;
                 }
             });
         }

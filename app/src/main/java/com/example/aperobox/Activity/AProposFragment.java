@@ -25,6 +25,7 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Toast;
 
 import com.example.aperobox.R;
+import com.example.aperobox.application.AperoBoxApplication;
 import com.google.android.material.button.MaterialButton;
 
 public class AProposFragment extends Fragment {
@@ -57,14 +58,9 @@ public class AProposFragment extends Fragment {
             icon.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
-                    if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_NO) {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                        return true;
-                    } else if (AppCompatDelegate.getDefaultNightMode() != AppCompatDelegate.MODE_NIGHT_NO) {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                        return true;
-                    }
-                    return false;
+                    AperoBoxApplication.getInstance().setIsNightModeEnabled(!AperoBoxApplication.getInstance().isNightModeEnabled());
+                    getFragmentManager().beginTransaction().detach(AProposFragment.this).attach(AProposFragment.this).commit();
+                    return true;
                 }
             });
         }
@@ -170,6 +166,11 @@ public class AProposFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (AperoBoxApplication.getInstance().isNightModeEnabled()) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
     }
 
     @Override

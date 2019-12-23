@@ -33,6 +33,7 @@ import com.example.aperobox.Exception.HttpResultException;
 import com.example.aperobox.Model.Adresse;
 import com.example.aperobox.Model.Utilisateur;
 import com.example.aperobox.R;
+import com.example.aperobox.application.AperoBoxApplication;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -51,6 +52,16 @@ public class InscriptionFragment extends Fragment {
     private SharedPreferences preferences;
     private Inscription inscriptionTask;
     private AjoutAdresse ajoutAdresseTask;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (AperoBoxApplication.getInstance().isNightModeEnabled()) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+    }
 
     @Override
     public View onCreateView(
@@ -424,14 +435,9 @@ public class InscriptionFragment extends Fragment {
             icon.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
-                    if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_NO) {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                        return true;
-                    } else if (AppCompatDelegate.getDefaultNightMode() != AppCompatDelegate.MODE_NIGHT_NO) {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                        return true;
-                    }
-                    return false;
+                    AperoBoxApplication.getInstance().setIsNightModeEnabled(!AperoBoxApplication.getInstance().isNightModeEnabled());
+                    getFragmentManager().beginTransaction().detach(InscriptionFragment.this).attach(InscriptionFragment.this).commit();
+                    return true;
                 }
             });
         }

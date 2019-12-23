@@ -39,11 +39,13 @@ import com.example.aperobox.Model.Produit;
 import com.example.aperobox.Productlayout.ProductPersonnaliseViewAdapter;
 import com.example.aperobox.Productlayout.ProductViewAdapter;
 import com.example.aperobox.R;
+import com.example.aperobox.application.AperoBoxApplication;
 import com.example.aperobox.application.SingletonPanier;
 import com.example.aperobox.Utility.Constantes;
 import com.google.android.material.button.MaterialButton;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class BoxFragment extends Fragment {
@@ -78,6 +80,7 @@ public class BoxFragment extends Fragment {
     private BoxDAO boxDAO;
 
     private View view;
+    private Bundle savedInstanceState;
 
     private Panier panier;
 
@@ -152,6 +155,8 @@ public class BoxFragment extends Fragment {
         View view = inflater.inflate(R.layout.box_fragment, container, false);
         this.view = view;
         produitToDisplay = view.findViewById(R.id.box_fragment_produit_recycler_view);
+
+        savedInstanceState = savedInstanceState;
 
         // Set up the tool bar
         setUpToolbar(view);
@@ -392,14 +397,17 @@ public class BoxFragment extends Fragment {
             icon.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
-                    if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_NO) {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                        return true;
-                    } else if (AppCompatDelegate.getDefaultNightMode() != AppCompatDelegate.MODE_NIGHT_NO) {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                        return true;
-                    }
-                    return false;
+                    Boolean isNightMode = !AperoBoxApplication.getInstance().isNightModeEnabled();
+                    AperoBoxApplication.getInstance().setIsNightModeEnabled(isNightMode);
+                    AppCompatDelegate.setDefaultNightMode(isNightMode?AppCompatDelegate.MODE_NIGHT_NO:AppCompatDelegate.MODE_NIGHT_YES);
+                    Map<Produit,Integer> listeProduit = listeProduits;
+                    Box select = selectedBox;
+                    BoxFragment.this.onDestroy();
+                    listeProduits = listeProduit;
+                    selectedBox = select;
+                    BoxFragment.this.onCreate(savedInstanceState);
+                    getFragmentManager().beginTransaction().detach(BoxFragment.this).attach(BoxFragment.this).commit();
+                    return true;
                 }
             });
         }

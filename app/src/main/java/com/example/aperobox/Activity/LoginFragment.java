@@ -24,6 +24,7 @@ import com.example.aperobox.Exception.HttpResultException;
 import com.example.aperobox.Model.JwtToken;
 import com.example.aperobox.Model.LoginModel;
 import com.example.aperobox.R;
+import com.example.aperobox.application.AperoBoxApplication;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -42,6 +43,16 @@ public class LoginFragment extends Fragment {
 
     private SharedPreferences preferences;
     private Connection connexionTask;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (AperoBoxApplication.getInstance().isNightModeEnabled()) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+    }
 
     @Override
     public View onCreateView(
@@ -131,14 +142,9 @@ public class LoginFragment extends Fragment {
             icon.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
-                    if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_NO) {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                        return true;
-                    } else if (AppCompatDelegate.getDefaultNightMode() != AppCompatDelegate.MODE_NIGHT_NO) {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                        return true;
-                    }
-                    return false;
+                    AperoBoxApplication.getInstance().setIsNightModeEnabled(!AperoBoxApplication.getInstance().isNightModeEnabled());
+                    getFragmentManager().beginTransaction().detach(LoginFragment.this).attach(LoginFragment.this).commit();
+                    return true;
                 }
             });
         }
@@ -224,7 +230,6 @@ public class LoginFragment extends Fragment {
                 getContext().getResources().getDrawable(R.drawable.close_menu))); // Menu close icon
     }
 
-
     private boolean isPasswordLengthValid(@Nullable Editable text) {
         return text != null && text.length() >= 3;
     }
@@ -232,8 +237,6 @@ public class LoginFragment extends Fragment {
     private boolean isUsernameLengthValid(@Nullable Editable text) {
         return text!=null && text.length() >= 3;
     }
-
-
 
     private class Connection extends AsyncTask<LoginModel, Void, JwtToken> {
 
@@ -281,10 +284,6 @@ public class LoginFragment extends Fragment {
             Toast.makeText(getContext(), R.string.login_failed, Toast.LENGTH_SHORT).show();
         }
     }
-
-
-
-
 
     @Override
     public void onDestroy() {

@@ -32,6 +32,7 @@ import com.example.aperobox.Model.Box;
 import com.example.aperobox.Model.Utilisateur;
 import com.example.aperobox.R;
 
+import com.example.aperobox.application.AperoBoxApplication;
 import com.example.aperobox.staggeredgridlayout.StaggeredProductCardRecyclerViewAdapter;
 import com.google.android.material.button.MaterialButton;
 
@@ -51,18 +52,26 @@ public class BoxsGridFragment extends Fragment {
     private LayoutInflater inflater;
     private ViewGroup container;
     private Boolean internetAvaillable;
+    private Bundle savedInstanceState;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (AperoBoxApplication.getInstance().isNightModeEnabled()) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         this.inflater = inflater;
         this.container = container;
+        this.savedInstanceState = savedInstanceState;
         setHasOptionsMenu(true);
         internetAvaillable = UtilDAO.isInternetAvailable(getContext());
+        super.onCreateView(inflater,container,savedInstanceState);
         return setView();
     }
 
@@ -237,14 +246,15 @@ public class BoxsGridFragment extends Fragment {
             icon.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
-                    if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_NO) {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                        return true;
-                    } else if (AppCompatDelegate.getDefaultNightMode() != AppCompatDelegate.MODE_NIGHT_NO) {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                        return true;
-                    }
-                    return false;
+                    Boolean isNightMode = !AperoBoxApplication.getInstance().isNightModeEnabled();
+                    AperoBoxApplication.getInstance().setIsNightModeEnabled(isNightMode);
+                    AppCompatDelegate.setDefaultNightMode(isNightMode?AppCompatDelegate.MODE_NIGHT_NO:AppCompatDelegate.MODE_NIGHT_YES);
+                    //BoxsGridFragment.this.onDestroyView();
+                    //BoxsGridFragment.this.onCreateView(inflater,container,savedInstanceState);
+                    BoxsGridFragment.this.onDestroy();
+                    BoxsGridFragment.this.onCreate(savedInstanceState);
+                    BoxsGridFragment.this.getFragmentManager().beginTransaction().detach(BoxsGridFragment.this).attach(BoxsGridFragment.this).commit();
+                    return true;
                 }
             });
         }
