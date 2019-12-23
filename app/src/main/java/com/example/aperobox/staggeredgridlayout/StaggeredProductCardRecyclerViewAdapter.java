@@ -3,6 +3,7 @@ package com.example.aperobox.staggeredgridlayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -73,7 +74,16 @@ public class StaggeredProductCardRecyclerViewAdapter extends RecyclerView.Adapte
                 prix = fragment.getString(R.string.box_fragment_box_prix_gratuit);
 
             holder.productPrice.setText(prix);
-            Glide.with(fragment).load(Constantes.URL_IMAGE_API + product.getPhoto()).into(holder.productImage);
+            try{
+                Glide.with(fragment).load(Constantes.URL_IMAGE_API + product.getPhoto()).into(holder.productImage);
+            } catch (Exception e) {
+                fragment.getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(fragment.getContext(), fragment.getString(R.string.chargement_lost_connection), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

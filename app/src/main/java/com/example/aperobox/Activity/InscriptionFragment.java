@@ -49,6 +49,8 @@ public class InscriptionFragment extends Fragment {
     private Utilisateur newUser;
     private Adresse newAdresse;
     private SharedPreferences preferences;
+    private Inscription inscriptionTask;
+    private AjoutAdresse ajoutAdresseTask;
 
     @Override
     public View onCreateView(
@@ -99,6 +101,9 @@ public class InscriptionFragment extends Fragment {
 
         // Set up the toolbar
         setUpToolbar(view);
+
+        //Set up icon dark mode
+        setHasOptionsMenu(true);
 
         // Set an error if the password is less than 8 characters.
         inscriptionButton.setOnClickListener(new View.OnClickListener() {
@@ -224,7 +229,8 @@ public class InscriptionFragment extends Fragment {
                                 passwordEditText.getText().toString(),
                                 confPasswordEditText.getText().toString()
                         );
-                        new AjoutAdresse().execute(newAdresse);
+                        ajoutAdresseTask = new AjoutAdresse();
+                        ajoutAdresseTask.execute(newAdresse);
                     }
                     else
                     {
@@ -333,7 +339,13 @@ public class InscriptionFragment extends Fragment {
             }
             catch (Exception e)
             {
-                Toast.makeText(getContext(), "Erreur Inscription Utilisateur 1", Toast.LENGTH_SHORT).show();
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getContext(), getString(R.string.inscription_fragment_erreur_inscription) + "\n" + getString(R.string.retry), Toast.LENGTH_LONG).show();
+                        inscriptionTask.cancel(true);
+                    }
+                });
             }
 
             return statusCodeUtilisateur;
@@ -369,7 +381,13 @@ public class InscriptionFragment extends Fragment {
             }
             catch (Exception e)
             {
-                Toast.makeText(getContext(), "Erreur Inscription Adresse : ", Toast.LENGTH_SHORT).show();
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getContext(), getString(R.string.inscription_fragment_erreur_ajout_adresse) + "\n" + getString(R.string.retry), Toast.LENGTH_LONG).show();
+                        inscriptionTask.cancel(true);
+                    }
+                });
             }
 
             newUser.setAdresse(adresse.getId());
@@ -380,7 +398,8 @@ public class InscriptionFragment extends Fragment {
         protected void onPostExecute(Adresse adresse)
         {
             if(adresse.getId() != null){
-                new Inscription().execute(newUser);
+                inscriptionTask = new Inscription();
+                inscriptionTask.execute(newUser);
             }else{
                 Toast.makeText(getContext(), "Erreur Inscription Adresse : ", Toast.LENGTH_SHORT).show();// TODO: faire ça avec @string
             }
@@ -388,9 +407,14 @@ public class InscriptionFragment extends Fragment {
     }
 
 
-
-
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(inscriptionTask!=null)
+            inscriptionTask.cancel(true);
+        if(ajoutAdresseTask!=null)
+            ajoutAdresseTask.cancel(true);
+    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {

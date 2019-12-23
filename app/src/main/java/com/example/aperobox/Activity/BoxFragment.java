@@ -14,6 +14,10 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -31,6 +35,7 @@ import com.example.aperobox.Dao.BoxDAO;
 import com.example.aperobox.Dao.ProduitDAO;
 import com.example.aperobox.Dao.UtilDAO;
 import com.example.aperobox.Dao.network.JokeEntry;
+import com.example.aperobox.Dao.network.NetworkUtil;
 import com.example.aperobox.Exception.HttpResultException;
 import com.example.aperobox.Model.Box;
 import com.example.aperobox.Model.Panier;
@@ -280,10 +285,17 @@ public class BoxFragment extends Fragment {
     {
         @Override
         protected Box doInBackground(String... params) {
+            if(NetworkUtil.getConnectivityStatus(getContext())==0)
+                loadBoxTask.cancel(true);
             try {
                 selectedBox = boxDAO.getBox(Integer.valueOf(boxId));
             } catch (Exception e) {
-                Toast.makeText(getContext(), "Erreur de chargement de la box", Toast.LENGTH_LONG).show();
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getContext(), getString(R.string.box_fragment_erreur_load_box) + "\n" + getString(R.string.retry), Toast.LENGTH_LONG).show();
+                    }
+                });
             }
             return selectedBox;
         }
@@ -311,10 +323,21 @@ public class BoxFragment extends Fragment {
                 ProduitDAO produitDAO = new ProduitDAO();
                 try {
                     listeProduits = produitDAO.getProduitByBoxId(boxId);
-                } catch (HttpResultException h){
+                } catch (final HttpResultException h){
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getContext(), h.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
                     Toast.makeText(getContext(), h.getMessage(), Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
-                    Toast.makeText(getContext(), "Erreur de chargement de toute les boxs", Toast.LENGTH_SHORT).show();
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getContext(), getString(R.string.box_fragment_erreur_load_produits) + "\n" + getString(R.string.retry), Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
                 return listeProduits;
             }
@@ -342,7 +365,12 @@ public class BoxFragment extends Fragment {
             try {
                 listeProduits = produitDAO.getAllProduitBoxPersonnalise();
             } catch (Exception e) {
-                Toast.makeText(getContext(), "Erreur de chargement de toute les boxs", Toast.LENGTH_SHORT).show();
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getContext(), getString(R.string.box_fragment_erreur_load_produits) + "\n" + getString(R.string.retry), Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
             return listeProduits;
         }
@@ -524,8 +552,15 @@ public class BoxFragment extends Fragment {
         boxPersonnalise.setElevation(1);
 
         this.box_price.setText(getString(R.string.box_fragment_box_prix_gratuit));
-        if(UtilDAO.isInternetAvailable(getContext())) {
+        try{
             Glide.with(this).load(Constantes.URL_IMAGE_API + Constantes.DEFAULT_END_URL_IMAGE_API).into(this.box_image);
+        } catch (Exception e) {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getContext(), getString(R.string.chargement_lost_connection), Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 
@@ -541,14 +576,21 @@ public class BoxFragment extends Fragment {
     }
 
     private void setViwBoxBox(){
-        if(UtilDAO.isInternetAvailable(getContext())) {
-            String url = selectedBox.getPhoto();
+        String url = selectedBox.getPhoto();
+        try{
             Glide
                     .with(BoxFragment.this)
                     .load(Constantes.URL_IMAGE_API + url)
                     .override(300, 200)
                     .error(R.drawable.ic_launcher_background)
                     .into(box_image);
+        } catch (Exception e) {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getContext(), getString(R.string.chargement_lost_connection), Toast.LENGTH_SHORT).show();
+                }
+            });
         }
 
         box_name.setText(selectedBox.getNom());

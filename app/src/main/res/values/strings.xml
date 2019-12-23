@@ -88,6 +88,15 @@
     <string name="invalid_localite">2 caractères minimum et 20 maximum</string>
     <string name="invalid_codePostal">1 à 7 chiffres requis</string>
 
+    <string name="box_grid_fragment_erreur_load_boxs">Une erreur est survenue lors du chargement de toute les boxs</string>
+    <string name="box_fragment_erreur_load_box">Une erreur est survenue lors du chargement de la box</string>
+    <string name="box_fragment_erreur_load_produits">Une erreur est survenue lors du chargement des produits</string>
+    <string name="inscription_fragment_erreur_inscription">Une erreur est survenue lors de votre inscription.</string>
+    <string name="inscription_fragment_erreur_ajout_adresse">Une erreur est survenue lors de l\'ajout de votre adresse.</string>
+    <string name="connexion_fragment_erreur_connexion">Une erreur est survenue lors de votre connexion.</string>
+    <string name="chargement_lost_connection">La connection internet s\'est interrompue durant le chargement d\'un/plusieurs élément(s).\n Veuillez vérifier votre connection internet, revenir en arrière et réessayer</string>
+    <string name="retry">Veuillez vérifier votre connection internet, revenir en arrière et réessayer</string>
+
     <!-- Backdrop menu -->
     <string name="menu_acceuil">Accueil</string>
     <string name="menu_box_perso">Box personnalisé</string>

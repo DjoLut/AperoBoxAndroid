@@ -59,14 +59,13 @@ public class BoxsGridFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
     }
 
     @Override
-    public View onCreateView(
-            @NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         this.inflater = inflater;
         this.container = container;
+        setHasOptionsMenu(true);
         internetAvaillable = UtilDAO.isInternetAvailable(getContext());
         return setView();
     }
@@ -268,8 +267,14 @@ public class BoxsGridFragment extends Fragment {
             try {
                 boxes = boxDAO.getAllBox();
             } catch (Exception e) {
-                Toast.makeText(getContext(), "Erreur de chargement de toute les boxs", Toast.LENGTH_SHORT).show();
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getContext(), getString(R.string.box_grid_fragment_erreur_load_boxs) + "\n" + getString(R.string.retry), Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
+
             return boxes;
         }
 

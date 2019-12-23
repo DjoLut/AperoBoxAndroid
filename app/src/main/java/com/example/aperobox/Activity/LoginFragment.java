@@ -42,6 +42,7 @@ import androidx.fragment.app.Fragment;
 public class LoginFragment extends Fragment {
 
     private SharedPreferences preferences;
+    private Connection connexionTask;
 
     @Override
     public View onCreateView(
@@ -79,8 +80,10 @@ public class LoginFragment extends Fragment {
                             passwordEditText.getText().toString()
                     );
 
-                    if(UtilDAO.isInternetAvailable(getContext()))
-                        new Connection().execute(utilisateurConnection);
+                    if(UtilDAO.isInternetAvailable(getContext())) {
+                        connexionTask = new Connection();
+                        connexionTask.execute(utilisateurConnection);
+                    }
                 }
             }
         });
@@ -114,6 +117,9 @@ public class LoginFragment extends Fragment {
 
         //Set up the toolbar
         setUpToolbar(view);
+
+        //Set up icon dark mode
+        setHasOptionsMenu(true);
 
         return view;
     }
@@ -243,9 +249,16 @@ public class LoginFragment extends Fragment {
             } catch (HttpResultException e) {
                 exception = e;
                 cancel(true);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            } catch (Exception e)
+                {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getContext(), getString(R.string.connexion_fragment_erreur_connexion) + "\n" + getString(R.string.retry), Toast.LENGTH_LONG).show();
+                            connexionTask.cancel(true);
+                        }
+                    });
+                }
             return token;
         }
 
@@ -277,6 +290,8 @@ public class LoginFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        if(connexionTask!=null)
+            connexionTask.cancel(true);
     }
 
     @Override

@@ -82,6 +82,9 @@ public class PanierFragment extends Fragment {
 
         setUpToolbar(view);
 
+        //Set up icon dark mode
+        setHasOptionsMenu(true);
+
         return view;
     }
 

@@ -40,6 +40,7 @@ public class AProposFragment extends Fragment {
         this.container = container;
 
         setUpToolbar(view);
+        setHasOptionsMenu(true);
 
         // Set cut corner background for API 23+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
