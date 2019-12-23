@@ -60,7 +60,7 @@ public class PanierFragment extends Fragment {
         //BOXES
         boxToDisplay = view.findViewById(R.id.panier_fragment_box_recycler_view);
         boxToDisplay.setHasFixedSize(true);
-        GridLayoutManager gridLayoutManagerBox = new GridLayoutManager(getContext(), 2, GridLayoutManager.HORIZONTAL, false);
+        GridLayoutManager gridLayoutManagerBox = new GridLayoutManager(getContext(), 1, GridLayoutManager.VERTICAL, false);
         boxToDisplay.setLayoutManager(gridLayoutManagerBox);
 
         PanierBoxViewAdapter adapterBox = new PanierBoxViewAdapter(panier, PanierFragment.this);
@@ -71,7 +71,7 @@ public class PanierFragment extends Fragment {
         //PRODUITS
         produitToDisplay = view.findViewById(R.id.panier_fragment_produit_recycler_view);
         produitToDisplay.setHasFixedSize(true);
-        GridLayoutManager gridLayoutManagerProduit = new GridLayoutManager(getContext(), 2, GridLayoutManager.HORIZONTAL, false);
+        GridLayoutManager gridLayoutManagerProduit = new GridLayoutManager(getContext(), 1, GridLayoutManager.VERTICAL, false);
         produitToDisplay.setLayoutManager(gridLayoutManagerProduit);
 
         PanierProduitViewAdapter adapterProduit = new PanierProduitViewAdapter(panier, PanierFragment.this);
