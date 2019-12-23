@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.example.aperobox.Dao.UtilDAO;
 import com.example.aperobox.Dao.network.JokeEntry;
 import com.example.aperobox.R;
+import com.example.aperobox.application.AperoBoxApplication;
 
 public class MainActivity extends AppCompatActivity implements NavigationHost{
     private SharedPreferences preferences;
@@ -29,11 +30,6 @@ public class MainActivity extends AppCompatActivity implements NavigationHost{
         }
         if(!UtilDAO.isInternetAvailable(getBaseContext()))
             Toast.makeText(this,R.string.error_no_internet,Toast.LENGTH_LONG).show();
-
-        preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.clear();
-        editor.commit();
     }
 
     @Override
@@ -56,14 +52,12 @@ public class MainActivity extends AppCompatActivity implements NavigationHost{
     @Override
     protected void onDestroy() {
         super.onDestroy();
-    }
-
-    @Override
-    protected void onPause() { super.onPause(); }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
+        if(AperoBoxApplication.token.isEmpty()) {
+            preferences = PreferenceManager.getDefaultSharedPreferences(this);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.clear();
+            editor.commit();
+        }
     }
 
     /**

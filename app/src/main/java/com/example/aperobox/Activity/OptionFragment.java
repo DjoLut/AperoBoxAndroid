@@ -31,6 +31,8 @@ public class OptionFragment extends Fragment {
 
     private Boolean isNightMode;
     private SharedPreferences preferences;
+    private static final String SAVED_BUNDLE_TAG = "optionFragment";
+    private Bundle bundle;
 
     public OptionFragment() {
         // Required empty public constructor
@@ -39,7 +41,12 @@ public class OptionFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRetainInstance(true);
         isNightMode = AperoBoxApplication.getInstance().isNightModeEnabled();
+        preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(SAVED_BUNDLE_TAG, null);
+        editor.commit();
     }
 
     @Nullable
@@ -57,6 +64,9 @@ public class OptionFragment extends Fragment {
                 Boolean isNightMode = !AperoBoxApplication.getInstance().isNightModeEnabled();
                 AperoBoxApplication.getInstance().setIsNightModeEnabled(isNightMode);
                 AppCompatDelegate.setDefaultNightMode(isNightMode?AppCompatDelegate.MODE_NIGHT_NO:AppCompatDelegate.MODE_NIGHT_YES);
+                preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+                String token = preferences.getString("access_token", "");
+                AperoBoxApplication.token = token;
                 OptionFragment.this.getActivity().recreate();
             }
         });
@@ -68,6 +78,15 @@ public class OptionFragment extends Fragment {
         }
 
         return view;
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if(bundle==null) {
+            bundle = new Bundle();
+        }
+        outState.putBundle(SAVED_BUNDLE_TAG, bundle);
     }
 
     private void setUpToolbar(View view) {

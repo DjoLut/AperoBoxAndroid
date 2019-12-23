@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 public class AperoBoxApplication extends Application {
     public static final String NIGHT_MODE = "NIGHT_MODE";
     private boolean isNightModeEnabled = false;
+    public static String token = "";
 
     private static AperoBoxApplication instance;
     private static Context appContext;
