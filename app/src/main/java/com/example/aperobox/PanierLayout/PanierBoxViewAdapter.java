@@ -15,12 +15,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 
-public class PanierViewAdapter extends RecyclerView.Adapter<PanierViewHolder> {
+public class PanierBoxViewAdapter extends RecyclerView.Adapter<PanierBoxViewHolder> {
     private Panier panier = SingletonPanier.getUniquePanier();
     private ArrayList<Box> box = new ArrayList<>();
     private ArrayList<Integer> quantite = new ArrayList<>();
 
-    public PanierViewAdapter(Panier panier, Fragment fragment) {
+    public PanierBoxViewAdapter(Panier panier, Fragment fragment) {
         for (Iterator<Map.Entry<Box, Integer>> it = panier.getBox().entrySet().iterator(); it.hasNext();)
         {
             Map.Entry<Box, Integer> entry = it.next();
@@ -36,13 +36,13 @@ public class PanierViewAdapter extends RecyclerView.Adapter<PanierViewHolder> {
 
     @NonNull
     @Override
-    public PanierViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_panier, parent, false);
-        return new PanierViewHolder(layoutView);
+    public PanierBoxViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_box_panier, parent, false);
+        return new PanierBoxViewHolder(layoutView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PanierViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull PanierBoxViewHolder holder, final int position) {
         holder.panierBoxNomTextView.setText(box.get(position).getNom());
         holder.panierBoxQuantiteEditText.setText(quantite.get(position).toString());
     }

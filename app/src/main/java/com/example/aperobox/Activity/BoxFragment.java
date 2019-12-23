@@ -42,6 +42,7 @@ import com.example.aperobox.application.SingletonPanier;
 import com.example.aperobox.Utility.Constantes;
 import com.google.android.material.button.MaterialButton;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 public class BoxFragment extends Fragment {
@@ -64,6 +65,7 @@ public class BoxFragment extends Fragment {
     private LoadProd loadProd;
     private LoadProduit loadProduit;
     private Box selectedBox;
+    private Box boxPersonnalise;
     private Double sommeHTVA;
     private Double promotion;
 
@@ -197,29 +199,46 @@ public class BoxFragment extends Fragment {
                 String access_token = preferences.getString("access_token", null);
                 if(access_token != null)
                 {
-                    if(Integer.valueOf(box_quantite.getText().toString()) != 0) {
-                        if(boxId==null){
-                            Boolean isempty = true;
-                            for(Integer value : listeProduits.values()) {
-                                if (value != 0)
-                                    isempty = false;
+                    if(Integer.valueOf(box_quantite.getText().toString()) != 0)
+                    {
+                        if(boxId==null)
+                        {
+                            Boolean isEmpty = true;
+                            Map<Produit, Integer> produitsBoxPerso = new HashMap<>();
+
+                            for (Iterator<Map.Entry<Produit, Integer>> it = listeProduits.entrySet().iterator(); it.hasNext();)
+                            {
+                                Map.Entry<Produit, Integer> entry = it.next();
+
+                                if(entry.getValue() != 0)
+                                {
+                                    produitsBoxPerso.put(entry.getKey(), entry.getValue());
+                                    isEmpty = false;
+                                }
                             }
 
-                            if(!isempty) {
-                                //Liste bien mise à jour
-                            } else{
+                            if(!isEmpty)
+                            {
+                                //AJOUT DES PRODUITS DANS LE PANIER
+                                panier = SingletonPanier.getUniquePanier();
+                                panier.addProduit(produitsBoxPerso);
+                                Toast.makeText(getContext(), R.string.box_fragment_produits_ajouter, Toast.LENGTH_LONG).show();
+                            }
+                            else
+                            {
                                 Toast.makeText(getContext(),R.string.box_fragment_box_personnalise_empty_quantite, Toast.LENGTH_LONG).show();
                             }
-                        } else {
+                        }
+                        else
+                        {
+                            //AJOUT DES BOX DANS LE PANIER
                             panier = SingletonPanier.getUniquePanier();
-                            if (boxId != null) {
-                                panier.addBox(selectedBox, Integer.valueOf(box_quantite.getText().toString()));
-                            } else {
-                                //panier.addBox(listeProduits, Integer.valueOf(box_quantite.getText().toString()));
-                            }
+                            panier.addBox(selectedBox, Integer.valueOf(box_quantite.getText().toString()));
                             Toast.makeText(getContext(), R.string.box_fragment_box_ajouter, Toast.LENGTH_LONG).show();
                         }
-                    } else{
+                    }
+                    else
+                    {
                         Toast.makeText(getContext(),R.string.box_fragment_box__empty_quantite, Toast.LENGTH_LONG).show();
                     }
                 }

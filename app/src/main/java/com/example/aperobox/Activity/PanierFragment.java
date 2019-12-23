@@ -18,9 +18,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.example.aperobox.Model.Panier;
-import com.example.aperobox.PanierLayout.PanierViewAdapter;
+import com.example.aperobox.PanierLayout.PanierBoxViewAdapter;
+import com.example.aperobox.PanierLayout.PanierProduitViewAdapter;
 import com.example.aperobox.R;
 import com.example.aperobox.application.SingletonPanier;
 import com.google.android.material.button.MaterialButton;
@@ -30,7 +32,10 @@ public class PanierFragment extends Fragment {
     private LayoutInflater inflater;
     private SharedPreferences preferences;
     private RecyclerView boxToDisplay;
+    private RecyclerView produitToDisplay;
     private Panier panier = SingletonPanier.getUniquePanier();
+    private TextView panierBoxTextView;
+    private TextView panierBoxPersoTextView;
 
     public PanierFragment() {
     }
@@ -49,13 +54,31 @@ public class PanierFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.panier_fragment, this.container, false);
 
-        boxToDisplay = view.findViewById(R.id.panier_fragment_produit_recycler_view);
-        boxToDisplay.setHasFixedSize(true);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2, GridLayoutManager.HORIZONTAL, false);
-        boxToDisplay.setLayoutManager(gridLayoutManager);
+        panierBoxTextView = view.findViewById(R.id.panier_fragment_box_text_view);
+        panierBoxPersoTextView = view.findViewById(R.id.panier_fragment_boxPerso_text_view);
 
-        PanierViewAdapter adapter = new PanierViewAdapter(panier, PanierFragment.this);
-        boxToDisplay.setAdapter(adapter);
+        //BOXES
+        boxToDisplay = view.findViewById(R.id.panier_fragment_box_recycler_view);
+        boxToDisplay.setHasFixedSize(true);
+        GridLayoutManager gridLayoutManagerBox = new GridLayoutManager(getContext(), 2, GridLayoutManager.HORIZONTAL, false);
+        boxToDisplay.setLayoutManager(gridLayoutManagerBox);
+
+        PanierBoxViewAdapter adapterBox = new PanierBoxViewAdapter(panier, PanierFragment.this);
+        if(adapterBox.getItemCount() == 0)
+            panierBoxTextView.setText(R.string.panier_fragment_box_vide);
+        boxToDisplay.setAdapter(adapterBox);
+
+        //PRODUITS
+        produitToDisplay = view.findViewById(R.id.panier_fragment_produit_recycler_view);
+        produitToDisplay.setHasFixedSize(true);
+        GridLayoutManager gridLayoutManagerProduit = new GridLayoutManager(getContext(), 2, GridLayoutManager.HORIZONTAL, false);
+        produitToDisplay.setLayoutManager(gridLayoutManagerProduit);
+
+        PanierProduitViewAdapter adapterProduit = new PanierProduitViewAdapter(panier, PanierFragment.this);
+        if(adapterProduit.getItemCount() == 0)
+            panierBoxPersoTextView.setText(R.string.panier_fragment_produit_vide);
+        produitToDisplay.setAdapter(adapterProduit);
+
 
         setUpToolbar(view);
 

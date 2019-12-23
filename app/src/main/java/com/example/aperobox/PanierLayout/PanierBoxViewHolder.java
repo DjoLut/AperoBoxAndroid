@@ -8,14 +8,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.aperobox.Model.Box;
 import com.example.aperobox.R;
 
-public class PanierViewHolder extends RecyclerView.ViewHolder {
+public class PanierBoxViewHolder extends RecyclerView.ViewHolder {
 
     public TextView panierBoxNomTextView;
     public EditText panierBoxQuantiteEditText;
 
-    PanierViewHolder(@NonNull View itemView){
+    PanierBoxViewHolder(@NonNull View itemView){
         super(itemView);
-        panierBoxNomTextView = itemView.findViewById(R.id.panier_fragment_nom_text_view);
+        panierBoxNomTextView = itemView.findViewById(R.id.panier_fragment_box_nom_text_view);
         panierBoxQuantiteEditText = itemView.findViewById(R.id.panier_fragment_box_quantite_edit_text);
     }
 

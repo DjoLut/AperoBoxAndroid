@@ -54,6 +54,7 @@
     <string name="box_fragment_box__empty_quantite">Vous devez avoir une quantité de box supérieur à 0 pour pouvoir commander</string>
     <string name="box_fragment_connection_obligatoire">Vous devez être connecté pour ajouter une box</string>
     <string name="box_fragment_box_ajouter">Box ajoutée(s)</string>
+    <string name="box_fragment_produits_ajouter">Produit(s) ajouté(s)</string>
 
     <!-- AProposFragment -->
     <string name="apropos_message">Application créé et inventée par deux étudiants d\'IG et trois étudiants de marketing de l\'HENALLux IESN de Namur</string>
@@ -98,5 +99,11 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- PanierFragment -->
+    <string name="panier_fragment_box_name">Box : </string>
+    <string name="panier_fragment_box_personnalise_name">Box Personnalisée : </string>
+    <string name="panier_fragment_box_vide">Box : Aucune box dans le panier</string>
+    <string name="panier_fragment_produit_vide">Box Personnalisée : Aucun produits dans le panier</string>
 
 </resources>
