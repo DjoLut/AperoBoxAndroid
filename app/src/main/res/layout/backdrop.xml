@@ -25,6 +25,13 @@
 
     <com.google.android.material.button.MaterialButton
         style="@style/Widget.AperoBox.Button.TextButton"
+        android:id="@+id/menu_option"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/menu_options" />
+
+    <com.google.android.material.button.MaterialButton
+        style="@style/Widget.AperoBox.Button.TextButton"
         android:id="@+id/menu_nous_contactez"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -145,8 +145,6 @@ public class BoxFragment extends Fragment {
             Toast.makeText(getContext(), getString(R.string.error_no_internet), Toast.LENGTH_SHORT).show();
             setJoke();
         }
-
-        setHasOptionsMenu(true);
     }
 
 
@@ -387,33 +385,6 @@ public class BoxFragment extends Fragment {
 
     }
 
-
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
-        if(menu.size()==0) {
-            menuInflater.inflate(R.menu.toolbar_menu, menu);
-            MenuItem icon = menu.getItem(0);
-            icon.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-                    Boolean isNightMode = !AperoBoxApplication.getInstance().isNightModeEnabled();
-                    AperoBoxApplication.getInstance().setIsNightModeEnabled(isNightMode);
-                    AppCompatDelegate.setDefaultNightMode(isNightMode?AppCompatDelegate.MODE_NIGHT_NO:AppCompatDelegate.MODE_NIGHT_YES);
-                    Map<Produit,Integer> listeProduit = listeProduits;
-                    Box select = selectedBox;
-                    BoxFragment.this.onDestroy();
-                    listeProduits = listeProduit;
-                    selectedBox = select;
-                    BoxFragment.this.onCreate(savedInstanceState);
-                    getFragmentManager().beginTransaction().detach(BoxFragment.this).attach(BoxFragment.this).commit();
-                    return true;
-                }
-            });
-        }
-        super.onCreateOptionsMenu(menu, menuInflater);
-    }
-
     private void calculTotal(){
         sommeHTVA = 0.0;
         promotion = 0.0;
@@ -476,6 +447,14 @@ public class BoxFragment extends Fragment {
                 }
             });
         }
+
+        View option = view.findViewById(R.id.menu_option);
+        option.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((NavigationHost)getActivity()).navigateTo(new OptionFragment(),true);
+            }
+        });
 
         View panier = view.findViewById(R.id.menu_panier);
         panier.setOnClickListener(new View.OnClickListener() {

@@ -88,9 +88,6 @@ public class PanierFragment extends Fragment {
 
         setUpToolbar(view);
 
-        //Set up icon dark mode
-        setHasOptionsMenu(true);
-
         return view;
     }
 
@@ -115,6 +112,7 @@ public class PanierFragment extends Fragment {
     @Override
     public void onDestroy() { super.onDestroy(); }
 
+/*
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
         if(menu.size()==0) {
@@ -132,6 +130,8 @@ public class PanierFragment extends Fragment {
         super.onCreateOptionsMenu(menu, menuInflater);
     }
 
+
+ */
     private void setUpToolbar(View view) {
         Toolbar toolbar = view.findViewById(R.id.panier_app_bar);
         AppCompatActivity activity = (AppCompatActivity) getActivity();
@@ -153,6 +153,14 @@ public class PanierFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ((NavigationHost) getActivity()).navigateTo(new BoxFragment(), true);
+            }
+        });
+
+        View option = view.findViewById(R.id.menu_option);
+        option.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((NavigationHost)getActivity()).navigateTo(new OptionFragment(),true);
             }
         });
 

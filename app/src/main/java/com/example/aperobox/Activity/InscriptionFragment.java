@@ -64,8 +64,7 @@ public class InscriptionFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(
-            @NonNull final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.inscription_fragment, container, false);
 
@@ -113,8 +112,6 @@ public class InscriptionFragment extends Fragment {
         // Set up the toolbar
         setUpToolbar(view);
 
-        //Set up icon dark mode
-        setHasOptionsMenu(true);
 
         // Set an error if the password is less than 8 characters.
         inscriptionButton.setOnClickListener(new View.OnClickListener() {
@@ -427,22 +424,6 @@ public class InscriptionFragment extends Fragment {
             ajoutAdresseTask.cancel(true);
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
-        if(menu.size()==0) {
-            menuInflater.inflate(R.menu.toolbar_menu, menu);
-            MenuItem icon = menu.getItem(0);
-            icon.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-                    AperoBoxApplication.getInstance().setIsNightModeEnabled(!AperoBoxApplication.getInstance().isNightModeEnabled());
-                    getFragmentManager().beginTransaction().detach(InscriptionFragment.this).attach(InscriptionFragment.this).commit();
-                    return true;
-                }
-            });
-        }
-        super.onCreateOptionsMenu(menu, menuInflater);
-    }
 
     private void setUpToolbar(View view) {
         Toolbar toolbar = view.findViewById(R.id.inscription_app_bar);
@@ -465,6 +446,14 @@ public class InscriptionFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ((NavigationHost)getActivity()).navigateTo(new BoxFragment(),true);
+            }
+        });
+
+        View option = view.findViewById(R.id.menu_option);
+        option.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((NavigationHost)getActivity()).navigateTo(new OptionFragment(),true);
             }
         });
 

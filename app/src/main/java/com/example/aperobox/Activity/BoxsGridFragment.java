@@ -69,7 +69,6 @@ public class BoxsGridFragment extends Fragment {
         this.inflater = inflater;
         this.container = container;
         this.savedInstanceState = savedInstanceState;
-        setHasOptionsMenu(true);
         internetAvaillable = UtilDAO.isInternetAvailable(getContext());
         super.onCreateView(inflater,container,savedInstanceState);
         return setView();
@@ -158,6 +157,14 @@ public class BoxsGridFragment extends Fragment {
             }
         });
 
+        View option = view.findViewById(R.id.menu_option);
+        option.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((NavigationHost)getActivity()).navigateTo(new OptionFragment(),true);
+            }
+        });
+
         View panier = view.findViewById(R.id.menu_panier);
         panier.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -238,7 +245,7 @@ public class BoxsGridFragment extends Fragment {
         textView.setText(jokeEntry.getBase()+"\n\n\n" + jokeEntry.getReponse());
     }
 
-    @Override
+    /*@Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
         if(menu.size()==0) {
             menuInflater.inflate(R.menu.toolbar_menu, menu);
@@ -260,6 +267,8 @@ public class BoxsGridFragment extends Fragment {
         }
         super.onCreateOptionsMenu(menu, menuInflater);
     }
+
+     */
 
 
 

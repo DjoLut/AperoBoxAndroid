@@ -55,8 +55,7 @@ public class LoginFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(
-            @NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.login_fragment, container, false);
         final TextInputLayout passwordTextInput = view.findViewById(R.id.login_password_text_input);
@@ -128,27 +127,7 @@ public class LoginFragment extends Fragment {
         //Set up the toolbar
         setUpToolbar(view);
 
-        //Set up icon dark mode
-        setHasOptionsMenu(true);
-
         return view;
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
-        if(menu.size()==0) {
-            menuInflater.inflate(R.menu.toolbar_menu, menu);
-            MenuItem icon = menu.getItem(0);
-            icon.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-                    AperoBoxApplication.getInstance().setIsNightModeEnabled(!AperoBoxApplication.getInstance().isNightModeEnabled());
-                    getFragmentManager().beginTransaction().detach(LoginFragment.this).attach(LoginFragment.this).commit();
-                    return true;
-                }
-            });
-        }
-        super.onCreateOptionsMenu(menu, menuInflater);
     }
 
     private void setUpToolbar(View view) {
@@ -172,6 +151,14 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ((NavigationHost)getActivity()).navigateTo(new BoxFragment(),true);
+            }
+        });
+
+        View option = view.findViewById(R.id.menu_option);
+        option.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((NavigationHost)getActivity()).navigateTo(new OptionFragment(),true);
             }
         });
 
