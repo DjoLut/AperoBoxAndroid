@@ -15,9 +15,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -35,7 +32,6 @@ import com.example.aperobox.Dao.BoxDAO;
 import com.example.aperobox.Dao.ProduitDAO;
 import com.example.aperobox.Dao.UtilDAO;
 import com.example.aperobox.Dao.network.JokeEntry;
-import com.example.aperobox.Dao.network.NetworkUtil;
 import com.example.aperobox.Exception.HttpResultException;
 import com.example.aperobox.Model.Box;
 import com.example.aperobox.Model.Panier;
@@ -285,8 +281,7 @@ public class BoxFragment extends Fragment {
     {
         @Override
         protected Box doInBackground(String... params) {
-            if(NetworkUtil.getConnectivityStatus(getContext())==0)
-                loadBoxTask.cancel(true);
+            loadBoxTask.cancel(true);
             try {
                 selectedBox = boxDAO.getBox(Integer.valueOf(boxId));
             } catch (Exception e) {

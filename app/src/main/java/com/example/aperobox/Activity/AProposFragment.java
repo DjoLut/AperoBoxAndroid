@@ -24,7 +24,6 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Toast;
 
-import com.example.aperobox.Model.Utilisateur;
 import com.example.aperobox.R;
 import com.google.android.material.button.MaterialButton;
 

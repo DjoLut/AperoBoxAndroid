@@ -26,12 +26,9 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.aperobox.Dao.BoxDAO;
-import com.example.aperobox.Dao.LigneProduitDAO;
 import com.example.aperobox.Dao.UtilDAO;
 import com.example.aperobox.Dao.network.JokeEntry;
 import com.example.aperobox.Model.Box;
-import com.example.aperobox.Model.LigneProduit;
-import com.example.aperobox.Model.Produit;
 import com.example.aperobox.Model.Utilisateur;
 import com.example.aperobox.R;
 
@@ -39,7 +36,6 @@ import com.example.aperobox.staggeredgridlayout.StaggeredProductCardRecyclerView
 import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class BoxsGridFragment extends Fragment {
 

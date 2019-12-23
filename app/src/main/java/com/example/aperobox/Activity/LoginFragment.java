@@ -17,13 +17,12 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Toast;
 
-import com.bumptech.glide.util.Util;
+
 import com.example.aperobox.Dao.UtilDAO;
 import com.example.aperobox.Dao.UtilisateurDAO;
 import com.example.aperobox.Exception.HttpResultException;
 import com.example.aperobox.Model.JwtToken;
 import com.example.aperobox.Model.LoginModel;
-import com.example.aperobox.Model.Utilisateur;
 import com.example.aperobox.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
