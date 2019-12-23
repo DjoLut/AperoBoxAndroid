@@ -7,9 +7,9 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -17,9 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -27,6 +24,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.bumptech.glide.Glide;
 import com.example.aperobox.Dao.BoxDAO;
 import com.example.aperobox.Dao.ProduitDAO;
@@ -39,16 +37,17 @@ import com.example.aperobox.Model.Produit;
 import com.example.aperobox.Productlayout.ProductPersonnaliseViewAdapter;
 import com.example.aperobox.Productlayout.ProductViewAdapter;
 import com.example.aperobox.R;
-import com.example.aperobox.application.AperoBoxApplication;
-import com.example.aperobox.application.SingletonPanier;
 import com.example.aperobox.Utility.Constantes;
+import com.example.aperobox.application.SingletonPanier;
 import com.google.android.material.button.MaterialButton;
+
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class BoxFragment extends Fragment {
+public class BoxPersonnaliseFragment extends Fragment {
+    private static final String SAVED_BUNDLE_TAG = "boxfragment";
+    private Bundle bundle;
 
     private SharedPreferences preferences;
     //View
@@ -58,30 +57,33 @@ public class BoxFragment extends Fragment {
     private ImageView box_image;
     private TextView box_quantite;
     private Button button_ajout_panier;
-    private Button button_plus;
-    private Button button_moins;
 
-    private LoadBox loadBoxTask;
-    private LoadProd loadProd;
-    private Box selectedBox;
-    private Box boxPersonnalise;
+    private BoxPersonnaliseFragment.LoadProduit loadProduit;
     private Double sommeHTVA;
-    private Double promotion;
 
-
-    private Integer boxId;
-    private Integer quantite;
     public static Map<Produit, Integer> listeProduits;
     private RecyclerView produitToDisplay;
-    private BoxDAO boxDAO;
 
     private View view;
     private Bundle savedInstanceState;
 
     private Panier panier;
 
-    public BoxFragment(int boxId){
-        this.boxId = boxId;
+    public BoxPersonnaliseFragment(){
+    }
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if(bundle==null && listeProduits!=null) {
+            bundle = new Bundle();
+        }
+        outState.putBundle(SAVED_BUNDLE_TAG, bundle);
     }
 
     @Override
@@ -94,10 +96,8 @@ public class BoxFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if(loadBoxTask != null)
-            loadBoxTask.cancel(true);
-        if(loadProd != null)
-            loadProd.cancel(true);
+        if(loadProduit!=null)
+            loadProduit.cancel(true);
     }
 
 
@@ -107,12 +107,9 @@ public class BoxFragment extends Fragment {
 
         setRetainInstance(true);
 
-        this.quantite = 1;
-        this.boxDAO = new BoxDAO();
-
         if(UtilDAO.isInternetAvailable(getContext())) {
-            loadBoxTask = new LoadBox();
-            loadBoxTask.execute();
+            loadProduit = new LoadProduit();
+            loadProduit.execute();
         } else {
             Toast.makeText(getContext(), getString(R.string.error_no_internet), Toast.LENGTH_SHORT).show();
             setJoke();
@@ -122,7 +119,7 @@ public class BoxFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        View view = inflater.inflate(R.layout.box_fragment, container, false);
+        View view = inflater.inflate(R.layout.box_personnalise_fragment, container, false);
         this.view = view;
         produitToDisplay = view.findViewById(R.id.box_fragment_produit_recycler_view);
 
@@ -136,8 +133,6 @@ public class BoxFragment extends Fragment {
         this.box_price = view.findViewById(R.id.box_fragment_box_price);
         this.box_description = view.findViewById(R.id.box_fragment_box_description);
         this.button_ajout_panier = view.findViewById(R.id.box_fragment_box_button_ajout_panier);
-        this.button_moins = view.findViewById(R.id.box_fragment_box_quantite_moins);
-        this.button_plus = view.findViewById(R.id.box_fragment_box_quantite_plus);
         this.box_quantite = view.findViewById(R.id.box_fragment_box_quantite);
 
         setView();
@@ -146,29 +141,6 @@ public class BoxFragment extends Fragment {
     }
 
     private void setView(){
-        this.button_moins.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                quantite = Integer.parseInt(box_quantite.getText().toString());
-                if(quantite >1) {
-                    quantite--;
-                    box_quantite.setText(quantite.toString());
-                }
-                affichePrix();
-            }
-        });
-
-        this.button_plus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                quantite = Integer.parseInt(box_quantite.getText().toString());
-                quantite++;
-                box_quantite.setText(quantite.toString());
-                affichePrix();
-            }
-        });
-
-
         button_ajout_panier.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -177,17 +149,25 @@ public class BoxFragment extends Fragment {
                 String access_token = preferences.getString("access_token", null);
                 if(access_token != null)
                 {
-                    if(Integer.valueOf(box_quantite.getText().toString()) != 0)
-                    {
+                    Boolean isEmpty = true;
+                    Map<Produit, Integer> produitsBoxPerso = new HashMap<>();
 
-                        //AJOUT DES BOX DANS LE PANIER
-                        panier = SingletonPanier.getUniquePanier();
-                        panier.addBox(selectedBox, Integer.valueOf(box_quantite.getText().toString()));
-                        Toast.makeText(getContext(), R.string.box_fragment_box_ajouter, Toast.LENGTH_LONG).show();
+                    for (Iterator<Map.Entry<Produit, Integer>> it = listeProduits.entrySet().iterator(); it.hasNext(); ) {
+                        Map.Entry<Produit, Integer> entry = it.next();
+
+                        if (entry.getValue() != 0) {
+                            produitsBoxPerso.put(entry.getKey(), entry.getValue());
+                            isEmpty = false;
+                        }
                     }
-                    else
-                    {
-                        Toast.makeText(getContext(),R.string.box_fragment_box__empty_quantite, Toast.LENGTH_LONG).show();
+
+                    if (!isEmpty) {
+                        //AJOUT DES PRODUITS DANS LE PANIER
+                        panier = SingletonPanier.getUniquePanier();
+                        panier.addProduit(produitsBoxPerso);
+                        Toast.makeText(getContext(), R.string.box_fragment_produits_ajouter, Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(getContext(), R.string.box_fragment_box_personnalise_empty_quantite, Toast.LENGTH_LONG).show();
                     }
                 }
                 else
@@ -198,14 +178,9 @@ public class BoxFragment extends Fragment {
             }
         });
 
-        this.box_quantite.setText(quantite.toString());
-
-
-        if(selectedBox!=null){
-            setViwBoxBox();
-            setViewBoxProduit();
-        }
-
+        setViewBoxPersonnaliseBox();
+        if(listeProduits!=null)
+            setViewBoxPersonnaliseProduit();
 
         int largePadding = getResources().getDimensionPixelSize(R.dimen.staggered_boxs_grid_spacing_large);
         int smallPadding = getResources().getDimensionPixelSize(R.dimen.staggered_boxs_grid_spacing_small);
@@ -218,70 +193,30 @@ public class BoxFragment extends Fragment {
         }
     }
 
-
-    private class LoadBox extends AsyncTask<String, Void, Box>
+    private class LoadProduit extends AsyncTask<Void, Void, Map<Produit, Integer>>
     {
         @Override
-        protected Box doInBackground(String... params) {
+        protected Map<Produit, Integer> doInBackground(Void... params)
+        {
+            ProduitDAO produitDAO = new ProduitDAO();
+            listeProduits = new HashMap<>();
             try {
-                selectedBox = boxDAO.getBox(Integer.valueOf(boxId));
+                listeProduits = produitDAO.getAllProduitBoxPersonnalise();
             } catch (Exception e) {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(getContext(), getString(R.string.box_fragment_erreur_load_box) + "\n" + getString(R.string.retry), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), getString(R.string.box_fragment_erreur_load_produits) + "\n" + getString(R.string.retry), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
-            return selectedBox;
+            return listeProduits;
         }
-
-        @Override
-        protected void onPostExecute(final Box box)
-        {
-            loadProd= new LoadProd();
-            loadProd.execute();
-
-            setViwBoxBox();
-        }
-
-        @Override
-        protected void onCancelled() {
-            super.onCancelled();
-        }
-    }
-
-        private class LoadProd extends AsyncTask<Void, Void, Map<Produit,Integer>>
-        {
-            @Override
-            protected Map<Produit, Integer> doInBackground(Void... params)
-            {
-                ProduitDAO produitDAO = new ProduitDAO();
-                try {
-                    listeProduits = produitDAO.getProduitByBoxId(boxId);
-                } catch (final HttpResultException h){
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getContext(), h.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    Toast.makeText(getContext(), h.getMessage(), Toast.LENGTH_SHORT).show();
-                } catch (Exception e) {
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getContext(), getString(R.string.box_fragment_erreur_load_produits) + "\n" + getString(R.string.retry), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
-                return listeProduits;
-            }
 
         @Override
         protected void onPostExecute(Map<Produit, Integer> produit)
         {
-            setViewBoxProduit();
+            setViewBoxPersonnaliseProduit();
         }
 
         @Override
@@ -291,13 +226,10 @@ public class BoxFragment extends Fragment {
 
     }
 
-
     private void calculTotal(){
         sommeHTVA = 0.0;
-        promotion = 0.0;
-        sommeHTVA = (selectedBox.getPrixUnitaireHtva()*(1+selectedBox.getTva())) * quantite;
-        if(selectedBox.getPromotion()!=null)
-            promotion = sommeHTVA*(1-selectedBox.getPromotion());
+        for(Produit produit: listeProduits.keySet())
+            sommeHTVA += produit.getPrixUnitaireHtva() * (1+produit.getTva()) * listeProduits.get(produit);
     }
 
     public void affichePrix(){
@@ -305,10 +237,6 @@ public class BoxFragment extends Fragment {
         String prix;
         if(sommeHTVA!=0) {
             prix = UtilDAO.format.format(Math.round(sommeHTVA*100.0)/100.0);
-            if (promotion != 0) {
-                prix += " - " +UtilDAO.format.format(Math.round(promotion*100.0)/100.0);
-                prix += " = " + UtilDAO.format.format(Math.round((sommeHTVA-promotion)*100.0)/100.0);
-            }
         } else
             prix = getString(R.string.box_fragment_box_prix_gratuit);
         box_price.setText(prix);
@@ -337,12 +265,8 @@ public class BoxFragment extends Fragment {
         });
 
         View boxPersonnalise = view.findViewById(R.id.menu_box_personnalise);
-        boxPersonnalise.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((NavigationHost) getActivity()).navigateTo(new BoxPersonnaliseFragment(), true);
-            }
-        });
+        boxPersonnalise.setElevation(1);
+        boxPersonnalise.setOnClickListener(null);
 
         View option = view.findViewById(R.id.menu_option);
         option.setOnClickListener(new View.OnClickListener() {
@@ -423,15 +347,14 @@ public class BoxFragment extends Fragment {
                 getContext().getResources().getDrawable(R.drawable.close_menu))); // Menu close icon
     }
 
-    private void setViwBoxBox(){
-        String url = selectedBox.getPhoto();
+    private void setViewBoxPersonnaliseBox(){
+        View boxPersonnalise = view.findViewById(R.id.menu_box_personnalise);
+        boxPersonnalise.setOnClickListener(null);
+        boxPersonnalise.setElevation(1);
+
+        this.box_price.setText(getString(R.string.box_fragment_box_prix_gratuit));
         try{
-            Glide
-                    .with(BoxFragment.this)
-                    .load(Constantes.URL_IMAGE_API + url)
-                    .override(300, 200)
-                    .error(R.drawable.ic_launcher_background)
-                    .into(box_image);
+            Glide.with(this).load(Constantes.URL_IMAGE_API + Constantes.DEFAULT_END_URL_IMAGE_API).into(this.box_image);
         } catch (Exception e) {
             getActivity().runOnUiThread(new Runnable() {
                 @Override
@@ -440,31 +363,17 @@ public class BoxFragment extends Fragment {
                 }
             });
         }
+    }
 
-        box_name.setText(selectedBox.getNom());
+    private void setViewBoxPersonnaliseProduit(){
         affichePrix();
-        box_description.setText(selectedBox.getDescription());
+
+        // Set up the RecyclerView
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1, GridLayoutManager.VERTICAL, false);
+        produitToDisplay.setLayoutManager(gridLayoutManager);
+
+        final ProductPersonnaliseViewAdapter adapter = new ProductPersonnaliseViewAdapter(getContext(), box_price);
+        produitToDisplay.setAdapter(adapter);
     }
 
-    private void setViewBoxProduit(){
-        if(listeProduits!=null) {
-            affichePrix();
-
-            // Set up the RecyclerView
-            //RecyclerView.LayoutManager manager = new LinearLayoutManager(getContext());
-            GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1, GridLayoutManager.VERTICAL, false);
-            produitToDisplay.setLayoutManager(gridLayoutManager);
-
-            ProductViewAdapter adapter = new ProductViewAdapter(listeProduits, BoxFragment.this);
-            produitToDisplay.setAdapter(adapter);
-        } else {
-            if(selectedBox==null){
-                LoadBox loadBox = new LoadBox();
-                loadBox.execute();
-            } else {
-                LoadProd loadProd= new LoadProd();
-                loadProd.execute();
-            }
-        }
-    }
 }

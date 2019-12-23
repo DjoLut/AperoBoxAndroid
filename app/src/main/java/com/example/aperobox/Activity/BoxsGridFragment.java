@@ -153,7 +153,7 @@ public class BoxsGridFragment extends Fragment {
         boxPersonnalise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((NavigationHost)getActivity()).navigateTo(new BoxFragment(),true);
+                ((NavigationHost)getActivity()).navigateTo(new BoxPersonnaliseFragment(),true);
             }
         });
 
