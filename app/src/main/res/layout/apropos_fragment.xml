@@ -55,20 +55,19 @@
             android:clipToPadding="false"
             android:orientation="vertical"
             android:padding="24dp"
-            android:paddingTop="16dp">
+            android:paddingTop="56dp">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="300dp"
-                android:layout_gravity="center_horizontal"
+                android:layout_gravity="center"
                 android:layout_marginBottom="16dp"
                 style="@style/TextAppearance.aperoBox.APropos.Image"
                 app:srcCompat="@drawable/logo_henallux" />
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="132dp"
                 android:text="@string/apropos_message"
                 style="@style/TextAppearance.aperoBox.APropos.Description"
                 android:textAppearance="@style/TextAppearance.aperoBox.Box.Description" />

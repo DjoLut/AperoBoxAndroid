@@ -281,7 +281,6 @@ public class BoxFragment extends Fragment {
     {
         @Override
         protected Box doInBackground(String... params) {
-            loadBoxTask.cancel(true);
             try {
                 selectedBox = boxDAO.getBox(Integer.valueOf(boxId));
             } catch (Exception e) {
