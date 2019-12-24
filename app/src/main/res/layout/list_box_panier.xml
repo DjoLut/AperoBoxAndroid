@@ -1,24 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="16dp">
+    android:layout_weight="1"
+    app:cardBackgroundColor="@android:color/transparent"
+    app:cardElevation="0dp">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/panier_fragment_box_nom_text_view"
-        style="@style/Widget.AperoBox.TextInputLayout"
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingRight="0dp"
+        android:paddingLeft="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:orientation="horizontal">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/panier_fragment_box_quantite_edit_text"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/panier_fragment_box_nom_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:maxWidth="80dp"
+            android:text="@string/box_fragment_produit_nom"
+            android:gravity="left"
+            android:layout_weight="1"
+            android:textAppearance="@style/TextAppearance.aperoBox.Box.Description" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="number"
-            android:digits="0123456789"
-            android:maxLines="1" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:orientation="horizontal"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:paddingRight="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_gravity="end">
+
+            <Button
+                android:id="@+id/panier_fragment_box_button_moins"
+                android:layout_width="0sp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_gravity="right"
+                style="@style/Widget.AperoBox.NumberSpinner.Button"
+                android:text="-" />
+
+            <EditText
+                android:id="@+id/panier_fragment_box_quantite_edit_text"
+                android:layout_width="0sp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textAlignment="center"
+                android:inputType="number"
+                android:text=""
+                android:layout_gravity="right" />
+
+            <Button
+                android:id="@+id/panier_fragment_box_button_plus"
+                android:layout_width="0sp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                style="@style/Widget.AperoBox.NumberSpinner.Button"
+                android:text="+"
+                android:layout_gravity="right" />
+        </LinearLayout>
+    </RelativeLayout>
+</com.google.android.material.card.MaterialCardView>
+
+    <!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="16dp">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/panier_fragment_box_nom_text_view"
+            style="@style/Widget.AperoBox.TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/panier_fragment_box_quantite_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:digits="0123456789"
+                android:maxLines="1" />
+        </com.google.android.material.textfield.TextInputLayout>
 
 
-</LinearLayout>
+    </LinearLayout>
+    -->

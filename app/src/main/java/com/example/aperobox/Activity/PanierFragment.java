@@ -17,10 +17,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.aperobox.Dao.CommandeDAO;
 import com.example.aperobox.Dao.UtilDAO;
+import com.example.aperobox.Model.Box;
 import com.example.aperobox.Model.Commande;
 import com.example.aperobox.Model.LigneCommande;
 import com.example.aperobox.Model.Panier;
@@ -43,6 +45,8 @@ public class PanierFragment extends Fragment {
     private TextView panierBoxTextView;
     private TextView panierBoxPersoTextView;
     private Button panierButtonAcheter;
+    private TextView prixTotal;
+    private TextView promotionTotal;
     private String access_token;
 
     public PanierFragment() {
@@ -70,6 +74,8 @@ public class PanierFragment extends Fragment {
         panierBoxTextView = view.findViewById(R.id.panier_fragment_box_text_view);
         panierBoxPersoTextView = view.findViewById(R.id.panier_fragment_boxPerso_text_view);
         panierButtonAcheter = view.findViewById(R.id.panier_fragment_button_acheter);
+        prixTotal = view.findViewById(R.id.panier_fragment_total_prix);
+        promotionTotal = view.findViewById(R.id.panier_fragment_total_promotion);
 
         //BOXES
         boxToDisplay = view.findViewById(R.id.panier_fragment_box_recycler_view);
@@ -77,7 +83,7 @@ public class PanierFragment extends Fragment {
         GridLayoutManager gridLayoutManagerBox = new GridLayoutManager(getContext(), 1, GridLayoutManager.VERTICAL, false);
         boxToDisplay.setLayoutManager(gridLayoutManagerBox);
 
-        PanierBoxViewAdapter adapterBox = new PanierBoxViewAdapter(panier, PanierFragment.this);
+        PanierBoxViewAdapter adapterBox = new PanierBoxViewAdapter(panier, PanierFragment.this, prixTotal, promotionTotal);
         if(adapterBox.getItemCount() == 0)
             panierBoxTextView.setText(R.string.panier_fragment_box_vide);
         boxToDisplay.setAdapter(adapterBox);
@@ -88,7 +94,7 @@ public class PanierFragment extends Fragment {
         GridLayoutManager gridLayoutManagerProduit = new GridLayoutManager(getContext(), 1, GridLayoutManager.VERTICAL, false);
         produitToDisplay.setLayoutManager(gridLayoutManagerProduit);
 
-        PanierProduitViewAdapter adapterProduit = new PanierProduitViewAdapter(panier, PanierFragment.this);
+        PanierProduitViewAdapter adapterProduit = new PanierProduitViewAdapter(panier, PanierFragment.this, prixTotal, promotionTotal);
         if(adapterProduit.getItemCount() == 0)
             panierBoxPersoTextView.setText(R.string.panier_fragment_produit_vide);
         produitToDisplay.setAdapter(adapterProduit);
@@ -152,6 +158,12 @@ public class PanierFragment extends Fragment {
     @Override
     public void onDestroy() { super.onDestroy(); }
 
+
+    public static void affichePrixTotalPromotion(TextView prixTotal, TextView promotion){
+        Panier panier = SingletonPanier.getUniquePanier();
+        prixTotal.setText(UtilDAO.format.format(Math.round(panier.calculTotalPrixBoxEtProduit()*100.0)/100.0));
+        promotion.setText(UtilDAO.format.format(Math.round(panier.calculTotalPromoBox()*100.0)/100.0));
+    }
 
     private void setUpToolbar(View view) {
         Toolbar toolbar = view.findViewById(R.id.panier_app_bar);
@@ -242,10 +254,6 @@ public class PanierFragment extends Fragment {
                 getContext().getResources().getDrawable(R.drawable.branded_menu), // Menu open icon
                 getContext().getResources().getDrawable(R.drawable.close_menu))); // Menu close icon
     }
-
-
-
-
 
 
 

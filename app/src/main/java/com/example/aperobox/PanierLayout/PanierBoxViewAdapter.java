@@ -3,6 +3,9 @@ package com.example.aperobox.PanierLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,8 +21,11 @@ public class PanierBoxViewAdapter extends RecyclerView.Adapter<PanierBoxViewHold
     private Panier panier = SingletonPanier.getUniquePanier();
     private ArrayList<Box> box = new ArrayList<>();
     private ArrayList<Integer> quantite = new ArrayList<>();
+    private TextView prixTotal, promotionTotal;
 
-    public PanierBoxViewAdapter(Panier panier, Fragment fragment) {
+    public PanierBoxViewAdapter(Panier panier, Fragment fragment, TextView prixTotal, TextView promotionTotal) {
+        this.prixTotal = prixTotal;
+        this.promotionTotal = promotionTotal;
         for (Iterator<Map.Entry<Box, Integer>> it = panier.getBox().entrySet().iterator(); it.hasNext();)
         {
             Map.Entry<Box, Integer> entry = it.next();
@@ -37,7 +43,7 @@ public class PanierBoxViewAdapter extends RecyclerView.Adapter<PanierBoxViewHold
     @Override
     public PanierBoxViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_box_panier, parent, false);
-        return new PanierBoxViewHolder(layoutView);
+        return new PanierBoxViewHolder(layoutView, prixTotal, promotionTotal);
     }
 
     @Override
