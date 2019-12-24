@@ -3,6 +3,7 @@ package com.example.aperobox.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -12,21 +13,25 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.example.aperobox.Dao.CommandeDAO;
+import com.example.aperobox.Dao.UtilDAO;
+import com.example.aperobox.Model.Commande;
+import com.example.aperobox.Model.LigneCommande;
 import com.example.aperobox.Model.Panier;
 import com.example.aperobox.PanierLayout.PanierBoxViewAdapter;
 import com.example.aperobox.PanierLayout.PanierProduitViewAdapter;
 import com.example.aperobox.R;
-import com.example.aperobox.application.AperoBoxApplication;
-import com.example.aperobox.application.SingletonPanier;
+import com.example.aperobox.Application.AperoBoxApplication;
+import com.example.aperobox.Application.SingletonPanier;
 import com.google.android.material.button.MaterialButton;
+import java.net.HttpURLConnection;
+import java.util.Date;
 
 public class PanierFragment extends Fragment {
     private ViewGroup container;
@@ -37,6 +42,8 @@ public class PanierFragment extends Fragment {
     private Panier panier = SingletonPanier.getUniquePanier();
     private TextView panierBoxTextView;
     private TextView panierBoxPersoTextView;
+    private Button panierButtonAcheter;
+    private String access_token;
 
     public PanierFragment() {
     }
@@ -62,6 +69,7 @@ public class PanierFragment extends Fragment {
 
         panierBoxTextView = view.findViewById(R.id.panier_fragment_box_text_view);
         panierBoxPersoTextView = view.findViewById(R.id.panier_fragment_boxPerso_text_view);
+        panierButtonAcheter = view.findViewById(R.id.panier_fragment_button_acheter);
 
         //BOXES
         boxToDisplay = view.findViewById(R.id.panier_fragment_box_recycler_view);
@@ -85,8 +93,40 @@ public class PanierFragment extends Fragment {
             panierBoxPersoTextView.setText(R.string.panier_fragment_produit_vide);
         produitToDisplay.setAdapter(adapterProduit);
 
-
         setUpToolbar(view);
+
+        panierButtonAcheter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                access_token = preferences.getString("access_token", null);
+                if(panier.sizeBox() != 0 || panier.sizeProduit() != 0)
+                {
+                    Commande commande = new Commande();
+                    commande.setDateCreation(new Date());
+                    commande.setPromotion(panier.calculTotalPromoBox());
+
+                    LigneCommande ligneCommande = new LigneCommande();
+                    if(UtilDAO.isInternetAvailable(getContext()))
+                    {
+                        //new AjoutCommande().execute(commande);
+
+
+
+
+                        panier.deleteAllBox();
+                        panier.deleteAllProduit();
+                        Toast.makeText(getContext(), "Commande enregistrée !", Toast.LENGTH_LONG).show();
+                        ((NavigationHost) getActivity()).navigateTo(new PanierFragment(), true);
+                    }
+
+                }
+                else
+                {
+                    Toast.makeText(getContext(), "Aucun article dans votre panier", Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
 
         return view;
     }
@@ -112,26 +152,7 @@ public class PanierFragment extends Fragment {
     @Override
     public void onDestroy() { super.onDestroy(); }
 
-/*
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
-        if(menu.size()==0) {
-            menuInflater.inflate(R.menu.toolbar_menu, menu);
-            MenuItem icon = menu.getItem(0);
-            icon.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-                    AperoBoxApplication.getInstance().setIsNightModeEnabled(!AperoBoxApplication.getInstance().isNightModeEnabled());
-                    getFragmentManager().beginTransaction().detach(PanierFragment.this).attach(PanierFragment.this).commit();
-                    return true;
-                }
-            });
-        }
-        super.onCreateOptionsMenu(menu, menuInflater);
-    }
 
-
- */
     private void setUpToolbar(View view) {
         Toolbar toolbar = view.findViewById(R.id.panier_app_bar);
         AppCompatActivity activity = (AppCompatActivity) getActivity();
@@ -187,7 +208,7 @@ public class PanierFragment extends Fragment {
         MaterialButton compte = view.findViewById(R.id.menu_compte);
         compte.setElevation((float) 1);
         preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        String access_token = preferences.getString("access_token", null);
+        access_token = preferences.getString("access_token", null);
         if (access_token != null) {
             compte.setVisibility(View.VISIBLE);
             compte.setText(R.string.deconnection_title);
@@ -221,4 +242,36 @@ public class PanierFragment extends Fragment {
                 getContext().getResources().getDrawable(R.drawable.branded_menu), // Menu open icon
                 getContext().getResources().getDrawable(R.drawable.close_menu))); // Menu close icon
     }
+
+
+
+
+
+
+
+    private class AjoutCommande extends AsyncTask<Commande, Void, Integer> {
+
+        @Override
+        protected Integer doInBackground(Commande... newCommande) {
+            CommandeDAO commandeDAO = new CommandeDAO();
+            Integer result = null;
+            try{
+                result = commandeDAO.ajoutCommande(access_token, newCommande[0]);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(Integer result) {
+            if(result == HttpURLConnection.HTTP_OK){
+                //new AjoutLigneCommande.execute(newLigneCommande);
+                Toast.makeText(getContext(), "Commande ajouté", Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(getContext(), "Erreur ajout commande", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
 }

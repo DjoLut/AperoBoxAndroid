@@ -1,15 +1,9 @@
 package com.example.aperobox.Dao;
 
-import android.content.res.Configuration;
-
-import com.example.aperobox.Dao.JsonTranslator.LigneProduitJsonTranslator;
 import com.example.aperobox.Model.LigneProduit;
 import com.example.aperobox.Utility.Constantes;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import org.json.JSONArray;
-
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;

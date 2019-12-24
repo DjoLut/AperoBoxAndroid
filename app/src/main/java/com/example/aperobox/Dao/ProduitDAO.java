@@ -5,9 +5,7 @@ import com.example.aperobox.Model.Produit;
 import com.example.aperobox.Utility.Constantes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
 import org.json.JSONArray;
-
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -15,7 +13,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.List;
 
 public class ProduitDAO {
@@ -23,7 +20,7 @@ public class ProduitDAO {
         ArrayList<Produit> produits = new ArrayList<>();
         Gson gson = new Gson();
 
-        URL url = new URL(Constantes.URL_API + "Box");
+        URL url = new URL(Constantes.URL_API + "Produit");
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
         connection.setRequestMethod("GET");
@@ -54,7 +51,7 @@ public class ProduitDAO {
     }
 
     public Produit getProduit(int id) throws Exception {
-        URL url = new URL("https://aperoboxapi.azurewebsites.net/api/Produit/"+id);
+        URL url = new URL(Constantes.URL_API + "Produit/" + id);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
         connection.setRequestMethod("GET");
@@ -87,7 +84,7 @@ public class ProduitDAO {
     public LinkedHashMap<Produit,Integer> getAllProduitBoxPersonnalise() throws Exception{
         LinkedHashMap<Produit, Integer> produits = new LinkedHashMap<>();
         Gson gson = new Gson();
-        URL url = new URL("https://aperoboxapi.azurewebsites.net/api/Produit/");
+        URL url = new URL(Constantes.URL_API + "Produit");
 
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");

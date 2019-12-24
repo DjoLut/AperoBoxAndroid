@@ -8,9 +8,9 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
 import com.example.aperobox.Dao.UtilDAO;
-import com.example.aperobox.Dao.network.JokeEntry;
+import com.example.aperobox.Application.JokeEntry;
 import com.example.aperobox.R;
-import com.example.aperobox.application.AperoBoxApplication;
+import com.example.aperobox.Application.AperoBoxApplication;
 
 public class MainActivity extends AppCompatActivity implements NavigationHost{
     private SharedPreferences preferences;

@@ -1,4 +1,4 @@
-package com.example.aperobox.staggeredgridlayout;
+package com.example.aperobox.Staggeredgridlayout;
 
 import android.view.View;
 import android.widget.ImageView;

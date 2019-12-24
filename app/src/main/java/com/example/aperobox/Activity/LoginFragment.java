@@ -9,26 +9,20 @@ import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Toast;
-
-
 import com.example.aperobox.Dao.UtilDAO;
 import com.example.aperobox.Dao.UtilisateurDAO;
 import com.example.aperobox.Exception.HttpResultException;
 import com.example.aperobox.Model.JwtToken;
 import com.example.aperobox.Model.LoginModel;
 import com.example.aperobox.R;
-import com.example.aperobox.application.AperoBoxApplication;
+import com.example.aperobox.Application.AperoBoxApplication;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -238,16 +232,15 @@ public class LoginFragment extends Fragment {
             } catch (HttpResultException e) {
                 exception = e;
                 cancel(true);
-            } catch (Exception e)
-                {
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getContext(), getString(R.string.connexion_fragment_erreur_connexion) + "\n" + getString(R.string.retry), Toast.LENGTH_LONG).show();
-                            connexionTask.cancel(true);
-                        }
-                    });
-                }
+            } catch (Exception e) {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getContext(), getString(R.string.connexion_fragment_erreur_connexion) + "\n" + getString(R.string.retry), Toast.LENGTH_LONG).show();
+                        connexionTask.cancel(true);
+                    }
+                });
+            }
             return token;
         }
 

@@ -2,6 +2,7 @@ package com.example.aperobox.Dao;
 
 import com.bumptech.glide.load.HttpException;
 import com.example.aperobox.Model.Adresse;
+import com.example.aperobox.Utility.Constantes;
 import com.google.gson.Gson;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -12,7 +13,7 @@ import java.net.URL;
 public class AdresseDAO {
 
     public Adresse ajoutAdresse(Adresse newAdresse) throws Exception{
-        URL url =  new URL("https://aperoboxapi.azurewebsites.net/api/Adresse");
+        URL url =  new URL(Constantes.URL_API + "Adresse");
 
         Gson gson = new Gson();
         String newAdresseString = gson.toJson(newAdresse);

@@ -1,10 +1,9 @@
-package com.example.aperobox.application;
+package com.example.aperobox.Application;
 
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-
 import androidx.appcompat.app.AppCompatDelegate;
 
 public class AperoBoxApplication extends Application {

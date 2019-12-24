@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.aperobox.Model.Panier;
 import com.example.aperobox.Model.Produit;
 import com.example.aperobox.R;
-import com.example.aperobox.application.SingletonPanier;
+import com.example.aperobox.Application.SingletonPanier;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
@@ -43,8 +43,11 @@ public class PanierProduitViewAdapter extends RecyclerView.Adapter<PanierProduit
 
     @Override
     public void onBindViewHolder(@NonNull PanierProduitViewHolder holder, final int position) {
-        holder.panierProduitNomTextView.setText(produit.get(position).getNom());
-        holder.panierProduitQuantiteEditText.setText(quantite.get(position).toString());
+        //holder.panierProduitNomTextView.setText(produit.get(position).getNom());
+        //holder.panierProduitQuantiteEditText.setText(quantite.get(position).toString());
+
+        PanierProduitViewHolder produitHolder = (PanierProduitViewHolder) holder;
+        produitHolder.bind((Produit)produit.get(position), (Integer)quantite.get(position));
     }
 
     @Override

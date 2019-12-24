@@ -5,9 +5,12 @@ import java.util.Date;
 public class Commentaire {
     private Integer id;
     private String texte;
-    private Date dateCommentaire;
-    private Utilisateur utilisateur;
-    private Box box;
+    private Date dateCreation;
+    private Integer utilisateur;
+    private Integer box;
+
+    private Utilisateur utilisateurComplet;
+    private Box boxComplet;
 
     public Commentaire() {
     }
@@ -28,27 +31,43 @@ public class Commentaire {
         this.texte = texte;
     }
 
-    public Date getDateCommentaire() {
-        return dateCommentaire;
+    public Date getDateCreation() {
+        return dateCreation;
     }
 
-    public void setDateCommentaire(Date dateCommentaire) {
-        this.dateCommentaire = dateCommentaire;
+    public void setDateCreation(Date dateCreation) {
+        this.dateCreation = dateCreation;
     }
 
-    public Utilisateur getUtilisateur() {
+    public Integer getUtilisateur() {
         return utilisateur;
     }
 
-    public void setUtilisateur(Utilisateur utilisateur) {
+    public void setUtilisateur(Integer utilisateur) {
         this.utilisateur = utilisateur;
     }
 
-    public Box getBox() {
+    public Integer getBox() {
         return box;
     }
 
-    public void setBox(Box box) {
+    public void setBox(Integer box) {
         this.box = box;
+    }
+
+    public Utilisateur getUtilisateurComplet() {
+        return utilisateurComplet;
+    }
+
+    public void setUtilisateurComplet(Utilisateur utilisateurComplet) {
+        this.utilisateurComplet = utilisateurComplet;
+    }
+
+    public Box getBoxComplet() {
+        return boxComplet;
+    }
+
+    public void setBoxComplet(Box boxComplet) {
+        this.boxComplet = boxComplet;
     }
 }

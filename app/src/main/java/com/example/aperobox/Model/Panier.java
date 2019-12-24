@@ -46,17 +46,147 @@ public class Panier {
 
     public void addBox(Box box, int quantite)
     {
-        //TEST IF EXIST .... PLUS TARD
-        /*for (Iterator<Map.Entry<Box, Integer>> it = boxes.entrySet().iterator(); it.hasNext();)
+        Boolean boxEstPresent = false;
+        int oldQuantite;
+        for (Iterator<Map.Entry<Box, Integer>> it = boxes.entrySet().iterator(); it.hasNext();)
         {
-            ;
-        }*/
-        boxes.put(box, quantite);
+            Map.Entry<Box, Integer> entry = it.next();
+            if(entry.getKey().getId() == box.getId())
+            {
+                oldQuantite = entry.getValue();
+                it.remove();
+                boxes.put(box, quantite + oldQuantite);
+                boxEstPresent = true;
+                break;
+            }
+        }
+
+        if(!boxEstPresent)
+            boxes.put(box, quantite);
     }
 
     public void addProduit(Map<Produit, Integer> listeProduit)
     {
-        //TEST IF EXIST .....
-        produits.putAll(listeProduit);
+        for (Iterator<Map.Entry<Produit, Integer>> itListeProduit = listeProduit.entrySet().iterator(); itListeProduit.hasNext();)
+        {
+            Map.Entry<Produit, Integer> entryListeProduit = itListeProduit.next();
+            int oldQuantite;
+            Boolean produitEstPresent = false;
+            for (Iterator<Map.Entry<Produit, Integer>> itProduits = produits.entrySet().iterator(); itProduits.hasNext();)
+            {
+                Map.Entry<Produit, Integer> entryProduits = itProduits.next();
+                if(entryProduits.getKey().getId() == entryListeProduit.getKey().getId())
+                {
+                    oldQuantite = entryProduits.getValue();
+                    itProduits.remove();
+                    produits.put(entryListeProduit.getKey(), entryListeProduit.getValue() + oldQuantite);
+                    produitEstPresent = true;
+                    break;
+                }
+            }
+
+            if(!produitEstPresent)
+                produits.put(entryListeProduit.getKey(), entryListeProduit.getValue());
+
+        }
     }
+
+    public int sizeBox()
+    {
+        return this.boxes.size();
+    }
+
+    public int sizeProduit()
+    {
+        return this.produits.size();
+    }
+
+    public void deleteBox(Box box)
+    {
+        for(Iterator<Map.Entry<Box,Integer>> it = boxes.entrySet().iterator(); it.hasNext();){
+            Map.Entry<Box, Integer> entry = it.next();
+            if (entry.getKey().getId() == box.getId())
+            {
+                it.remove();
+                break;
+            }
+        }
+    }
+
+    public void deleteProduit(Produit produit)
+    {
+        for(Iterator<Map.Entry<Produit,Integer>> it = produits.entrySet().iterator(); it.hasNext();){
+            Map.Entry<Produit, Integer> entry = it.next();
+            if (entry.getKey().getId() == produit.getId())
+            {
+                it.remove();
+                break;
+            }
+        }
+    }
+
+    public double calculTotalPrixBoxEtProduit()
+    {
+        return calculTotalPrixBox() + calculTotalPrixProduit();
+    }
+
+    public double calculTotalPrixBox()
+    {
+        double totalPrice = 0;
+        for(Iterator<Map.Entry<Box,Integer>> it = boxes.entrySet().iterator(); it.hasNext();)
+        {
+            Map.Entry<Box, Integer> entry = it.next();
+            totalPrice += (entry.getKey().getPrixUnitaireHtva() * (1+entry.getKey().getTva()) * entry.getValue());
+        }
+        return totalPrice;
+    }
+
+    public double calculTotalPrixProduit()
+    {
+        double totalPrice = 0;
+        for(Iterator<Map.Entry<Produit,Integer>> it = produits.entrySet().iterator(); it.hasNext();)
+        {
+            Map.Entry<Produit, Integer> entry = it.next();
+            totalPrice += (entry.getKey().getPrixUnitaireHtva() * (1+entry.getKey().getTva()) * entry.getValue());
+        }
+        return totalPrice;
+    }
+
+    public double calculTotalPromoBox()
+    {
+        double totalPromo = 0;
+        for(Iterator<Map.Entry<Box,Integer>> it = boxes.entrySet().iterator(); it.hasNext();){
+            Map.Entry<Box, Integer> entry = it.next();
+            if(entry.getKey().getPromotion() != null)
+                totalPromo += (entry.getKey().getPromotion()/100*(entry.getKey().getPrixUnitaireHtva() * (1+entry.getKey().getTva()) * entry.getValue()));
+        }
+        return totalPromo;
+    }
+
+    public void modifQuantiteBox(Box box, int quantite)
+    {
+        for(Iterator<Map.Entry<Box,Integer>> it = boxes.entrySet().iterator(); it.hasNext();){
+            Map.Entry<Box, Integer> entry = it.next();
+            if (entry.getKey().getId() == box.getId())
+            {
+                it.remove();
+                boxes.put(entry.getKey(), quantite);
+                break;
+            }
+        }
+    }
+
+    public void modifQuantiteProduit(Produit produit, int quantite)
+    {
+        for(Iterator<Map.Entry<Produit,Integer>> it = produits.entrySet().iterator(); it.hasNext();){
+            Map.Entry<Produit, Integer> entry = it.next();
+            if (entry.getKey().getId() == produit.getId())
+            {
+                it.remove();
+                produits.put(entry.getKey(), quantite);
+                break;
+            }
+        }
+    }
+
 }

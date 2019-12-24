@@ -1,12 +1,10 @@
-package com.example.aperobox.Dao.network;
+package com.example.aperobox.Application;
 
 import android.content.res.Resources;
 import android.util.Log;
-
 import com.example.aperobox.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;

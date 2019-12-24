@@ -8,15 +8,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -24,18 +20,15 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.aperobox.Dao.BoxDAO;
 import com.example.aperobox.Dao.UtilDAO;
-import com.example.aperobox.Dao.network.JokeEntry;
+import com.example.aperobox.Application.JokeEntry;
 import com.example.aperobox.Model.Box;
 import com.example.aperobox.Model.Utilisateur;
 import com.example.aperobox.R;
-
-import com.example.aperobox.application.AperoBoxApplication;
-import com.example.aperobox.staggeredgridlayout.StaggeredProductCardRecyclerViewAdapter;
+import com.example.aperobox.Application.AperoBoxApplication;
+import com.example.aperobox.Staggeredgridlayout.StaggeredProductCardRecyclerViewAdapter;
 import com.google.android.material.button.MaterialButton;
-
 import java.util.ArrayList;
 
 public class BoxsGridFragment extends Fragment {

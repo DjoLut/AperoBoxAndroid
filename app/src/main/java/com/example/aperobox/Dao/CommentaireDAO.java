@@ -54,7 +54,7 @@ public class CommentaireDAO {
         int resultCode;
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
         String outputJsonString = gson.toJson(newUser);
-        URL url = new URL("https://aperoboxapi.azurewebsites.net/api/Utilisateur/");
+        URL url = new URL(Constantes.URL_API + "Commentaire");
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("POST");
         connection.setDoInput(false);

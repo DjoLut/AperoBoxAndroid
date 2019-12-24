@@ -3,7 +3,7 @@ package com.example.aperobox.Model;
 public class BoxPersonnalise {
     private Integer id;
     private Integer quantite;
-    private LigneDeCommande ligneDeCommande;
+    private LigneCommande ligneCommande;
     private Produit produit;
 
     public Integer getId() {
@@ -22,12 +22,12 @@ public class BoxPersonnalise {
         this.quantite = quantite;
     }
 
-    public LigneDeCommande getLigneDeCommande() {
-        return ligneDeCommande;
+    public LigneCommande getLigneCommande() {
+        return ligneCommande;
     }
 
-    public void setLigneDeCommande(LigneDeCommande ligneDeCommande) {
-        this.ligneDeCommande = ligneDeCommande;
+    public void setLigneCommande(LigneCommande ligneCommande) {
+        this.ligneCommande = ligneCommande;
     }
 
     public Produit getProduit() {

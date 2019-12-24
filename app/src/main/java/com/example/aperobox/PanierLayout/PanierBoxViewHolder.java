@@ -1,17 +1,17 @@
 package com.example.aperobox.PanierLayout;
 
 import android.view.View;
-import android.widget.EditText;
-import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.aperobox.Model.Box;
 import com.example.aperobox.R;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 public class PanierBoxViewHolder extends RecyclerView.ViewHolder {
 
-    public TextView panierBoxNomTextView;
-    public EditText panierBoxQuantiteEditText;
+    public TextInputLayout panierBoxNomTextView;
+    public TextInputEditText panierBoxQuantiteEditText;
 
     PanierBoxViewHolder(@NonNull View itemView){
         super(itemView);

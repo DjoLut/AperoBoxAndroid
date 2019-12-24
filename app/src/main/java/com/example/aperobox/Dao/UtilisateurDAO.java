@@ -4,6 +4,7 @@ import com.example.aperobox.Exception.HttpResultException;
 import com.example.aperobox.Model.JwtToken;
 import com.example.aperobox.Model.LoginModel;
 import com.example.aperobox.Model.Utilisateur;
+import com.example.aperobox.Utility.Constantes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.io.BufferedReader;
@@ -18,7 +19,7 @@ public class UtilisateurDAO {
 
         Gson gson = new Gson();
         String outputJsonString = gson.toJson(loginModel);
-        URL url = new URL("https://aperoboxapi.azurewebsites.net/api/Jwt");
+        URL url = new URL(Constantes.URL_API + "Jwt");
         HttpURLConnection connection = (HttpURLConnection)url.openConnection();
         connection.setRequestMethod("POST");
         connection.setDoInput(true);
@@ -50,7 +51,7 @@ public class UtilisateurDAO {
         int resultCode;
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
         String outputJsonString = gson.toJson(newUser);
-        URL url = new URL("https://aperoboxapi.azurewebsites.net/api/Utilisateur/");
+        URL url = new URL(Constantes.URL_API + "Utilisateur");
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("POST");
         connection.setDoInput(false);
@@ -65,5 +66,6 @@ public class UtilisateurDAO {
         connection.disconnect();
         return resultCode;
     }
+
 
 }

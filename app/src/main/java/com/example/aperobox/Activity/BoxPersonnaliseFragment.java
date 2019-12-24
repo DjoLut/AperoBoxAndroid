@@ -7,14 +7,12 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,23 +22,17 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
-import com.example.aperobox.Dao.BoxDAO;
 import com.example.aperobox.Dao.ProduitDAO;
 import com.example.aperobox.Dao.UtilDAO;
-import com.example.aperobox.Dao.network.JokeEntry;
-import com.example.aperobox.Exception.HttpResultException;
-import com.example.aperobox.Model.Box;
+import com.example.aperobox.Application.JokeEntry;
 import com.example.aperobox.Model.Panier;
 import com.example.aperobox.Model.Produit;
 import com.example.aperobox.Productlayout.ProductPersonnaliseViewAdapter;
-import com.example.aperobox.Productlayout.ProductViewAdapter;
 import com.example.aperobox.R;
 import com.example.aperobox.Utility.Constantes;
-import com.example.aperobox.application.SingletonPanier;
+import com.example.aperobox.Application.SingletonPanier;
 import com.google.android.material.button.MaterialButton;
-
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;

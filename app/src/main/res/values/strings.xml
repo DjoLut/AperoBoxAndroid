@@ -115,5 +115,6 @@
     <string name="panier_fragment_box_vide">Box : Aucune box dans le panier</string>
     <string name="panier_fragment_produit_vide">Box Personnalisée : Aucun produits dans le panier</string>
     <string name="panier_fragment_votre_panier">Votre panier : </string>
+    <string name="panier_fragment_button_acheter">Commander !</string>
 
 </resources>
