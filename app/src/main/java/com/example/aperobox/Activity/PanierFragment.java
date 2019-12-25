@@ -20,12 +20,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.aperobox.Dao.AdresseDAO;
 import com.example.aperobox.Dao.CommandeDAO;
+import com.example.aperobox.Dao.LigneCommandeDAO;
 import com.example.aperobox.Dao.UtilDAO;
+import com.example.aperobox.Exception.HttpResultException;
+import com.example.aperobox.Model.Adresse;
 import com.example.aperobox.Model.Box;
 import com.example.aperobox.Model.Commande;
 import com.example.aperobox.Model.LigneCommande;
 import com.example.aperobox.Model.Panier;
+import com.example.aperobox.Model.Produit;
 import com.example.aperobox.PanierLayout.PanierBoxViewAdapter;
 import com.example.aperobox.PanierLayout.PanierProduitViewAdapter;
 import com.example.aperobox.R;
@@ -33,7 +39,10 @@ import com.example.aperobox.Application.AperoBoxApplication;
 import com.example.aperobox.Application.SingletonPanier;
 import com.google.android.material.button.MaterialButton;
 import java.net.HttpURLConnection;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.Map;
 
 public class PanierFragment extends Fragment {
     private ViewGroup container;
@@ -111,20 +120,10 @@ public class PanierFragment extends Fragment {
                     commande.setDateCreation(new Date());
                     commande.setPromotion(panier.calculTotalPromoBox());
 
-                    LigneCommande ligneCommande = new LigneCommande();
                     if(UtilDAO.isInternetAvailable(getContext()))
                     {
-                        //new AjoutCommande().execute(commande);
-
-
-
-
-                        panier.deleteAllBox();
-                        panier.deleteAllProduit();
-                        Toast.makeText(getContext(), "Commande enregistrée !", Toast.LENGTH_LONG).show();
-                        ((NavigationHost) getActivity()).navigateTo(new PanierFragment(), true);
+                        new AjoutCommande().execute(commande);
                     }
-
                 }
                 else
                 {
@@ -257,29 +256,96 @@ public class PanierFragment extends Fragment {
 
 
 
-    private class AjoutCommande extends AsyncTask<Commande, Void, Integer> {
-
+    private class AjoutCommande extends AsyncTask<Commande, Void, Commande>
+    {
+        HttpResultException exception;
         @Override
-        protected Integer doInBackground(Commande... newCommande) {
+        protected Commande doInBackground(Commande... newCommande) {
             CommandeDAO commandeDAO = new CommandeDAO();
-            Integer result = null;
+            Commande commande = new Commande();
             try{
-                result = commandeDAO.ajoutCommande(access_token, newCommande[0]);
-            }catch (Exception e){
+                commande = commandeDAO.ajoutCommande(access_token, newCommande[0]);
+            }
+            catch (HttpResultException e)
+            {
+                exception = e;
+                cancel(true);
+            }
+            catch (Exception e)
+            {
                 e.printStackTrace();
             }
-            return result;
+            return commande;
         }
 
         @Override
-        protected void onPostExecute(Integer result) {
-            if(result == HttpURLConnection.HTTP_OK){
-                //new AjoutLigneCommande.execute(newLigneCommande);
-                Toast.makeText(getContext(), "Commande ajouté", Toast.LENGTH_SHORT).show();
+        protected void onPostExecute(Commande commande) {
+            if(commande.getId() != null){
+
+                if(panier.sizeBox() != 0)
+                {
+                    for(Iterator<Map.Entry<Box,Integer>> it = panier.getBox().entrySet().iterator(); it.hasNext();) {
+                        Map.Entry<Box, Integer> entry = it.next();
+                        LigneCommande ligneCommande = new LigneCommande();
+                        ligneCommande.setQuantite(entry.getValue());
+                        ligneCommande.setBox(entry.getKey().getId());
+                        ligneCommande.setProduit(null);
+                        ligneCommande.setCommande(commande.getId());
+                        new AjoutLigneCommande().execute(ligneCommande);
+                    }
+                    panier.deleteAllBox();
+                }
+
+                if(panier.sizeProduit() != 0)
+                {
+                    for(Iterator<Map.Entry<Produit,Integer>> it = panier.getProduit().entrySet().iterator(); it.hasNext();) {
+                        Map.Entry<Produit, Integer> entry = it.next();
+                        LigneCommande ligneCommande = new LigneCommande();
+                        ligneCommande.setQuantite(entry.getValue());
+                        ligneCommande.setBox(null);
+                        ligneCommande.setProduit(entry.getKey().getId());
+                        ligneCommande.setCommande(commande.getId());
+                        new AjoutLigneCommande().execute(ligneCommande);
+                    }
+                    panier.deleteAllProduit();
+                }
+
+                Toast.makeText(getContext(), "Commande enregistrée !", Toast.LENGTH_LONG).show();
+                ((NavigationHost) getActivity()).navigateTo(new PanierFragment(), true);
             }else{
                 Toast.makeText(getContext(), "Erreur ajout commande", Toast.LENGTH_SHORT).show();
             }
         }
     }
+
+
+    private class AjoutLigneCommande extends AsyncTask<LigneCommande, Void, Integer>
+    {
+        @Override
+        protected Integer doInBackground(LigneCommande ...params) {
+            Integer resultCode = null;
+            LigneCommandeDAO ligneCommandeDAO = new LigneCommandeDAO();
+
+            try {
+                resultCode = ligneCommandeDAO.ajoutLigneCommande(access_token, params[0]);
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+
+            return resultCode;
+        }
+
+        @Override
+        protected void onPostExecute(Integer resultCode)
+        {
+            if(resultCode != HttpURLConnection.HTTP_CREATED)
+            {
+                Toast.makeText(getContext(), "Erreur Inscription Adresse : ", Toast.LENGTH_SHORT).show();// TODO: faire ça avec @string
+            }
+        }
+    }
+
 
 }

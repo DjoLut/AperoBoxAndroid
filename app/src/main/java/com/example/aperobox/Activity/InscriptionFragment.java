@@ -31,6 +31,8 @@ import com.example.aperobox.Application.AperoBoxApplication;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+
+import java.net.HttpURLConnection;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -355,7 +357,7 @@ public class InscriptionFragment extends Fragment {
         @Override
         protected void onPostExecute(Integer statusCode)
         {
-            if(statusCode == 201){
+            if(statusCode == HttpURLConnection.HTTP_CREATED){
                 Toast.makeText(getContext(), "Success inscription", Toast.LENGTH_SHORT).show();// TODO: faire ça avec @string
                 ((NavigationHost) getActivity()).navigateTo(new LoginFragment(), false);
             }else{

@@ -2,19 +2,14 @@ package com.example.aperobox.PanierLayout;
 
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.aperobox.Activity.PanierFragment;
 import com.example.aperobox.Application.SingletonPanier;
 import com.example.aperobox.Model.Panier;
 import com.example.aperobox.Model.Produit;
 import com.example.aperobox.R;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 
 public class PanierProduitViewHolder extends RecyclerView.ViewHolder {
 
@@ -35,6 +30,7 @@ public class PanierProduitViewHolder extends RecyclerView.ViewHolder {
         moins = itemView.findViewById(R.id.panier_fragment_produit_button_moins);
         plus = itemView.findViewById(R.id.panier_fragment_produit_button_plus);
         panier = SingletonPanier.getUniquePanier();
+        PanierFragment.affichePrixTotalPromotion(this.prixTotal, this.promotionTotal);
     }
 
     public void bind( final Produit produit, Integer quantit)
@@ -68,6 +64,11 @@ public class PanierProduitViewHolder extends RecyclerView.ViewHolder {
                         quantite--;
                         panier.modifQuantiteProduit(produit,quantite);
                         panierProduitQuantiteEditText.setText(quantite.toString());
+                    }
+                    if(quantite == 0)
+                    {
+                        panier.deleteProduit(produit);
+                        //RELOAD FRAGMENT
                     }
                 } catch(NumberFormatException e) {
                     panierProduitQuantiteEditText.setText("bug");

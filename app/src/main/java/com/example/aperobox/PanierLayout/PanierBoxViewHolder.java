@@ -1,31 +1,18 @@
 package com.example.aperobox.PanierLayout;
 
-import android.os.TestLooperManager;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.aperobox.Activity.BoxPersonnaliseFragment;
 import com.example.aperobox.Activity.PanierFragment;
 import com.example.aperobox.Application.SingletonPanier;
-import com.example.aperobox.Dao.UtilDAO;
 import com.example.aperobox.Model.Box;
 import com.example.aperobox.Model.Panier;
-import com.example.aperobox.Model.Produit;
-import com.example.aperobox.Productlayout.ProductPersonnaliseViewAdapter;
 import com.example.aperobox.R;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 
 public class PanierBoxViewHolder extends RecyclerView.ViewHolder {
-
-    //public TextInputLayout panierBoxNomTextView;
-    //public TextInputEditText panierBoxQuantiteEditText;
-
 
     public TextView panierBoxNomTextView;
     public TextView panierBoxQuantiteEditText;
@@ -44,6 +31,7 @@ public class PanierBoxViewHolder extends RecyclerView.ViewHolder {
         moins = itemView.findViewById(R.id.panier_fragment_box_button_moins);
         plus = itemView.findViewById(R.id.panier_fragment_box_button_plus);
         panier = SingletonPanier.getUniquePanier();
+        PanierFragment.affichePrixTotalPromotion(this.prixTotal, this.promotionTotal);
     }
 
     public void bind(final Box box, Integer quantit)
@@ -78,6 +66,11 @@ public class PanierBoxViewHolder extends RecyclerView.ViewHolder {
                         quantite--;
                         panier.modifQuantiteBox(box,quantite);
                         panierBoxQuantiteEditText.setText(quantite.toString());
+                    }
+                    if(quantite == 0)
+                    {
+                        panier.deleteBox(box);
+                        //RELOAD FRAGMENT
                     }
                 } catch(NumberFormatException e) {
                     panierBoxQuantiteEditText.setText("bug");

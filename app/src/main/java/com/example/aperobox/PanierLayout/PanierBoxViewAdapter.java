@@ -3,9 +3,7 @@ package com.example.aperobox.PanierLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
@@ -48,9 +46,6 @@ public class PanierBoxViewAdapter extends RecyclerView.Adapter<PanierBoxViewHold
 
     @Override
     public void onBindViewHolder(@NonNull PanierBoxViewHolder holder, final int position) {
-        //holder.panierBoxNomTextView.setText(box.get(position).getNom());
-        //holder.panierBoxQuantiteEditText.setText(quantite.get(position).toString());
-
         PanierBoxViewHolder produitHolder = (PanierBoxViewHolder) holder;
         produitHolder.bind((Box)box.get(position), (Integer)quantite.get(position));
     }
