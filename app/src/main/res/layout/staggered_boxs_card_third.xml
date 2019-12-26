@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
+    android:layout_width="@dimen/staggered_boxs_grid_card_width_portrait"
     android:layout_height="wrap_content"
     app:cardBackgroundColor="@android:color/transparent"
     app:cardElevation="0dp"
     app:cardPreventCornerOverlap="true"
-    app:contentPaddingTop="@dimen/staggered_boxs_grid_margin_top_second">
+    app:contentPaddingTop="@dimen/staggered_boxs_grid_margin_top_third">
 
 
     <LinearLayout
-        android:layout_width="@dimen/staggered_boxs_grid_card_width_portrait"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/staggered_boxs_grid_spacing_small"
-        android:layout_marginRight="@dimen/staggered_boxs_grid_spacing_small"
         android:orientation="vertical">
 
         <ImageView
