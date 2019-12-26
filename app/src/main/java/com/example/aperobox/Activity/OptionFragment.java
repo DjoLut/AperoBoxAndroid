@@ -30,9 +30,6 @@ public class OptionFragment extends Fragment {
     private static final String SAVED_BUNDLE_TAG = "optionFragment";
     private Bundle bundle;
 
-    public OptionFragment() {
-        // Required empty public constructor
-    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,6 +60,7 @@ public class OptionFragment extends Fragment {
                 preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
                 String token = preferences.getString("access_token", "");
                 AperoBoxApplication.token = token;
+                //((NavigationHost)getActivity()).navigateTo(OptionFragment.this, false);
                 OptionFragment.this.getActivity().recreate();
             }
         });

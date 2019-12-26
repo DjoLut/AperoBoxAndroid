@@ -83,21 +83,28 @@
                 android:layout_marginBottom="32dp"
                 android:text="@string/box_fragment_box_personnalise_name"
                 android:textAppearance="@style/TextAppearance.aperoBox.Box.Title" />
-            <TextView
-                android:id="@+id/box_fragment_box_price"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="32dp"
-                android:text=""
-                android:textAppearance="@style/TextAppearance.aperoBox.Box.Price" />
+
+                <TextView
+                    android:id="@+id/box_fragment_box_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginBottom="@dimen/box_margin_bottom_price"
+                    android:text=""
+                    android:textAppearance="@style/TextAppearance.aperoBox.Box.Price" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/box_fragment_button_commentaire"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/box_fragment_commentaire"
+                    android:layout_gravity="right"/>
 
             <TextView
                 android:id="@+id/box_fragment_box_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="32dp"
+                android:layout_marginBottom="@dimen/box_margin_bottom_description"
                 android:textAppearance="@style/TextAppearance.aperoBox.Box.Description" />
 
 
@@ -165,6 +172,17 @@
                 android:text="@string/box_fragment_box_button_ajout_panier"
                 style="@style/Widget.AperoBox.Button"
                 />
+
+            <LinearLayout
+                style="@style/Widget.AperoBox.Backdrop"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingTop="88dp">
+
+                <include layout="@layout/backdrop" />
+            </LinearLayout>
 
 
         </LinearLayout>

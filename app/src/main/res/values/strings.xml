@@ -55,6 +55,13 @@
     <string name="box_fragment_connection_obligatoire">Vous devez être connecté pour ajouter une box</string>
     <string name="box_fragment_box_ajouter">Box ajoutée(s)</string>
     <string name="box_fragment_produits_ajouter">Produit(s) ajouté(s)</string>
+    <string name="box_fragment_commentaire">Commentaires</string>
+
+    <!-- CommentaireFragment -->
+    <string name="commentaire_fragment_error_load_commentaire">Une erreur est survenue lors du chargement des commentaires.</string>
+    <string name="commentaire_fragment_edit_text_envoyer_commentaire">Envoyez un commentaire.</string>
+    <string name="commentaire_fragment_error_ajout_commentaire">Une erreur est survenue lors de l\'ajout de votre commentaire.</string>
+    <string name="commentaire_fragment_error_duplication">Vous ne pouvez ajoutez 2 fois le même commentaire.</string>
 
     <!-- AProposFragment -->
     <string name="apropos_message">Application créé et inventée par deux étudiants d\'IG et trois étudiants de marketing de l\'HENALLux IESN de Namur</string>
@@ -105,9 +112,6 @@
     <string name="menu_a_propos">À propos</string>
     <string name="menu_nous_contacter">Contactez-nous</string>
     <string name="compte">Connexion</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!-- PanierFragment -->
     <string name="panier_fragment_box_name">Box : </string>

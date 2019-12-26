@@ -49,6 +49,7 @@ public class BoxFragment extends Fragment {
     private Button button_ajout_panier;
     private Button button_plus;
     private Button button_moins;
+    private MaterialButton button_commentaire;
 
     private LoadBox loadBoxTask;
     private LoadProd loadProd;
@@ -115,7 +116,7 @@ public class BoxFragment extends Fragment {
         this.view = view;
         produitToDisplay = view.findViewById(R.id.box_fragment_produit_recycler_view);
 
-        savedInstanceState = savedInstanceState;
+        this.savedInstanceState = savedInstanceState;
 
         // Set up the tool bar
         setUpToolbar(view);
@@ -128,6 +129,7 @@ public class BoxFragment extends Fragment {
         this.button_moins = view.findViewById(R.id.box_fragment_box_quantite_moins);
         this.button_plus = view.findViewById(R.id.box_fragment_box_quantite_plus);
         this.box_quantite = view.findViewById(R.id.box_fragment_box_quantite);
+        this.button_commentaire = view.findViewById(R.id.box_fragment_button_commentaire);
 
         setView();
 
@@ -154,6 +156,13 @@ public class BoxFragment extends Fragment {
                 quantite++;
                 box_quantite.setText(quantite.toString());
                 affichePrix();
+            }
+        });
+
+        this.button_commentaire.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((NavigationHost) getActivity()).navigateTo(new CommentaireBoxFragment(boxId), true);
             }
         });
 
@@ -404,7 +413,7 @@ public class BoxFragment extends Fragment {
             });
         }
 
-        toolbar.setNavigationOnClickListener(new NavigationIconClickListener(
+        ((Toolbar)view.findViewById(R.id.box_app_bar)).setNavigationOnClickListener(new NavigationIconClickListener(
                 getContext(),
                 view.findViewById(R.id.box_grid),
                 new AccelerateDecelerateInterpolator(),

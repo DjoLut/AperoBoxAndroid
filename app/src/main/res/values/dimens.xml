@@ -20,4 +20,12 @@
     <dimen name="staggered_boxs_grid_card_width_landscape">188dp</dimen>
     <dimen name="staggered_boxs_grid_card_height_landscape">140dp</dimen>
 
+    <!-- Dimens Commentaire -->
+    <dimen name="commentaire_margin_bottom">16dp</dimen>
+    <dimen name="commentaire_texte_margin_bottom">8dp</dimen>
+
+    <!-- Dimens Box -->
+    <dimen name="box_margin_bottom_price">16dp</dimen>
+    <dimen name="box_margin_bottom_description">16dp</dimen>
+
 </resources>
