@@ -3,11 +3,14 @@
 
     <!-- Dark colors -->
     <color name="colorPrimary">#091e00</color>
-    <color name="colorPrimaryDark">#01400f</color>
-    <color name="colorAccent">#00360c</color>
+    <color name="colorPrimaryDark">#a4c639</color>
+    <color name="colorAccent">#00580a</color>
     <color name="textColorPrimary">#E0E0E0</color>
-    <color name="toolbarIconColor">@color/darktextColorPrimary</color>
+    <color name="toolbarIconColor">@color/textColorPrimary</color>
     <color name="loginPageBackgroundColor">#020900</color>
-    <color name="productGridBackgroundColor">#21271e</color>
+    <color name="productGridBackgroundColor">#001302</color>
     <color name="textInputOutlineColor">#a4c639</color>
+    <color name="navigationBarColor">@color/colorPrimaryDark</color>
+    <color name="statusBarColor">@color/colorAccent</color>
+    <color name="statusBarTextColor">@color/textColorPrimary</color>
 </resources>

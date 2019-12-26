@@ -173,18 +173,6 @@
                 style="@style/Widget.AperoBox.Button"
                 />
 
-            <LinearLayout
-                style="@style/Widget.AperoBox.Backdrop"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_horizontal"
-                android:orientation="vertical"
-                android:paddingTop="88dp">
-
-                <include layout="@layout/backdrop" />
-            </LinearLayout>
-
-
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>

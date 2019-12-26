@@ -10,6 +10,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,6 +24,7 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.aperobox.Application.AperoBoxApplication;
 import com.example.aperobox.CommentaireLayout.CommentaireViewAdapter;
 import com.example.aperobox.Dao.CommentaireDAO;
 import com.example.aperobox.Exception.HttpResultException;
@@ -51,6 +53,8 @@ public class CommentaireBoxFragment extends Fragment {
 
     private ArrayList<Commentaire> listeCommentaire;
 
+    public CommentaireBoxFragment(){}
+
     public CommentaireBoxFragment(Integer boxId){
         this.boxId = boxId;
     }
@@ -59,6 +63,11 @@ public class CommentaireBoxFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (AperoBoxApplication.getInstance().isNightModeEnabled()) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
     }
 
     @Nullable
@@ -71,12 +80,12 @@ public class CommentaireBoxFragment extends Fragment {
         this.edit_text = view.findViewById(R.id.commentaire_edit_text);
         this.envoyer = view.findViewById(R.id.commentaire_envoyer);
 
+        setUpToolbar(view);
+
         if(listeCommentaire==null) {
             loadCommentaire = new LoadCommentaire();
             loadCommentaire.execute();
         }
-
-        setUpToolbar(view);
 
         return view;
     }
@@ -84,6 +93,11 @@ public class CommentaireBoxFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        if(loadCommentaire!=null)
+            loadCommentaire.cancel(true);
+        if(ajouterCommentaire!=null){
+            loadCommentaire.cancel(false);
+        }
     }
 
 
@@ -149,6 +163,7 @@ public class CommentaireBoxFragment extends Fragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        CommentaireBoxFragment.this.getActivity().onBackPressed();
                         Toast.makeText(getContext(), h.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -157,6 +172,7 @@ public class CommentaireBoxFragment extends Fragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        CommentaireBoxFragment.this.getActivity().onBackPressed();
                         Toast.makeText(getContext(), getString(R.string.commentaire_fragment_error_load_commentaire) + "\n" + getString(R.string.retry), Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -170,9 +186,10 @@ public class CommentaireBoxFragment extends Fragment {
             setViewCommentaire();
         }
     }
+
     public void ajouterCommentaire(Commentaire commentaire){
         if((listeCommentaire == null || listeCommentaire.isEmpty()) || !listeCommentaire.contains(commentaire)){
-            AjouterCommentaire ajouterCommentaire = new AjouterCommentaire();
+            ajouterCommentaire = new AjouterCommentaire();
             ajouterCommentaire.execute(commentaire);
         } else {
             Toast.makeText(getContext(),getString(R.string.commentaire_fragment_error_duplication), Toast.LENGTH_SHORT).show();
@@ -182,15 +199,15 @@ public class CommentaireBoxFragment extends Fragment {
     private void setViewCommentaire(){
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        String access_token = preferences.getString("access_token", "");
-        if(access_token!=null && !access_token.isEmpty()) {
+        String access_token = preferences.getString("access_token", null);
+        if(access_token!=null) {
             this.edit_text.setVisibility(View.VISIBLE);
             this.text_input.setVisibility(View.VISIBLE);
             this.envoyer.setVisibility(View.VISIBLE);
             this.envoyer.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (edit_text.getText() != null) {
+                    if (!edit_text.getText().toString().isEmpty()) {
                         String texte = edit_text.getText().toString();
                         Commentaire commentaire = new Commentaire();
                         commentaire.setBox(boxId);

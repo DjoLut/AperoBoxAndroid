@@ -45,6 +45,8 @@ public class ProductPersonnaliseViewHolder extends RecyclerView.ViewHolder {
         quantite = BoxPersonnaliseFragment.listeProduits.get(produit1);
         quantiteTextInput.setText(quantite.toString());
 
+        quantiteTextInput.setEnabled(false);
+
         plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

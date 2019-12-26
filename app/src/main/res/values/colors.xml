@@ -5,28 +5,11 @@
     <color name="colorPrimaryDark">#a4c639</color>
     <color name="colorAccent">#caeb5e</color>
     <color name="textColorPrimary">#442C2E</color>
-    <color name="toolbarIconColor">@color/textColorPrimary</color>
+    <color name="toolbarIconColor">#000000</color>
     <color name="loginPageBackgroundColor">#FFFFFF</color>
     <color name="productGridBackgroundColor">#FFFBFA</color>
-    <color name="textInputOutlineColor">#a4c639</color>
-
-    <!-- Dark colors -->
-    <color name="darkcolorPrimary">#091e00</color>
-    <color name="darkcolorPrimaryDark">#caeb5e</color>
-    <color name="darkcolorAccent">#a4c639</color>
-    <color name="darktextColorPrimary">#E0E0E0</color>
-    <color name="darktoolbarIconColor">@color/darktextColorPrimary</color>
-    <color name="darkloginPageBackgroundColor">#020900</color>
-    <color name="darkproductGridBackgroundColor">#21271e</color>
-    <color name="darktextInputOutlineColor">#caeb5e</color>
-
-    <!-- Light colors -->
-    <color name="lightcolorPrimary">#E0E0E0</color>
-    <color name="lightcolorPrimaryDark">#a4c639</color>
-    <color name="lightcolorAccent">#caeb5e</color>
-    <color name="lighttextColorPrimary">#442C2E</color>
-    <color name="lighttoolbarIconColor">@color/textColorPrimary</color>
-    <color name="lightloginPageBackgroundColor">#FFFFFF</color>
-    <color name="lightproductGridBackgroundColor">#FFFBFA</color>
-    <color name="lighttextInputOutlineColor">#a4c639</color>
+    <color name="textInputOutlineColor">@color/colorPrimaryDark</color>
+    <color name="navigationBarColor">@color/colorPrimaryDark</color>
+    <color name="statusBarColor">@color/colorAccent</color>
+    <color name="statusBarTextColor">@color/textColorPrimary</color>
 </resources>

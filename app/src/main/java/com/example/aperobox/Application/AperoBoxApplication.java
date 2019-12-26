@@ -8,8 +8,8 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 public class AperoBoxApplication extends Application {
     public static final String NIGHT_MODE = "NIGHT_MODE";
-    private boolean isNightModeEnabled = false;
-    public static String token = "";
+    private boolean isNightModeEnabled;
+    public static String token;
 
     private static AperoBoxApplication instance;
     private static Context appContext;
@@ -20,9 +20,7 @@ public class AperoBoxApplication extends Application {
         return instance;
     }
 
-    public static Context getAppContext() {
-        return appContext;
-    }
+    public static Context getAppContext() { return appContext; }
 
     public void setAppContext(Context mAppContext) {
         this.appContext = mAppContext;
@@ -31,12 +29,11 @@ public class AperoBoxApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        instance = this;
-
-        SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-        this.isNightModeEnabled = mPrefs.getBoolean(NIGHT_MODE, false);
-
+        instance = getInstance();
+        token = null;
         this.setAppContext(getApplicationContext());
+        SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(appContext);
+        this.isNightModeEnabled = mPrefs.getBoolean(NIGHT_MODE, false);
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
 
@@ -47,7 +44,7 @@ public class AperoBoxApplication extends Application {
     public void setIsNightModeEnabled(boolean isNightModeEnabled) {
         this.isNightModeEnabled = isNightModeEnabled;
 
-        SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(appContext);
         SharedPreferences.Editor editor = mPrefs.edit();
         editor.putBoolean(NIGHT_MODE, isNightModeEnabled);
         editor.apply();

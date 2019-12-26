@@ -58,8 +58,7 @@ public class OptionFragment extends Fragment {
                 AperoBoxApplication.getInstance().setIsNightModeEnabled(isNightMode);
                 AppCompatDelegate.setDefaultNightMode(isNightMode?AppCompatDelegate.MODE_NIGHT_NO:AppCompatDelegate.MODE_NIGHT_YES);
                 preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-                String token = preferences.getString("access_token", "");
-                AperoBoxApplication.token = token;
+                AperoBoxApplication.token = preferences.getString("access_token", null);
                 //((NavigationHost)getActivity()).navigateTo(OptionFragment.this, false);
                 OptionFragment.this.getActivity().recreate();
             }
@@ -82,6 +81,8 @@ public class OptionFragment extends Fragment {
         }
         outState.putBundle(SAVED_BUNDLE_TAG, bundle);
     }
+
+
 
     private void setUpToolbar(View view) {
         Toolbar toolbar = view.findViewById(R.id.app_bar);
