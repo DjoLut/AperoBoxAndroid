@@ -22,7 +22,7 @@ public class Utilisateur {
 
     private String motDePasse;
 
-    private String confMotDePasse;
+    private String MotDePasseConf;
 
     private Integer adresse;
 
@@ -32,7 +32,7 @@ public class Utilisateur {
 
     private List<UtilisateurRole> utilisateurRoles;
 
-    public Utilisateur(String nom, String prenom, Date dateNaissance, String mail, Long telephone, Long gsm, String username, String motDePasse, String confMotDePasse)
+    public Utilisateur(String nom, String prenom, Date dateNaissance, String mail, Long telephone, Long gsm, String username, String motDePasse, String MotDePasseConf)
     {
         this.nom = nom;
         this.prenom = prenom;
@@ -42,7 +42,7 @@ public class Utilisateur {
         this.gsm = gsm;
         this.username = username;
         this.motDePasse = motDePasse;
-        this.confMotDePasse = confMotDePasse;
+        this.MotDePasseConf = MotDePasseConf;
     }
 
     public Utilisateur(String username, String motDePasse)
@@ -71,8 +71,12 @@ public class Utilisateur {
         return nom;
     }
 
-    public String getConfMotDePasse() {
-        return confMotDePasse;
+    public String getMotDePasseConf() {
+        return MotDePasseConf;
+    }
+
+    public void setMotDePasseConf(String motDePasseConf) {
+        MotDePasseConf = motDePasseConf;
     }
 
     public List<Commentaire> getCommentaires() {
@@ -97,10 +101,6 @@ public class Utilisateur {
 
     public void setNom(String nom) {
         this.nom = nom;
-    }
-
-    public void setConfMotDePasse(String confMotDePasse) {
-        this.confMotDePasse = confMotDePasse;
     }
 
     public void setCommentaires(List<Commentaire> commentaires) {
