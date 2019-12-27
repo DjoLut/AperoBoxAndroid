@@ -44,7 +44,6 @@ public class PanierFragment extends Fragment {
     private Button panierButtonAcheter;
     private TextView prixTotal;
     private TextView promotionTotal;
-    private String access_token;
 
     public PanierFragment() {
     }
@@ -99,7 +98,6 @@ public class PanierFragment extends Fragment {
         panierButtonAcheter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                access_token = preferences.getString("access_token", null);
                 if(panier.sizeBox() != 0 || panier.sizeProduit() != 0)
                 {
                     Commande commande = new Commande();
@@ -157,6 +155,7 @@ public class PanierFragment extends Fragment {
         protected Commande doInBackground(Commande... newCommande) {
             CommandeDAO commandeDAO = new CommandeDAO();
             Commande commande = new Commande();
+            String access_token = preferences.getString("access_token", null);
             try{
                 commande = commandeDAO.ajoutCommande(access_token, newCommande[0]);
             }
@@ -219,7 +218,7 @@ public class PanierFragment extends Fragment {
         protected Integer doInBackground(LigneCommande ...params) {
             Integer resultCode = null;
             LigneCommandeDAO ligneCommandeDAO = new LigneCommandeDAO();
-
+            String access_token = preferences.getString("access_token", null);
             try {
                 resultCode = ligneCommandeDAO.ajoutLigneCommande(access_token, params[0]);
             }
