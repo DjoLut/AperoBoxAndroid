@@ -49,6 +49,8 @@ public class NavigationIconClickListener implements View.OnClickListener {
         height = displayMetrics.heightPixels;
     }
 
+    public boolean getBackDropShown(){ return backdropShown;}
+
     @Override
     public void onClick(View view) {
         backdropShown = !backdropShown;
