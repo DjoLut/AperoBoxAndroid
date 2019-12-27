@@ -4,6 +4,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.aperobox.Activity.PanierFragment;
 import com.example.aperobox.Application.SingletonPanier;
@@ -20,11 +21,13 @@ public class PanierProduitViewHolder extends RecyclerView.ViewHolder {
     private TextView prixTotal, promotionTotal;
     private Integer quantite;
     private Panier panier;
+    private Fragment fragment;
 
-    PanierProduitViewHolder(@NonNull View itemView, TextView prixTotal, TextView promotionTotal){
+    PanierProduitViewHolder(@NonNull View itemView, Fragment fragment, TextView prixTotal, TextView promotionTotal){
         super(itemView);
         this.prixTotal = prixTotal;
         this.promotionTotal = promotionTotal;
+        this.fragment = fragment;
         panierProduitNomTextView = itemView.findViewById(R.id.panier_fragment_produit_nom_text_view);
         panierProduitQuantiteEditText = itemView.findViewById(R.id.panier_fragment_produit_quantite_edit_text);
         moins = itemView.findViewById(R.id.panier_fragment_produit_button_moins);
@@ -68,6 +71,7 @@ public class PanierProduitViewHolder extends RecyclerView.ViewHolder {
                     if(quantite == 0)
                     {
                         panier.deleteProduit(produit);
+                        fragment.getActivity().recreate();
                         //RELOAD FRAGMENT
                     }
                 } catch(NumberFormatException e) {

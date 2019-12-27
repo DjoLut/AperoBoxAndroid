@@ -21,10 +21,12 @@ public class PanierProduitViewAdapter extends RecyclerView.Adapter<PanierProduit
     private ArrayList<Produit> produit = new ArrayList<>();
     private ArrayList<Integer> quantite = new ArrayList<>();
     private TextView prixTotal, promotionTotal;
+    private Fragment fragment;
 
     public PanierProduitViewAdapter(Panier panier, Fragment fragment, TextView prixTotal, TextView promotionTotal) {
         this.prixTotal = prixTotal;
         this.promotionTotal = promotionTotal;
+        this.fragment = fragment;
         for (Iterator<Map.Entry<Produit, Integer>> it = panier.getProduit().entrySet().iterator(); it.hasNext();)
         {
             Map.Entry<Produit, Integer> entry = it.next();
@@ -42,7 +44,7 @@ public class PanierProduitViewAdapter extends RecyclerView.Adapter<PanierProduit
     @Override
     public PanierProduitViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_produit_panier, parent, false);
-        return new PanierProduitViewHolder(layoutView, prixTotal, promotionTotal);
+        return new PanierProduitViewHolder(layoutView,fragment, prixTotal, promotionTotal);
     }
 
     @Override
