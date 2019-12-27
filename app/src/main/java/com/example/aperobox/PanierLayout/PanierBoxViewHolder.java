@@ -21,11 +21,13 @@ public class PanierBoxViewHolder extends RecyclerView.ViewHolder {
     private TextView prixTotal, promotionTotal;
     private Integer quantite;
     private Panier panier;
+    private Fragment fragment;
 
-    PanierBoxViewHolder(@NonNull View itemView, TextView prixTotal, TextView promotionTotal){
+    PanierBoxViewHolder(@NonNull View itemView, Fragment fragment, TextView prixTotal, TextView promotionTotal){
         super(itemView);
         this.prixTotal = prixTotal;
         this.promotionTotal = promotionTotal;
+        this.fragment = fragment;
         panierBoxNomTextView = itemView.findViewById(R.id.panier_fragment_box_nom_text_view);
         panierBoxQuantiteEditText = itemView.findViewById(R.id.panier_fragment_box_quantite_edit_text);
         moins = itemView.findViewById(R.id.panier_fragment_box_button_moins);
@@ -70,7 +72,7 @@ public class PanierBoxViewHolder extends RecyclerView.ViewHolder {
                     if(quantite == 0)
                     {
                         panier.deleteBox(box);
-                        //RELOAD FRAGMENT
+                        fragment.getFragmentManager().beginTransaction().detach(fragment).attach(fragment).commit();
                     }
                 } catch(NumberFormatException e) {
                     panierBoxQuantiteEditText.setText("bug");

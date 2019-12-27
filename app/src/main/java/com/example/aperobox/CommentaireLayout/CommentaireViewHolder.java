@@ -14,6 +14,10 @@ import com.example.aperobox.Model.Utilisateur;
 import com.example.aperobox.R;
 import com.google.android.material.button.MaterialButton;
 
+import java.text.DateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public class CommentaireViewHolder extends RecyclerView.ViewHolder {
     public TextView texte;
     private TextView date;
@@ -29,6 +33,8 @@ public class CommentaireViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(final Commentaire commentaire){
         texte.setText(commentaire.getTexte());
-        date.setText(commentaire.getDateCreation().toLocaleString());
+        Locale locale = new Locale("fr", "FR");
+        DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.DEFAULT, locale);
+        date.setText(dateFormat.format(new Date(commentaire.getDateCreation().getTime())));
     }
 }

@@ -72,17 +72,23 @@ public class MainActivity extends AppCompatActivity implements NavigationHost{
     @Override
     protected void onStop() {
         super.onStop();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
         if(AperoBoxApplication.token == null) {
             preferences = PreferenceManager.getDefaultSharedPreferences(this);
             SharedPreferences.Editor editor = preferences.edit();
             editor.clear();
             editor.commit();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        /*if(AperoBoxApplication.token == null) {
+            preferences = PreferenceManager.getDefaultSharedPreferences(this);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.clear();
+            editor.commit();
+        }*/
     }
 
     /**

@@ -39,7 +39,7 @@ public class PanierProduitViewHolder extends RecyclerView.ViewHolder {
     public void bind( final Produit produit, Integer quantit)
     {
         this.quantite = quantit;
-        panierProduitNomTextView.setHint(produit.getNom());
+        panierProduitNomTextView.setText(produit.getNom());
         panierProduitQuantiteEditText.setText(quantite.toString());
         plus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,8 +71,7 @@ public class PanierProduitViewHolder extends RecyclerView.ViewHolder {
                     if(quantite == 0)
                     {
                         panier.deleteProduit(produit);
-                        fragment.getActivity().recreate();
-                        //RELOAD FRAGMENT
+                        fragment.getFragmentManager().beginTransaction().detach(fragment).attach(fragment).commit();
                     }
                 } catch(NumberFormatException e) {
                     panierProduitQuantiteEditText.setText("bug");
