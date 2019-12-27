@@ -14,13 +14,12 @@ import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateDecelerateInterpolator;
-import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.aperobox.Adapter.CommentaireLayout.CommentaireViewAdapter;
 import com.example.aperobox.Application.AperoBoxApplication;
-import com.example.aperobox.CommentaireLayout.CommentaireViewAdapter;
 import com.example.aperobox.Dao.CommentaireDAO;
 import com.example.aperobox.Exception.HttpResultException;
 import com.example.aperobox.Model.Commentaire;
@@ -81,7 +80,7 @@ public class CommentaireBoxFragment extends Fragment {
                     .setBackgroundResource(R.drawable.product_grid_background_shape);
         }
 
-        if(listeCommentaire==null) {
+        if(listeCommentaire==null || listeCommentaire.isEmpty()) {
             loadCommentaire = new LoadCommentaire();
             loadCommentaire.execute();
         }
@@ -166,13 +165,12 @@ public class CommentaireBoxFragment extends Fragment {
                         Toast.makeText(getContext(), h.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
-                Toast.makeText(getContext(), h.getMessage(), Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        CommentaireBoxFragment.this.getActivity().onBackPressed();
-                        Toast.makeText(getContext(), getString(R.string.commentaire_fragment_error_load_commentaire) + "\n" + getString(R.string.retry), Toast.LENGTH_SHORT).show();
+                        //CommentaireBoxFragment.this.getActivity().onBackPressed();
+                        Toast.makeText(CommentaireBoxFragment.this.getContext(), getString(R.string.commentaire_fragment_error_load_commentaire) + "\n" + getString(R.string.retry), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
