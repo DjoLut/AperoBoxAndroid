@@ -1,10 +1,8 @@
-package com.example.aperobox.Productlayout;
+package com.example.aperobox.Adapter.ProductLayout;
 
 import android.view.View;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.aperobox.Model.Produit;
 import com.example.aperobox.R;
 import com.google.android.material.textfield.TextInputEditText;

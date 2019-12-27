@@ -1,17 +1,13 @@
-package com.example.aperobox.CommentaireLayout;
+package com.example.aperobox.Adapter.CommentaireLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.aperobox.Activity.CommentaireBoxFragment;
 import com.example.aperobox.Model.Commentaire;
 import com.example.aperobox.R;
-
 import java.util.ArrayList;
 import java.util.List;
 

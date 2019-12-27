@@ -22,8 +22,8 @@ import com.example.aperobox.Model.Commande;
 import com.example.aperobox.Model.LigneCommande;
 import com.example.aperobox.Model.Panier;
 import com.example.aperobox.Model.Produit;
-import com.example.aperobox.PanierLayout.PanierBoxViewAdapter;
-import com.example.aperobox.PanierLayout.PanierProduitViewAdapter;
+import com.example.aperobox.Adapter.PanierLayout.PanierBoxViewAdapter;
+import com.example.aperobox.Adapter.PanierLayout.PanierProduitViewAdapter;
 import com.example.aperobox.R;
 import com.example.aperobox.Application.AperoBoxApplication;
 import com.example.aperobox.Application.SingletonPanier;
@@ -111,7 +111,7 @@ public class PanierFragment extends Fragment {
                 }
                 else
                 {
-                    Toast.makeText(getContext(), "Aucun article dans votre panier", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), R.string.panier_fragment_panier_vide, Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -203,10 +203,10 @@ public class PanierFragment extends Fragment {
                     panier.deleteAllProduit();
                 }
 
-                Toast.makeText(getContext(), "Commande enregistrée !", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), R.string.panier_fragment_commande_save, Toast.LENGTH_LONG).show();
                 ((NavigationHost) getActivity()).navigateTo(new PanierFragment(), true);
             }else{
-                Toast.makeText(getContext(), "Erreur ajout commande", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.retry, Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -235,7 +235,7 @@ public class PanierFragment extends Fragment {
         {
             if(resultCode != HttpURLConnection.HTTP_CREATED)
             {
-                Toast.makeText(getContext(), "Erreur Inscription Adresse : ", Toast.LENGTH_SHORT).show();// TODO: faire ça avec @string
+                Toast.makeText(getContext(), R.string.panier_fragment_erreur_save, Toast.LENGTH_SHORT).show();
             }
         }
     }

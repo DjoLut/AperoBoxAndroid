@@ -1,22 +1,16 @@
-package com.example.aperobox.Productlayout;
+package com.example.aperobox.Adapter.ProductLayout;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.aperobox.Activity.BoxFragment;
 import com.example.aperobox.Activity.BoxPersonnaliseFragment;
 import com.example.aperobox.Model.Produit;
 import com.example.aperobox.R;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.Set;
 
 public class ProductPersonnaliseViewAdapter extends RecyclerView.Adapter<ProductPersonnaliseViewHolder> {

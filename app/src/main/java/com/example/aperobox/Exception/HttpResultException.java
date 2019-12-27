@@ -1,7 +1,6 @@
 package com.example.aperobox.Exception;
 
 import com.example.aperobox.Utility.Constantes;
-
 import java.net.HttpURLConnection;
 
 public class HttpResultException extends Exception {
@@ -25,20 +24,5 @@ public class HttpResultException extends Exception {
             default:                                    return Constantes.HTTP_STATUS_500_INTERNAL_SERVER_ERROR;
         }
 
-        /*
-        if(statusCode >= HttpURLConnection.HTTP_INTERNAL_ERROR){
-            //return Resources.getSystem().getString(R.string.HttpUrlConnection_InternalError);
-            return "erreur";
-        }
-        if(statusCode >= HttpURLConnection.HTTP_BAD_REQUEST){
-            if(statusCode == HttpURLConnection.HTTP_BAD_REQUEST || statusCode == HttpURLConnection.HTTP_UNAUTHORIZED){
-                return "Nom d\'utilisateur ou mot de passe incorrect";//Resources.getSystem().getString(R.string.HttpConnection_Unauthorized);
-            }
-            //return Resources.getSystem().getString(R.string.HttpUrlConnection_ClientError);
-            return "erreur";
-        }
-        return super.getMessage();
-
-         */
     }
 }

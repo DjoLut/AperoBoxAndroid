@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.animation.Interpolator;
 import android.widget.ImageView;
 import com.example.aperobox.R;
-
 import androidx.annotation.Nullable;
 
 /**
@@ -76,7 +75,7 @@ public class NavigationIconClickListener implements View.OnClickListener {
     private void updateIcon(View view) {
         if (openIcon != null && closeIcon != null) {
             if (!(view instanceof ImageView)) {
-                throw new IllegalArgumentException("updateIcon() must be called on an ImageView");
+                throw new IllegalArgumentException();
             }
             if (backdropShown) {
                 ((ImageView) view).setImageDrawable(closeIcon);
