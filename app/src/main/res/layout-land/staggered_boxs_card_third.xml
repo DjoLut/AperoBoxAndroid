@@ -6,7 +6,7 @@
     app:cardBackgroundColor="@android:color/transparent"
     app:cardElevation="0dp"
     app:cardPreventCornerOverlap="true"
-    app:contentPaddingTop="@dimen/staggered_boxs_grid_margin_top_third">
+    app:contentPaddingTop="@dimen/staggered_boxs_grid_margin_top_third_landscape">
 
 
     <LinearLayout

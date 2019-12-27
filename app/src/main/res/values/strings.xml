@@ -62,6 +62,7 @@
     <string name="commentaire_fragment_edit_text_envoyer_commentaire">Envoyez un commentaire.</string>
     <string name="commentaire_fragment_error_ajout_commentaire">Une erreur est survenue lors de l\'ajout de votre commentaire.</string>
     <string name="commentaire_fragment_error_duplication">Vous ne pouvez ajoutez 2 fois le même commentaire.</string>
+    <string name="commentaire_fragment_aucun_commentaire">Aucun commentaire.</string>
 
     <!-- AProposFragment -->
     <string name="apropos_message">Application créé et inventée par deux étudiants d\'IG et trois étudiants de marketing de l\'HENALLux IESN de Namur</string>

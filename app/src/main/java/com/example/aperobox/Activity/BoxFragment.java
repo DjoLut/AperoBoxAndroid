@@ -135,6 +135,13 @@ public class BoxFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.box_fragment, container, false);
         this.view = view;
+
+        setView();
+
+        return view;
+    }
+
+    private void setView(){
         produitToDisplay = view.findViewById(R.id.box_fragment_produit_recycler_view);
 
         this.savedInstanceState = savedInstanceState;
@@ -149,12 +156,6 @@ public class BoxFragment extends Fragment {
         this.box_quantite = view.findViewById(R.id.box_fragment_box_quantite);
         this.button_commentaire = view.findViewById(R.id.box_fragment_button_commentaire);
 
-        setView();
-
-        return view;
-    }
-
-    private void setView(){
         this.button_moins.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -180,7 +181,16 @@ public class BoxFragment extends Fragment {
         this.button_commentaire.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((NavigationHost) getActivity()).navigateTo(new CommentaireBoxFragment(boxId), true);
+                if(UtilDAO.isInternetAvailable(getContext())) {
+                    ((NavigationHost) getActivity()).navigateTo(new CommentaireBoxFragment(boxId), true);
+                } else {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getContext(), getString(R.string.connexion_fragment_erreur_connexion) + "\n" + getString(R.string.retry), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
             }
         });
 

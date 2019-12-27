@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.aperobox.Application.AperoBoxApplication;
@@ -51,6 +52,8 @@ public class CommentaireBoxFragment extends Fragment {
     private MaterialButton envoyer;
     private LoadCommentaire loadCommentaire;
     private AjouterCommentaire ajouterCommentaire;
+    private TextView aucun_commentaire;
+    private View view;
 
     private ArrayList<Commentaire> listeCommentaire;
 
@@ -74,12 +77,13 @@ public class CommentaireBoxFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.commentaire_box_fragment, container,false);
+        view = inflater.inflate(R.layout.commentaire_box_fragment, container,false);
 
         this.recycler_view = view.findViewById(R.id.recycler_view);
         this.text_input = view.findViewById(R.id.commentaire_text_input);
         this.edit_text = view.findViewById(R.id.commentaire_edit_text);
         this.envoyer = view.findViewById(R.id.commentaire_envoyer);
+        this.aucun_commentaire = ((TextView) view.findViewById(R.id.testAucunCommentaire));
 
         // Set cut corner background for API 23+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -101,7 +105,7 @@ public class CommentaireBoxFragment extends Fragment {
         if(loadCommentaire!=null)
             loadCommentaire.cancel(true);
         if(ajouterCommentaire!=null){
-            loadCommentaire.cancel(false);
+            ajouterCommentaire.cancel(false);
         }
     }
 
@@ -188,7 +192,22 @@ public class CommentaireBoxFragment extends Fragment {
         @Override
         protected void onPostExecute(ArrayList<Commentaire> commentaires) {
             super.onPostExecute(commentaires);
+            aucun_commentaire.setVisibility(View.INVISIBLE);
+            aucun_commentaire.setText("");
+            aucun_commentaire.setElevation(0);
+
+            if(commentaires.isEmpty()) {
+                aucun_commentaire.setText(R.string.commentaire_fragment_aucun_commentaire);
+                aucun_commentaire.setElevation(1);
+                aucun_commentaire.setVisibility(View.VISIBLE);
+            }
             setViewCommentaire();
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+            loadCommentaire.cancel(true);
         }
     }
 
@@ -234,6 +253,7 @@ public class CommentaireBoxFragment extends Fragment {
                 }
             });
         }
+
 
         RecyclerView.LayoutManager manager = new LinearLayoutManager(getContext());
         recycler_view.setLayoutManager(manager);

@@ -61,6 +61,12 @@
                 android:layout_marginBottom="32dp"
                 android:text=""
                 android:textAppearance="@style/TextAppearance.aperoBox.Box.Price" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/box_fragment_button_commentaire"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/box_fragment_commentaire"
+                android:layout_gravity="right"/>
 
             <TextView
                 android:id="@+id/box_fragment_box_description"

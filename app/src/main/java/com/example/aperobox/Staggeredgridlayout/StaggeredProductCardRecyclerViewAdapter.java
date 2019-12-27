@@ -57,11 +57,10 @@ public class StaggeredProductCardRecyclerViewAdapter extends RecyclerView.Adapte
             Box product = boxList.get(position);
             holder.productTitle.setText(product.getNom());
 
-            Double sommeHTVA = 0.0;
             Double promotion = 0.0;
-            sommeHTVA = (product.getPrixUnitaireHtva()*(1+product.getTva())) * 1;
+            Double sommeHTVA = (product.getPrixUnitaireHtva()*(1.0+product.getTva())) * 1.0;
             if(product.getPromotion()!=null)
-                promotion = sommeHTVA*(1-product.getPromotion());
+                promotion = sommeHTVA*(1.0-product.getPromotion());
 
             String prix;
             if(sommeHTVA!=0) {

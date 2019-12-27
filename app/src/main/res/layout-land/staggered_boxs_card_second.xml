@@ -6,12 +6,12 @@
     app:cardBackgroundColor="@android:color/transparent"
     app:cardElevation="0dp"
     app:cardPreventCornerOverlap="true"
-    app:contentPaddingTop="@dimen/staggered_boxs_grid_margin_top_second">
+    app:contentPaddingTop="@dimen/staggered_boxs_grid_margin_top_second_landscape">
 
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/staggered_boxs_grid_card_height_landscape"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/staggered_boxs_grid_spacing_small"
         android:layout_marginRight="@dimen/staggered_boxs_grid_spacing_small"
         android:orientation="vertical">
