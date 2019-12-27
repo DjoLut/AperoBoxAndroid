@@ -9,6 +9,22 @@
     android:forceDarkAllowed="true"
     tools:context=".Activity.CommentaireBoxFragment">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="150dp"
+        android:gravity="center"
+        android:id="@+id/testAucunCommentaire"
+        android:elevation="9dp"
+        style="@style/TextAppearance.aperoBox.Box.Title"/>
+
+    <ProgressBar
+        android:id="@+id/commentaire_fragment_progress_bar"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:elevation="9dp"
+        android:layout_gravity="center"/>
+
     <androidx.core.widget.NestedScrollView
         android:id="@+id/commentaire_grid"
         android:layout_width="match_parent"
@@ -25,13 +41,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:id="@+id/testAucunCommentaire"
-                android:visibility="gone"
-                style="@style/TextAppearance.aperoBox.Box.Title"/>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view"
                 android:layout_width="match_parent"

@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.bumptech.glide.Glide;
@@ -52,6 +53,7 @@ public class BoxFragment extends Fragment {
     private Button button_plus;
     private Button button_moins;
     private MaterialButton button_commentaire;
+    private ProgressBar progressBar;
 
     private LoadBox loadBoxTask;
     private LoadProd loadProd;
@@ -90,8 +92,10 @@ public class BoxFragment extends Fragment {
                 if(listeProduits==null){
                     loadProd = new LoadProd();
                     loadProd.execute();
-                } else
+                } else{
                     setViewBoxProduit();
+                }
+
             }
         }
     }
@@ -155,6 +159,7 @@ public class BoxFragment extends Fragment {
         this.button_plus = view.findViewById(R.id.box_fragment_box_quantite_plus);
         this.box_quantite = view.findViewById(R.id.box_fragment_box_quantite);
         this.button_commentaire = view.findViewById(R.id.box_fragment_button_commentaire);
+        this.progressBar = view.findViewById(R.id.box_fragment_progress_bar);
 
         this.button_moins.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -373,6 +378,8 @@ public class BoxFragment extends Fragment {
     private void setViewBoxProduit(){
         if(listeProduits!=null) {
             affichePrix();
+
+            progressBar.setElevation(0);
 
             // Set up the RecyclerView
             //RecyclerView.LayoutManager manager = new LinearLayoutManager(getContext());

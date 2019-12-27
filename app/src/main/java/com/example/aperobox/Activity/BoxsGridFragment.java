@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -199,6 +200,9 @@ public class BoxsGridFragment extends Fragment {
                     allBoxes.add(b);
                 }
             }
+
+            ProgressBar progressBar = view.findViewById(R.id.box_grid_fragment_progress_bar);
+            progressBar.setElevation(0);
 
             StaggeredProductCardRecyclerViewAdapter adapter = new StaggeredProductCardRecyclerViewAdapter(allBoxes, BoxsGridFragment.this);
             boxToDisplay.setAdapter(adapter);

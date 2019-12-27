@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -201,6 +202,10 @@ public class CommentaireBoxFragment extends Fragment {
                 aucun_commentaire.setElevation(1);
                 aucun_commentaire.setVisibility(View.VISIBLE);
             }
+
+            ProgressBar progressBar = view.findViewById(R.id.commentaire_fragment_progress_bar);
+            progressBar.setElevation(0);
+
             setViewCommentaire();
         }
 
