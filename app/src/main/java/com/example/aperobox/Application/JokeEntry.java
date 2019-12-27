@@ -41,12 +41,12 @@ public class JokeEntry {
                     writer.write(buffer, 0, pointer);
                 }
             } catch (IOException exception) {
-                Log.e(TAG, "Error writing/reading from the JSON file.", exception);
+                Log.e(TAG, ""+R.string.joke_entry_erreur_read, exception);
             } finally {
                 try {
                     inputStream.close();
                 } catch (IOException exception) {
-                    Log.e(TAG, "Error closing the input stream.", exception);
+                    Log.e(TAG, ""+R.string.joke_entry_erreur_close, exception);
                 }
             }
             String jsonProductsString = writer.toString();

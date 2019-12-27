@@ -2,7 +2,6 @@
     <string name="product_title">Titre</string>
     <string name="product_description">Text secondaire</string>
 
-
     <string name="app_name">AperoBox</string>4
     <string name="aperobox">Apéro Box</string>
 
@@ -73,7 +72,6 @@
     <string name="contact_mail_sujet">aperoBox_contact_us</string>
     <string name="contact_mail_chooser">Choisissez l\'application</string>
 
-
     <!-- Error messages -->
     <string name="error_login_api">Impossible d\'accéder aux serveurs</string>
     <string name="error_no_internet">Une connexion internet est nécessaire.</string>
@@ -105,6 +103,10 @@
     <string name="chargement_lost_connection">La connection internet s\'est interrompue durant le chargement d\'un/plusieurs élément(s).\n Veuillez vérifier votre connection internet, revenir en arrière et réessayer</string>
     <string name="retry">Veuillez vérifier votre connection internet, revenir en arrière et réessayer</string>
 
+    <string name="inscription_fragment_success_inscription">Inscription réussie</string>
+    <string name="inscription_fragment_error_unique_field">Nom d\'utilisateur et/ou adresse email existe déjà dans la base de données</string>
+    <string name="inscription_fragment_error_adresse">Erreur de l\'inscription, l\'addresse n\'est pas conforme</string>
+
     <!-- Backdrop menu -->
     <string name="menu_acceuil">Accueil</string>
     <string name="menu_box_perso">Box personnalisé</string>
@@ -113,6 +115,8 @@
     <string name="menu_a_propos">À propos</string>
     <string name="menu_nous_contacter">Contactez-nous</string>
     <string name="compte">Connexion</string>
+
+    <string name="deconnecte">Déconnecté</string>
 
     <!-- PanierFragment -->
     <string name="panier_fragment_box_name">Box : </string>
@@ -123,5 +127,13 @@
     <string name="panier_fragment_button_acheter">Commander !</string>
     <string name="panier_fragment_prix_total">Prix total (TVAC): </string>
     <string name="panier_fragment_promotion_total">Promotion total: </string>
+    <string name="panier_fragment_panier_vide">Aucun article dans votre panier !</string>
+    <string name="panier_fragment_commande_save">Commande enregistrée</string>
+    <string name="panier_fragment_erreur_save">Erreur lors de l\'enregistrement du panier</string>
+
+
+    <!-- JokeENtry -->
+    <string name="joke_entry_erreur_read">Erreur dans la lecteur du fichier JSON</string>
+    <string name="joke_entry_erreur_close">Erreur fermeture du fichier JSON</string>
 
 </resources>

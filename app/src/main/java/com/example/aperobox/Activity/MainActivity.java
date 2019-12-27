@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -17,7 +16,6 @@ import com.example.aperobox.Dao.UtilDAO;
 import com.example.aperobox.Application.JokeEntry;
 import com.example.aperobox.R;
 import com.example.aperobox.Application.AperoBoxApplication;
-import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.button.MaterialButton;
 
 public class MainActivity extends AppCompatActivity implements NavigationHost{
@@ -196,7 +194,7 @@ public class MainActivity extends AppCompatActivity implements NavigationHost{
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.clear();
                     editor.commit();
-                    Toast.makeText(MainActivity.this, "Déconnecté", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, R.string.deconnecte, Toast.LENGTH_LONG).show();
                     MainActivity.this.navigateTo(new BoxsGridFragment(), true);
                 }
             });

@@ -1,4 +1,4 @@
-package com.example.aperobox.PanierLayout;
+package com.example.aperobox.Adapter.PanierLayout;
 
 import android.view.View;
 import android.widget.Button;

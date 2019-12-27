@@ -24,7 +24,6 @@ public class LigneProduitDAO {
         connection.setRequestMethod("GET");
         connection.setDoInput(true);
         connection.setDoOutput(false);
-        //connection.setRequestProperty("Authorization", "Bearer " + token);
 
         InputStream inputStream = connection.getInputStream();
         InputStreamReader inputStreamReader = new InputStreamReader(inputStream);

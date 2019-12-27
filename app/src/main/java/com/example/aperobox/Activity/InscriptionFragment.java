@@ -1,24 +1,18 @@
 package com.example.aperobox.Activity;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.DatePicker;
 import android.widget.Toast;
 import com.example.aperobox.Dao.AdresseDAO;
@@ -32,7 +26,6 @@ import com.example.aperobox.Application.AperoBoxApplication;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-
 import java.net.HttpURLConnection;
 import java.util.Calendar;
 import java.util.Date;
@@ -241,7 +234,7 @@ public class InscriptionFragment extends Fragment {
                     }
                     else
                     {
-                        Toast.makeText(getContext(), "Erreur connexion lost", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), R.string.retry, Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -362,10 +355,10 @@ public class InscriptionFragment extends Fragment {
         protected void onPostExecute(Integer statusCode)
         {
             if(statusCode == HttpURLConnection.HTTP_CREATED){
-                Toast.makeText(getContext(), "Success inscription", Toast.LENGTH_SHORT).show();// TODO: faire ça avec @string
+                Toast.makeText(getContext(), R.string.inscription_fragment_success_inscription, Toast.LENGTH_SHORT).show();// TODO: faire ça avec @string
                 ((NavigationHost) getActivity()).navigateTo(new LoginFragment(), false);
             }else{
-                Toast.makeText(getContext(), "Erreur Inscription Utilisateur 2 : " + statusCode, Toast.LENGTH_SHORT).show();// TODO: faire ça avec @string
+                Toast.makeText(getContext(), R.string.inscription_fragment_error_unique_field, Toast.LENGTH_SHORT).show();// TODO: faire ça avec @string
             }
         }
     }
@@ -408,7 +401,7 @@ public class InscriptionFragment extends Fragment {
                 inscriptionTask = new Inscription();
                 inscriptionTask.execute(newUser);
             }else{
-                Toast.makeText(getContext(), "Erreur Inscription Adresse : ", Toast.LENGTH_SHORT).show();// TODO: faire ça avec @string
+                Toast.makeText(getContext(), R.string.inscription_fragment_error_adresse, Toast.LENGTH_SHORT).show();// TODO: faire ça avec @string
             }
         }
     }

@@ -22,8 +22,8 @@ import com.example.aperobox.Model.Commande;
 import com.example.aperobox.Model.LigneCommande;
 import com.example.aperobox.Model.Panier;
 import com.example.aperobox.Model.Produit;
-import com.example.aperobox.PanierLayout.PanierBoxViewAdapter;
-import com.example.aperobox.PanierLayout.PanierProduitViewAdapter;
+import com.example.aperobox.Adapter.PanierLayout.PanierBoxViewAdapter;
+import com.example.aperobox.Adapter.PanierLayout.PanierProduitViewAdapter;
 import com.example.aperobox.R;
 import com.example.aperobox.Application.AperoBoxApplication;
 import com.example.aperobox.Application.SingletonPanier;
@@ -44,7 +44,6 @@ public class PanierFragment extends Fragment {
     private Button panierButtonAcheter;
     private TextView prixTotal;
     private TextView promotionTotal;
-    private String access_token;
 
     public PanierFragment() {
     }
@@ -99,7 +98,6 @@ public class PanierFragment extends Fragment {
         panierButtonAcheter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                access_token = preferences.getString("access_token", null);
                 if(panier.sizeBox() != 0 || panier.sizeProduit() != 0)
                 {
                     Commande commande = new Commande();
@@ -113,7 +111,7 @@ public class PanierFragment extends Fragment {
                 }
                 else
                 {
-                    Toast.makeText(getContext(), "Aucun article dans votre panier", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), R.string.panier_fragment_panier_vide, Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -157,6 +155,7 @@ public class PanierFragment extends Fragment {
         protected Commande doInBackground(Commande... newCommande) {
             CommandeDAO commandeDAO = new CommandeDAO();
             Commande commande = new Commande();
+            String access_token = preferences.getString("access_token", null);
             try{
                 commande = commandeDAO.ajoutCommande(access_token, newCommande[0]);
             }
@@ -204,10 +203,10 @@ public class PanierFragment extends Fragment {
                     panier.deleteAllProduit();
                 }
 
-                Toast.makeText(getContext(), "Commande enregistrée !", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), R.string.panier_fragment_commande_save, Toast.LENGTH_LONG).show();
                 ((NavigationHost) getActivity()).navigateTo(new PanierFragment(), true);
             }else{
-                Toast.makeText(getContext(), "Erreur ajout commande", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.retry, Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -219,7 +218,7 @@ public class PanierFragment extends Fragment {
         protected Integer doInBackground(LigneCommande ...params) {
             Integer resultCode = null;
             LigneCommandeDAO ligneCommandeDAO = new LigneCommandeDAO();
-
+            String access_token = preferences.getString("access_token", null);
             try {
                 resultCode = ligneCommandeDAO.ajoutLigneCommande(access_token, params[0]);
             }
@@ -236,7 +235,7 @@ public class PanierFragment extends Fragment {
         {
             if(resultCode != HttpURLConnection.HTTP_CREATED)
             {
-                Toast.makeText(getContext(), "Erreur Inscription Adresse : ", Toast.LENGTH_SHORT).show();// TODO: faire ça avec @string
+                Toast.makeText(getContext(), R.string.panier_fragment_erreur_save, Toast.LENGTH_SHORT).show();
             }
         }
     }

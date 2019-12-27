@@ -1,19 +1,13 @@
-package com.example.aperobox.CommentaireLayout;
+package com.example.aperobox.Adapter.CommentaireLayout;
 
 import android.view.View;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.aperobox.Activity.CommentaireBoxFragment;
-import com.example.aperobox.Application.AperoBoxApplication;
 import com.example.aperobox.Model.Commentaire;
-import com.example.aperobox.Model.Utilisateur;
 import com.example.aperobox.R;
 import com.google.android.material.button.MaterialButton;
-
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
