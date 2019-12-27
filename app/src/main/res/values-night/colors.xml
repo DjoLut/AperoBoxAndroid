@@ -6,11 +6,11 @@
     <color name="colorPrimaryDark">#a4c639</color>
     <color name="colorAccent">#00580a</color>
     <color name="textColorPrimary">#E0E0E0</color>
-    <color name="toolbarIconColor">@color/textColorPrimary</color>
+    <color name="toolbarIconColor">#E0E0E0</color>
     <color name="loginPageBackgroundColor">#020900</color>
     <color name="productGridBackgroundColor">#001302</color>
     <color name="textInputOutlineColor">#a4c639</color>
-    <color name="navigationBarColor">@color/colorPrimaryDark</color>
-    <color name="statusBarColor">@color/colorAccent</color>
-    <color name="statusBarTextColor">@color/textColorPrimary</color>
+    <color name="navigationBarColor">#a4c639</color>
+    <color name="statusBarColor">#00580a</color>
+    <color name="statusBarTextColor">#E0E0E0</color>
 </resources>

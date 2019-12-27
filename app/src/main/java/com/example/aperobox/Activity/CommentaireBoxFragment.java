@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -80,7 +81,11 @@ public class CommentaireBoxFragment extends Fragment {
         this.edit_text = view.findViewById(R.id.commentaire_edit_text);
         this.envoyer = view.findViewById(R.id.commentaire_envoyer);
 
-        setUpToolbar(view);
+        // Set cut corner background for API 23+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            view.findViewById(R.id.commentaire_grid)
+                    .setBackgroundResource(R.drawable.product_grid_background_shape);
+        }
 
         if(listeCommentaire==null) {
             loadCommentaire = new LoadCommentaire();
@@ -187,6 +192,16 @@ public class CommentaireBoxFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(listeCommentaire==null){
+            loadCommentaire = new LoadCommentaire();
+            loadCommentaire.execute(boxId);
+        } else
+            setViewCommentaire();
+    }
+
     public void ajouterCommentaire(Commentaire commentaire){
         if((listeCommentaire == null || listeCommentaire.isEmpty()) || !listeCommentaire.contains(commentaire)){
             ajouterCommentaire = new AjouterCommentaire();
@@ -223,108 +238,5 @@ public class CommentaireBoxFragment extends Fragment {
         RecyclerView.LayoutManager manager = new LinearLayoutManager(getContext());
         recycler_view.setLayoutManager(manager);
         recycler_view.setAdapter(new CommentaireViewAdapter(listeCommentaire, CommentaireBoxFragment.this));
-    }
-
-
-    private void setUpToolbar(View view) {
-        Toolbar toolbar = view.findViewById(R.id.app_bar);
-        AppCompatActivity activity = (AppCompatActivity) getActivity();
-        if (activity != null) {
-            activity.setSupportActionBar(toolbar);
-        }
-
-        View acceuil = view.findViewById(R.id.menu_acceuil);
-        acceuil.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((NavigationHost) getActivity()).navigateTo(new BoxsGridFragment(), true);
-            }
-        });
-
-        View boxPersonnalise = view.findViewById(R.id.menu_box_personnalise);
-        boxPersonnalise.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((NavigationHost) getActivity()).navigateTo(new BoxPersonnaliseFragment(), true);
-            }
-        });
-
-        View option = view.findViewById(R.id.menu_option);
-        option.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((NavigationHost)getActivity()).navigateTo(new OptionFragment(),true);
-            }
-        });
-
-        View panier = view.findViewById(R.id.menu_panier);
-        panier.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((NavigationHost) getActivity()).navigateTo(new PanierFragment(), true);
-            }
-        });
-
-        view.findViewById(R.id.menu_a_propos).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((NavigationHost) getActivity()).navigateTo(new AProposFragment(), true);
-            }
-        });
-
-        view.findViewById(R.id.menu_nous_contactez).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.setType("plain/text");
-                intent.setData(Uri.parse("mailto:"));
-                intent.putExtra(Intent.EXTRA_EMAIL, new String[]{getString(R.string.contact_mail)});
-                intent.putExtra(Intent.EXTRA_SUBJECT, R.string.contact_mail_sujet);
-                startActivity(Intent.createChooser(intent, getString(R.string.contact_mail_chooser)));
-            }
-        });
-
-        // Compte onclick listener
-        MaterialButton compte = view.findViewById(R.id.menu_compte);
-        preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        String access_token = preferences.getString("access_token", null);
-        if(access_token!=null) {
-            compte.setVisibility(View.VISIBLE);
-            compte.setText(R.string.deconnection_title);
-            compte.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.clear();
-                    editor.commit();
-                    Toast.makeText(getContext(), "Déconnecté", Toast.LENGTH_LONG).show();
-                    ((NavigationHost) getActivity()).navigateTo(new BoxsGridFragment(), true);
-                }
-            });
-            panier.setVisibility(View.VISIBLE);
-            panier.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ((NavigationHost)getActivity()).navigateTo(new PanierFragment(), true);
-                }
-            });
-        }
-        else {
-            compte.setText(R.string.connexion_title);
-            panier.setVisibility(View.INVISIBLE);
-            view.findViewById(R.id.menu_compte).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ((NavigationHost) getActivity()).navigateTo(new LoginFragment(), true);
-                }
-            });
-        }
-
-        toolbar.setNavigationOnClickListener(new NavigationIconClickListener(
-                getContext(),
-                view.findViewById(R.id.commentaire_grid),
-                new AccelerateDecelerateInterpolator(),
-                getContext().getResources().getDrawable(R.drawable.branded_menu), // Menu open icon
-                getContext().getResources().getDrawable(R.drawable.close_menu))); // Menu close icon
     }
 }

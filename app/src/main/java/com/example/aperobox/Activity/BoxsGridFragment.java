@@ -94,7 +94,13 @@ public class BoxsGridFragment extends Fragment {
         }
 
         // Set up the tool bar
-        setUpToolbar(view);
+        //setUpToolbar(view);
+
+        // Set cut corner background for API 23+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            view.findViewById(R.id.product_grid)
+                    .setBackgroundResource(R.drawable.product_grid_background_shape);
+        }
 
         return view;
     }
@@ -130,7 +136,7 @@ public class BoxsGridFragment extends Fragment {
             loadBoxTask.cancel(true);
     }
 
-    private void setUpToolbar(View view) {
+    /*private void setUpToolbar(View view) {
         Toolbar toolbar = view.findViewById(R.id.app_bar);
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         if (activity != null) {
@@ -231,6 +237,8 @@ public class BoxsGridFragment extends Fragment {
                 getContext().getResources().getDrawable(R.drawable.close_menu))); // Menu close icon
     }
 
+     */
+
 
     private void setJoke(View view){
         JokeEntry jokeEntry = JokeEntry.getRandom();
@@ -301,12 +309,6 @@ public class BoxsGridFragment extends Fragment {
             int largePadding = getResources().getDimensionPixelSize(R.dimen.staggered_boxs_grid_spacing_large);
             int smallPadding = getResources().getDimensionPixelSize(R.dimen.staggered_boxs_grid_spacing_small);
             boxToDisplay.addItemDecoration(new BoxsGridItemDecoration(largePadding, smallPadding));
-
-            // Set cut corner background for API 23+
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                view.findViewById(R.id.product_grid)
-                        .setBackgroundResource(R.drawable.product_grid_background_shape);
-            }
 
         }
 

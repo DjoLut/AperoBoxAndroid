@@ -81,6 +81,19 @@ public class BoxFragment extends Fragment {
         super.onResume();
         if(!UtilDAO.isInternetAvailable(getContext()))
             setJoke();
+        else{
+            if(selectedBox==null){
+                loadBoxTask = new LoadBox();
+                loadBoxTask.execute();
+            } else {
+                setViwBoxBox();
+                if(listeProduits==null){
+                    loadProd = new LoadProd();
+                    loadProd.execute();
+                } else
+                    setViewBoxProduit();
+            }
+        }
     }
 
     @Override
@@ -126,9 +139,6 @@ public class BoxFragment extends Fragment {
 
         this.savedInstanceState = savedInstanceState;
 
-        // Set up the tool bar
-        setUpToolbar(view);
-
         this.box_image = view.findViewById(R.id.box_fragment_box_image);
         this.box_name = view.findViewById(R.id.box_fragment_box_name);
         this.box_price = view.findViewById(R.id.box_fragment_box_price);
@@ -170,7 +180,7 @@ public class BoxFragment extends Fragment {
         this.button_commentaire.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((NavigationHost) getActivity()).navigateTo(new CommentaireBoxFragment(boxId), false);
+                ((NavigationHost) getActivity()).navigateTo(new CommentaireBoxFragment(boxId), true);
             }
         });
 
@@ -225,12 +235,12 @@ public class BoxFragment extends Fragment {
     }
 
 
-    private class LoadBox extends AsyncTask<String, Void, Box>
+    private class LoadBox extends AsyncTask<Void, Void, Box>
     {
         @Override
-        protected Box doInBackground(String... params) {
+        protected Box doInBackground(Void... params) {
             try {
-                selectedBox = boxDAO.getBox(Integer.valueOf(boxId));
+                selectedBox = boxDAO.getBox(boxId);
             } catch (Exception e) {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
@@ -325,108 +335,6 @@ public class BoxFragment extends Fragment {
         box_description.setText(jokeEntry.getBase()+"\n\n\n" + jokeEntry.getReponse());
         box_price.setText(getString(R.string.box_fragment_box_prix_gratuit));
         box_name.setText(getString(R.string.box_fragment_box_error_chargement_api_name));
-    }
-
-    private void setUpToolbar(View view) {
-        Toolbar toolbar = view.findViewById(R.id.box_app_bar);
-        AppCompatActivity activity = (AppCompatActivity) getActivity();
-        if (activity != null) {
-            activity.setSupportActionBar(toolbar);
-        }
-
-        View acceuil = view.findViewById(R.id.menu_acceuil);
-        acceuil.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((NavigationHost) getActivity()).navigateTo(new BoxsGridFragment(), true);
-            }
-        });
-
-        View boxPersonnalise = view.findViewById(R.id.menu_box_personnalise);
-        boxPersonnalise.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((NavigationHost) getActivity()).navigateTo(new BoxPersonnaliseFragment(), true);
-            }
-        });
-
-        View option = view.findViewById(R.id.menu_option);
-        option.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((NavigationHost)getActivity()).navigateTo(new OptionFragment(),true);
-            }
-        });
-
-        View panier = view.findViewById(R.id.menu_panier);
-        panier.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((NavigationHost) getActivity()).navigateTo(new PanierFragment(), true);
-            }
-        });
-
-        view.findViewById(R.id.menu_a_propos).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((NavigationHost) getActivity()).navigateTo(new AProposFragment(), true);
-            }
-        });
-
-        view.findViewById(R.id.menu_nous_contactez).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.setType("plain/text");
-                intent.setData(Uri.parse("mailto:"));
-                intent.putExtra(Intent.EXTRA_EMAIL, new String[]{getString(R.string.contact_mail)});
-                intent.putExtra(Intent.EXTRA_SUBJECT, R.string.contact_mail_sujet);
-                startActivity(Intent.createChooser(intent, getString(R.string.contact_mail_chooser)));
-            }
-        });
-
-        // Compte onclick listener
-        MaterialButton compte = view.findViewById(R.id.menu_compte);
-        preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        String access_token = preferences.getString("access_token", null);
-        if(access_token!=null) {
-            compte.setVisibility(View.VISIBLE);
-            compte.setText(R.string.deconnection_title);
-            compte.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.clear();
-                    editor.commit();
-                    Toast.makeText(getContext(), "Déconnecté", Toast.LENGTH_LONG).show();
-                    ((NavigationHost) getActivity()).navigateTo(new BoxsGridFragment(), true);
-                }
-            });
-            panier.setVisibility(View.VISIBLE);
-            panier.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ((NavigationHost)getActivity()).navigateTo(new PanierFragment(), true);
-                }
-            });
-        }
-        else {
-            compte.setText(R.string.connexion_title);
-            panier.setVisibility(View.INVISIBLE);
-            view.findViewById(R.id.menu_compte).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ((NavigationHost) getActivity()).navigateTo(new LoginFragment(), true);
-                }
-            });
-        }
-
-        ((Toolbar)view.findViewById(R.id.box_app_bar)).setNavigationOnClickListener(new NavigationIconClickListener(
-                getContext(),
-                view.findViewById(R.id.box_grid),
-                new AccelerateDecelerateInterpolator(),
-                getContext().getResources().getDrawable(R.drawable.branded_menu), // Menu open icon
-                getContext().getResources().getDrawable(R.drawable.close_menu))); // Menu close icon
     }
 
     private void setViwBoxBox(){
