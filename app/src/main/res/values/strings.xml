@@ -131,6 +131,7 @@
     <string name="panier_fragment_panier_vide">Aucun article dans votre panier !</string>
     <string name="panier_fragment_commande_save">Commande enregistrée</string>
     <string name="panier_fragment_erreur_save">Erreur lors de l\'enregistrement du panier</string>
+    <string name="panier_fragment_sous_total">Sous-total : </string>
 
 
     <!-- JokeENtry -->

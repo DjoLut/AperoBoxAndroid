@@ -1,9 +1,10 @@
 package com.example.aperobox.Activity;
 
 import android.content.SharedPreferences;
-import android.net.http.HttpResponseCache;
 import android.os.AsyncTask;
 import android.os.Bundle;
+
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -29,7 +30,6 @@ import com.example.aperobox.R;
 import com.example.aperobox.Application.AperoBoxApplication;
 import com.example.aperobox.Application.SingletonPanier;
 import com.google.android.material.button.MaterialButton;
-
 import java.net.HttpURLConnection;
 import java.util.Date;
 import java.util.Iterator;
@@ -45,6 +45,8 @@ public class PanierFragment extends Fragment {
     private TextView panierBoxTextView;
     private TextView panierBoxPersoTextView;
     private Button panierButtonAcheter;
+    private TextView prixBox;
+    private TextView prixProduit;
     private TextView prixTotal;
     private TextView promotionTotal;
 
@@ -79,6 +81,8 @@ public class PanierFragment extends Fragment {
         panierButtonAcheter = view.findViewById(R.id.panier_fragment_button_acheter);
         prixTotal = view.findViewById(R.id.panier_fragment_total_prix);
         promotionTotal = view.findViewById(R.id.panier_fragment_total_promotion);
+        prixBox = view.findViewById(R.id.panier_fragment_prix_box);
+        prixProduit = view.findViewById(R.id.panier_fragment_prix_produit);
 
         //BOXES
         boxToDisplay = view.findViewById(R.id.panier_fragment_box_recycler_view);
@@ -86,7 +90,7 @@ public class PanierFragment extends Fragment {
         GridLayoutManager gridLayoutManagerBox = new GridLayoutManager(getContext(), 1, GridLayoutManager.VERTICAL, false);
         boxToDisplay.setLayoutManager(gridLayoutManagerBox);
 
-        PanierBoxViewAdapter adapterBox = new PanierBoxViewAdapter(panier, PanierFragment.this, prixTotal, promotionTotal);
+        PanierBoxViewAdapter adapterBox = new PanierBoxViewAdapter(panier, PanierFragment.this, prixTotal, promotionTotal, prixBox);
         if(adapterBox.getItemCount() == 0)
             panierBoxTextView.setText(R.string.panier_fragment_box_vide);
         boxToDisplay.setAdapter(adapterBox);
@@ -97,7 +101,7 @@ public class PanierFragment extends Fragment {
         GridLayoutManager gridLayoutManagerProduit = new GridLayoutManager(getContext(), 1, GridLayoutManager.VERTICAL, false);
         produitToDisplay.setLayoutManager(gridLayoutManagerProduit);
 
-        PanierProduitViewAdapter adapterProduit = new PanierProduitViewAdapter(panier, PanierFragment.this, prixTotal, promotionTotal);
+        PanierProduitViewAdapter adapterProduit = new PanierProduitViewAdapter(panier, PanierFragment.this, prixTotal, promotionTotal, prixProduit);
         if(adapterProduit.getItemCount() == 0)
             panierBoxPersoTextView.setText(R.string.panier_fragment_produit_vide);
         produitToDisplay.setAdapter(adapterProduit);
@@ -155,10 +159,14 @@ public class PanierFragment extends Fragment {
     public void onDestroy() { super.onDestroy(); }
 
 
-    public static void affichePrixTotalPromotion(TextView prixTotal, TextView promotion){
+    public static void affichePrixTotalPromotion(TextView prixTotal, TextView promotion, @Nullable TextView prixBox, @Nullable TextView prixProduit){
         Panier panier = SingletonPanier.getUniquePanier();
         prixTotal.setText(UtilDAO.format.format(Math.round(panier.calculTotalPrixBoxEtProduit()*100.0)/100.0));
         promotion.setText(UtilDAO.format.format(Math.round(panier.calculTotalPromoBox()*100.0)/100.0));
+        if(prixBox != null)
+            prixBox.setText(UtilDAO.format.format(Math.round(panier.calculTotalPrixBox()*100.0)/100.0));
+        if(prixProduit != null)
+            prixProduit.setText(UtilDAO.format.format(Math.round(panier.calculTotalPrixProduit()*100.0)/100.0));
     }
 
     private class AjoutCommande extends AsyncTask<Commande, Void, Commande>

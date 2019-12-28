@@ -18,22 +18,23 @@ public class PanierBoxViewHolder extends RecyclerView.ViewHolder {
     public TextView panierBoxQuantiteEditText;
     private Button moins;
     private Button plus;
-    private TextView prixTotal, promotionTotal;
+    private TextView prixTotal, promotionTotal, prixBox;
     private Integer quantite;
     private Panier panier;
     private Fragment fragment;
 
-    PanierBoxViewHolder(@NonNull View itemView, Fragment fragment, TextView prixTotal, TextView promotionTotal){
+    PanierBoxViewHolder(@NonNull View itemView, Fragment fragment, TextView prixTotal, TextView promotionTotal, TextView prixBox){
         super(itemView);
         this.prixTotal = prixTotal;
         this.promotionTotal = promotionTotal;
+        this.prixBox = prixBox;
         this.fragment = fragment;
         panierBoxNomTextView = itemView.findViewById(R.id.panier_fragment_box_nom_text_view);
         panierBoxQuantiteEditText = itemView.findViewById(R.id.panier_fragment_box_quantite_edit_text);
         moins = itemView.findViewById(R.id.panier_fragment_box_button_moins);
         plus = itemView.findViewById(R.id.panier_fragment_box_button_plus);
         panier = SingletonPanier.getUniquePanier();
-        PanierFragment.affichePrixTotalPromotion(this.prixTotal, this.promotionTotal);
+        PanierFragment.affichePrixTotalPromotion(this.prixTotal, this.promotionTotal, prixBox, null);
     }
 
     public void bind(final Box box, Integer quantit)
@@ -55,7 +56,7 @@ public class PanierBoxViewHolder extends RecyclerView.ViewHolder {
                 } catch(NullPointerException e) {
                     panierBoxQuantiteEditText.setText("bug2");
                 }
-                PanierFragment.affichePrixTotalPromotion(prixTotal,promotionTotal);
+                PanierFragment.affichePrixTotalPromotion(prixTotal,promotionTotal, prixBox, null);
             }
         });
 
@@ -79,7 +80,7 @@ public class PanierBoxViewHolder extends RecyclerView.ViewHolder {
                 } catch(NullPointerException e) {
                     panierBoxQuantiteEditText.setText("bug2");
                 }
-                PanierFragment.affichePrixTotalPromotion(prixTotal,promotionTotal);
+                PanierFragment.affichePrixTotalPromotion(prixTotal,promotionTotal, prixBox, null);
             }
         });
     }

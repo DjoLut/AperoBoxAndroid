@@ -18,22 +18,23 @@ public class PanierProduitViewHolder extends RecyclerView.ViewHolder {
     public TextView panierProduitQuantiteEditText;
     private Button moins;
     private Button plus;
-    private TextView prixTotal, promotionTotal;
+    private TextView prixTotal, promotionTotal, prixProduit;
     private Integer quantite;
     private Panier panier;
     private Fragment fragment;
 
-    PanierProduitViewHolder(@NonNull View itemView, Fragment fragment, TextView prixTotal, TextView promotionTotal){
+    PanierProduitViewHolder(@NonNull View itemView, Fragment fragment, TextView prixTotal, TextView promotionTotal, TextView prixProduit){
         super(itemView);
         this.prixTotal = prixTotal;
         this.promotionTotal = promotionTotal;
+        this.prixProduit = prixProduit;
         this.fragment = fragment;
         panierProduitNomTextView = itemView.findViewById(R.id.panier_fragment_produit_nom_text_view);
         panierProduitQuantiteEditText = itemView.findViewById(R.id.panier_fragment_produit_quantite_edit_text);
         moins = itemView.findViewById(R.id.panier_fragment_produit_button_moins);
         plus = itemView.findViewById(R.id.panier_fragment_produit_button_plus);
         panier = SingletonPanier.getUniquePanier();
-        PanierFragment.affichePrixTotalPromotion(this.prixTotal, this.promotionTotal);
+        PanierFragment.affichePrixTotalPromotion(this.prixTotal, this.promotionTotal, null, prixProduit);
     }
 
     public void bind( final Produit produit, Integer quantit)
@@ -54,7 +55,7 @@ public class PanierProduitViewHolder extends RecyclerView.ViewHolder {
                 } catch(NullPointerException e) {
                     panierProduitQuantiteEditText.setText("bug2");
                 }
-                PanierFragment.affichePrixTotalPromotion(prixTotal,promotionTotal);
+                PanierFragment.affichePrixTotalPromotion(prixTotal,promotionTotal, null, prixProduit);
             }
         });
 
@@ -78,7 +79,7 @@ public class PanierProduitViewHolder extends RecyclerView.ViewHolder {
                 } catch(NullPointerException e) {
                     panierProduitQuantiteEditText.setText("bug2");
                 }
-                PanierFragment.affichePrixTotalPromotion(prixTotal,promotionTotal);
+                PanierFragment.affichePrixTotalPromotion(prixTotal,promotionTotal, null, prixProduit);
             }
         });
     }

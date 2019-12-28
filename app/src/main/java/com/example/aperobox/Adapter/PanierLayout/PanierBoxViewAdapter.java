@@ -19,12 +19,13 @@ public class PanierBoxViewAdapter extends RecyclerView.Adapter<PanierBoxViewHold
     private Panier panier = SingletonPanier.getUniquePanier();
     private ArrayList<Box> box = new ArrayList<>();
     private ArrayList<Integer> quantite = new ArrayList<>();
-    private TextView prixTotal, promotionTotal;
+    private TextView prixTotal, promotionTotal, prixBox;
     private Fragment fragment;
 
-    public PanierBoxViewAdapter(Panier panier, Fragment fragment, TextView prixTotal, TextView promotionTotal) {
+    public PanierBoxViewAdapter(Panier panier, Fragment fragment, TextView prixTotal, TextView promotionTotal, TextView prixBox) {
         this.prixTotal = prixTotal;
         this.promotionTotal = promotionTotal;
+        this.prixBox = prixBox;
         this.fragment = fragment;
         for (Iterator<Map.Entry<Box, Integer>> it = panier.getBox().entrySet().iterator(); it.hasNext();)
         {
@@ -43,7 +44,7 @@ public class PanierBoxViewAdapter extends RecyclerView.Adapter<PanierBoxViewHold
     @Override
     public PanierBoxViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_box_panier, parent, false);
-        return new PanierBoxViewHolder(layoutView, fragment, prixTotal, promotionTotal);
+        return new PanierBoxViewHolder(layoutView, fragment, prixTotal, promotionTotal, prixBox);
     }
 
     @Override
