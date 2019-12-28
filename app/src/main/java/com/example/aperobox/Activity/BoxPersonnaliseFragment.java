@@ -111,28 +111,36 @@ public class BoxPersonnaliseFragment extends Fragment {
             loadProduit = new LoadProduit();
             loadProduit.execute();
         } else {
-            Toast.makeText(getContext(), getString(R.string.error_no_internet), Toast.LENGTH_SHORT).show();
-            setJoke();
         }
     }
 
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        View view = inflater.inflate(R.layout.box_personnalise_fragment, container, false);
-        this.view = view;
-        produitToDisplay = view.findViewById(R.id.box_fragment_produit_recycler_view);
+        if(UtilDAO.isInternetAvailable(getContext())) {
+            view = inflater.inflate(R.layout.box_personnalise_fragment, container, false);
+            produitToDisplay = view.findViewById(R.id.box_fragment_produit_recycler_view);
 
-        savedInstanceState = savedInstanceState;
+            savedInstanceState = savedInstanceState;
 
-        this.box_image = view.findViewById(R.id.box_fragment_box_image);
-        this.box_name = view.findViewById(R.id.box_fragment_box_name);
-        this.box_price = view.findViewById(R.id.box_fragment_box_price);
-        this.box_description = view.findViewById(R.id.box_fragment_box_description);
-        this.button_ajout_panier = view.findViewById(R.id.box_fragment_box_button_ajout_panier);
-        this.box_quantite = view.findViewById(R.id.box_fragment_box_quantite);
+            this.box_image = view.findViewById(R.id.box_fragment_box_image);
+            this.box_name = view.findViewById(R.id.box_fragment_box_name);
+            this.box_price = view.findViewById(R.id.box_fragment_box_price);
+            this.box_description = view.findViewById(R.id.box_fragment_box_description);
+            this.button_ajout_panier = view.findViewById(R.id.box_fragment_box_button_ajout_panier);
+            this.box_quantite = view.findViewById(R.id.box_fragment_box_quantite);
 
-        setView();
+            if(listeProduits!=null){
+                loadProduit = new LoadProduit();
+                loadProduit.execute();
+            }
+
+            setView();
+        } else {
+            Toast.makeText(getContext(), getString(R.string.error_no_internet), Toast.LENGTH_SHORT).show();
+            view = inflater.inflate(R.layout.joke, container,false);
+            setJoke();
+        }
 
         return view;
     }
@@ -246,9 +254,8 @@ public class BoxPersonnaliseFragment extends Fragment {
 
     private void setJoke(){
         JokeEntry jokeEntry = JokeEntry.getRandom();
-        box_description.setText(jokeEntry.getBase()+"\n\n\n" + jokeEntry.getReponse());
-        box_price.setText(getString(R.string.box_fragment_box_prix_gratuit));
-        box_name.setText(getString(R.string.box_fragment_box_error_chargement_api_name));
+        TextView textView = view.findViewById(R.id.boxs_joke);
+        textView.setText(jokeEntry.getBase()+"\n\n\n" + jokeEntry.getReponse());
     }
 
     private void setViewBoxPersonnaliseBox(){

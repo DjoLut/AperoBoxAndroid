@@ -29,7 +29,7 @@ public class AperoBoxApplication extends Application {
     public static String token;
     private static LoginModel loginModel;
     private Connection connection;
-    private Expiration expiration;
+    private JwtToken jwtToken;
 
     private static AperoBoxApplication instance;
     private static Context appContext;
@@ -60,11 +60,8 @@ public class AperoBoxApplication extends Application {
     @Override
     public void onTerminate() {
         super.onTerminate();
-        if(expiration!=null)
-            expiration.cancel(true);
-        else
-            if (connection!=null)
-                connection.cancel(true);
+        if (connection!=null)
+            connection.cancel(true);
     }
 
     public boolean isNightModeEnabled() {
@@ -87,18 +84,23 @@ public class AperoBoxApplication extends Application {
     public void startExpiration(JwtToken jwtToken){
         long time = jwtToken.getExpires_in()*1000;
 
+        token = jwtToken.getAccess_token();
 
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Connection connection = new Connection();
+                connection = new Connection();
                 connection.execute(loginModel);
             }
-        }, time-5000);
-
+        }, 5000);
     }
 
+    public void deconnexion(){
+        token = null;
+    }
+
+    /*
     private class Expiration extends AsyncTask<JwtToken, Void, Void>
     {
         @Override
@@ -106,7 +108,6 @@ public class AperoBoxApplication extends Application {
         {
             long time = token[0].getExpires_in()*1000;
 
-/*
             final Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
@@ -116,17 +117,6 @@ public class AperoBoxApplication extends Application {
                 }
             }, long - 5000);
 
- */
-
-
-            final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    Connection connection = new Connection();
-                    connection.execute(loginModel);
-                }
-            }, 5000);
 
             return null;
         }
@@ -139,6 +129,8 @@ public class AperoBoxApplication extends Application {
         }
     }
 
+     */
+
     private class Connection extends AsyncTask<LoginModel, Void, Void> {
 
         private HttpResultException exception;
@@ -150,18 +142,18 @@ public class AperoBoxApplication extends Application {
 
         @Override
         protected Void doInBackground(LoginModel... loginModels) {
-            UtilisateurDAO utilisateurDAO = new UtilisateurDAO();
-            try {
-                token = utilisateurDAO.connection(loginModels[0]).getAccess_token();
-                Toast.makeText(appContext, R.string.login_success, Toast.LENGTH_LONG).show();
-            } catch (HttpResultException e) {
-                exception = e;
-                cancel(true);
-            } catch (Exception e) {
-                Log.i("test", e.getMessage());
-            }
+            if(token!=null) {
+                UtilisateurDAO utilisateurDAO = new UtilisateurDAO();
+                try {
+                    jwtToken = utilisateurDAO.connection(loginModels[0]);
+                    token = jwtToken.getAccess_token();
+                } catch (Exception e) {
+                    Log.i("test", e.getMessage());
+                    cancel(true);
+                }
 
-            Log.i("test", "Token refresh!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                Log.i("test", "Token refresh!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            }
             return null;
         }
 
@@ -172,6 +164,7 @@ public class AperoBoxApplication extends Application {
             SharedPreferences.Editor editor = preferences.edit();
             editor.putString("access_token", token);
             editor.commit();
+            startExpiration(jwtToken);
         }
 
         @Override

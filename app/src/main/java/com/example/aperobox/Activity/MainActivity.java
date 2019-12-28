@@ -211,6 +211,7 @@ public class MainActivity extends AppCompatActivity implements NavigationHost{
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.clear();
                     editor.commit();
+                    AperoBoxApplication.getInstance().deconnexion();
                     Toast.makeText(MainActivity.this, R.string.deconnecte, Toast.LENGTH_LONG).show();
                     MainActivity.this.navigateTo(new BoxsGridFragment(), true);
                 }
