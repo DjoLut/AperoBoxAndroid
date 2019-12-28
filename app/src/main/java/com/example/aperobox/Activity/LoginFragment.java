@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.view.KeyEvent;
@@ -19,6 +20,7 @@ import com.example.aperobox.Model.JwtToken;
 import com.example.aperobox.Model.LoginModel;
 import com.example.aperobox.R;
 import com.example.aperobox.Application.AperoBoxApplication;
+import com.example.aperobox.Thread.TokenExpire;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -26,6 +28,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
+
+import java.util.TimerTask;
 
 /**
  * Fragment representing the login screen for AperoBox.
@@ -171,14 +175,14 @@ public class LoginFragment extends Fragment {
         }
 
         @Override
-        protected void onPostExecute(JwtToken token)
+        protected void onPostExecute(final JwtToken token)
         {
             progressBar.setVisibility(View.INVISIBLE);
             preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
             SharedPreferences.Editor editor = preferences.edit();
             editor.putString("access_token", token.getAccess_token());
             if (editor.commit()) {
-                //new RefreshingToken().execute();
+                //new Expiration().execute(token);
                 Toast.makeText(getContext(), R.string.login_success, Toast.LENGTH_LONG).show();
                 ((NavigationHost) getActivity()).navigateTo(new BoxsGridFragment(), false);
             } else {
@@ -192,6 +196,32 @@ public class LoginFragment extends Fragment {
             progressBar.setVisibility(View.INVISIBLE);
         }
     }
+
+
+    /*private class Expiration extends AsyncTask<JwtToken, Void, String>
+    {
+        @Override
+        protected String doInBackground(JwtToken ...token)
+        {
+            TokenExpire tokenExpire = new TokenExpire((token[0].getExpires_in())*1000);
+            tokenExpire.run();
+            //tokenExpire.start();
+
+            return token[0].getAccess_token();
+        }
+
+        @Override
+        protected void onPostExecute(String acces_token)
+        {
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.clear();
+            editor.commit();
+            Toast.makeText(getContext(), R.string.login_token_expire, Toast.LENGTH_LONG).show();
+            ((NavigationHost) getActivity()).navigateTo(new BoxsGridFragment(), false);
+        }
+
+
+    }*/
 
     @Override
     public void onDestroy() {

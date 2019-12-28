@@ -83,6 +83,7 @@
     <string name="invalid_conf_password">Mots de passes différents</string>
     <string name="login_failed">Échec de la connexion</string>
     <string name="login_success">Succès de la connexion</string>
+    <string name="login_token_expire">Session expiré. Veuillez-vous reconnecter</string>
     <string name="invalid_date_naissance">La date de naissance n\'est pas valable (minimum 13 ans)</string>
     <string name="invalid_nom">2 caractères minimum et 50 maximum</string>
     <string name="invalid_prenom">2 caractères minimum et 50 maximum</string>
