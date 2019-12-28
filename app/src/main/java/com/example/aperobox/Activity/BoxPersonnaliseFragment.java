@@ -23,6 +23,7 @@ import com.example.aperobox.Application.AperoBoxApplication;
 import com.example.aperobox.Dao.ProduitDAO;
 import com.example.aperobox.Dao.UtilDAO;
 import com.example.aperobox.Application.JokeEntry;
+import com.example.aperobox.Model.Box;
 import com.example.aperobox.Model.Panier;
 import com.example.aperobox.Model.Produit;
 import com.example.aperobox.Adapter.ProductLayout.ProductPersonnaliseViewAdapter;
@@ -48,7 +49,7 @@ public class BoxPersonnaliseFragment extends Fragment {
     private TextView box_quantite;
     private Button button_ajout_panier;
 
-    private BoxPersonnaliseFragment.LoadProduit loadProduit;
+    private LoadProduit loadProduit;
     private Double sommeHTVA;
 
     public static Map<Produit, Integer> listeProduits;
@@ -110,7 +111,6 @@ public class BoxPersonnaliseFragment extends Fragment {
         if(UtilDAO.isInternetAvailable(getContext())) {
             loadProduit = new LoadProduit();
             loadProduit.execute();
-        } else {
         }
     }
 

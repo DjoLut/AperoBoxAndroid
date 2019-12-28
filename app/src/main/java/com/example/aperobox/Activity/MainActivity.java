@@ -137,29 +137,21 @@ public class MainActivity extends AppCompatActivity implements NavigationHost{
         }
 
         acceuil = view.findViewById(R.id.menu_acceuil);
-        if(internetAvaillable)
-            acceuil.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    navigateTo(new BoxsGridFragment(), true);
-                }
-            });
-        else
-            acceuil.setOnClickListener(null);
-
+        acceuil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigateTo(new BoxsGridFragment(), true);
+            }
+        });
 
 
         boxPersonnalise = view.findViewById(R.id.menu_box_personnalise);
-
-        if(internetAvaillable)
         boxPersonnalise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 navigateTo(new BoxPersonnaliseFragment(),true);
             }
         });
-        else
-            acceuil.setOnClickListener(null);
 
         option = view.findViewById(R.id.menu_option);
         option.setOnClickListener(new View.OnClickListener() {

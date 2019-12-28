@@ -101,6 +101,10 @@ public class LoginFragment extends Fragment {
                         connexionTask = new Connection();
                         connexionTask.execute(utilisateurConnection);
                     }
+                    else
+                    {
+                        Toast.makeText(getContext(), R.string.error_no_internet, Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
