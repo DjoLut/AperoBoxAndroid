@@ -101,6 +101,7 @@ public class BoxsGridFragment extends Fragment {
 
         // Set cut corner background for API 23+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if(view.findViewById(R.id.product_grid)!=null)
             view.findViewById(R.id.product_grid)
                     .setBackgroundResource(R.drawable.product_grid_background_shape);
         }
@@ -111,14 +112,8 @@ public class BoxsGridFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if(internetAvaillable != UtilDAO.isInternetAvailable(getContext())) {
-            internetAvaillable = UtilDAO.isInternetAvailable(getContext());
-            setView();
-        }
-
-        MaterialButton menu = ((MainActivity)getActivity()).acceuil;
-        menu.setOnClickListener(null);
-        menu.setElevation(1);
+        if(internetAvaillable != UtilDAO.isInternetAvailable(getContext()))
+            ((NavigationHost)getActivity()).navigateTo(new BoxsGridFragment(), false);
     }
 
     @Override
@@ -148,33 +143,6 @@ public class BoxsGridFragment extends Fragment {
         TextView textView = view.findViewById(R.id.boxs_joke);
         textView.setText(jokeEntry.getBase()+"\n\n\n" + jokeEntry.getReponse());
     }
-
-    /*@Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
-        if(menu.size()==0) {
-            menuInflater.inflate(R.menu.toolbar_menu, menu);
-            MenuItem icon = menu.getItem(0);
-            icon.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-                    Boolean isNightMode = !AperoBoxApplication.getInstance().isNightModeEnabled();
-                    AperoBoxApplication.getInstance().setIsNightModeEnabled(isNightMode);
-                    AppCompatDelegate.setDefaultNightMode(isNightMode?AppCompatDelegate.MODE_NIGHT_NO:AppCompatDelegate.MODE_NIGHT_YES);
-                    //BoxsGridFragment.this.onDestroyView();
-                    //BoxsGridFragment.this.onCreateView(inflater,container,savedInstanceState);
-                    BoxsGridFragment.this.onDestroy();
-                    BoxsGridFragment.this.onCreate(savedInstanceState);
-                    BoxsGridFragment.this.getFragmentManager().beginTransaction().detach(BoxsGridFragment.this).attach(BoxsGridFragment.this).commit();
-                    return true;
-                }
-            });
-        }
-        super.onCreateOptionsMenu(menu, menuInflater);
-    }
-
-     */
-
-
 
     private class LoadBox extends AsyncTask<String, Void, ArrayList<Box>>
     {

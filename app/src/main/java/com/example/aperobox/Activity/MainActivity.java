@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements NavigationHost{
     protected MaterialButton nous_contacter;
     protected MaterialButton compte;
     private NavigationIconClickListener navigationIconClickListener;
+    private Boolean internetAvaillable;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -128,6 +129,7 @@ public class MainActivity extends AppCompatActivity implements NavigationHost{
     }
 
     private void setUpToolbar(View view) {
+        internetAvaillable = UtilDAO.isInternetAvailable(view.getContext());
         toolbar = view.findViewById(R.id.app_bar);
         AppCompatActivity activity = (AppCompatActivity) this;
         if (activity != null) {
@@ -135,21 +137,29 @@ public class MainActivity extends AppCompatActivity implements NavigationHost{
         }
 
         acceuil = view.findViewById(R.id.menu_acceuil);
-        acceuil.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navigateTo(new BoxsGridFragment(),true);
-            }
-        });
+        if(internetAvaillable)
+            acceuil.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    navigateTo(new BoxsGridFragment(), true);
+                }
+            });
+        else
+            acceuil.setOnClickListener(null);
+
 
 
         boxPersonnalise = view.findViewById(R.id.menu_box_personnalise);
+
+        if(internetAvaillable)
         boxPersonnalise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 navigateTo(new BoxPersonnaliseFragment(),true);
             }
         });
+        else
+            acceuil.setOnClickListener(null);
 
         option = view.findViewById(R.id.menu_option);
         option.setOnClickListener(new View.OnClickListener() {

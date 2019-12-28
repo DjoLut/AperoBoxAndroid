@@ -20,7 +20,9 @@ import android.widget.Toast;
 
 import com.example.aperobox.Adapter.CommentaireLayout.CommentaireViewAdapter;
 import com.example.aperobox.Application.AperoBoxApplication;
+import com.example.aperobox.Application.JokeEntry;
 import com.example.aperobox.Dao.CommentaireDAO;
+import com.example.aperobox.Dao.UtilDAO;
 import com.example.aperobox.Exception.HttpResultException;
 import com.example.aperobox.Model.Commentaire;
 import com.example.aperobox.R;
@@ -43,10 +45,9 @@ public class CommentaireBoxFragment extends Fragment {
     private AjouterCommentaire ajouterCommentaire;
     private TextView aucun_commentaire;
     private View view;
+    private Boolean internetAvaillable;
 
     private ArrayList<Commentaire> listeCommentaire;
-
-    public CommentaireBoxFragment(){}
 
     public CommentaireBoxFragment(Integer boxId){
         this.boxId = boxId;
@@ -56,6 +57,9 @@ public class CommentaireBoxFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setRetainInstance(true);
+
         if (AperoBoxApplication.getInstance().isNightModeEnabled()) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         } else {
@@ -66,26 +70,42 @@ public class CommentaireBoxFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.commentaire_box_fragment, container,false);
+        super.onCreateView(inflater,container,savedInstanceState);
+        internetAvaillable = UtilDAO.isInternetAvailable(getContext());
+        if(internetAvaillable) {
+            view = inflater.inflate(R.layout.commentaire_box_fragment, container,false);
 
-        this.recycler_view = view.findViewById(R.id.recycler_view);
-        this.text_input = view.findViewById(R.id.commentaire_text_input);
-        this.edit_text = view.findViewById(R.id.commentaire_edit_text);
-        this.envoyer = view.findViewById(R.id.commentaire_envoyer);
-        this.aucun_commentaire = ((TextView) view.findViewById(R.id.testAucunCommentaire));
+            this.recycler_view = view.findViewById(R.id.recycler_view);
+            this.text_input = view.findViewById(R.id.commentaire_text_input);
+            this.edit_text = view.findViewById(R.id.commentaire_edit_text);
+            this.envoyer = view.findViewById(R.id.commentaire_envoyer);
+            this.aucun_commentaire = ((TextView) view.findViewById(R.id.testAucunCommentaire));
 
-        // Set cut corner background for API 23+
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            view.findViewById(R.id.commentaire_grid)
-                    .setBackgroundResource(R.drawable.product_grid_background_shape);
+            // Set cut corner background for API 23+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                view.findViewById(R.id.commentaire_grid)
+                        .setBackgroundResource(R.drawable.product_grid_background_shape);
+            }
+
+            if (UtilDAO.isInternetAvailable(getContext())) {
+                listeCommentaire = new ArrayList<>();
+                loadCommentaire = new LoadCommentaire();
+                loadCommentaire.execute();
+            }
+        } else {
+            view = inflater.inflate(R.layout.joke, container, false);
+            Toast.makeText(getContext(), getString(R.string.error_no_internet), Toast.LENGTH_LONG).show();
+            setJoke(view);
         }
 
-        if(listeCommentaire==null || listeCommentaire.isEmpty()) {
-            loadCommentaire = new LoadCommentaire();
-            loadCommentaire.execute();
-        }
 
         return view;
+    }
+
+    private void setJoke(View view){
+        JokeEntry jokeEntry = JokeEntry.getRandom();
+        TextView textView = view.findViewById(R.id.boxs_joke);
+        textView.setText(jokeEntry.getBase()+"\n\n\n" + jokeEntry.getReponse());
     }
 
     @Override
@@ -94,7 +114,7 @@ public class CommentaireBoxFragment extends Fragment {
         if(loadCommentaire!=null)
             loadCommentaire.cancel(true);
         if(ajouterCommentaire!=null){
-            ajouterCommentaire.cancel(false);
+            ajouterCommentaire.cancel(true);
         }
     }
 
@@ -147,12 +167,6 @@ public class CommentaireBoxFragment extends Fragment {
     private class LoadCommentaire extends AsyncTask<Integer, Void, ArrayList<Commentaire>>{
 
         @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            listeCommentaire = new ArrayList<>();
-        }
-
-        @Override
         protected ArrayList<Commentaire> doInBackground(Integer... integers) {
             try {
                 CommentaireDAO commentaireDAO = new CommentaireDAO();
@@ -161,7 +175,6 @@ public class CommentaireBoxFragment extends Fragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        CommentaireBoxFragment.this.getActivity().onBackPressed();
                         Toast.makeText(getContext(), h.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -169,8 +182,7 @@ public class CommentaireBoxFragment extends Fragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        //CommentaireBoxFragment.this.getActivity().onBackPressed();
-                        Toast.makeText(CommentaireBoxFragment.this.getContext(), getString(R.string.commentaire_fragment_error_load_commentaire) + "\n" + getString(R.string.retry), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CommentaireBoxFragment.this.getContext(), getString(R.string.commentaire_fragment_error_load_commentaire) + "\n" + getString(R.string.retry), Toast.LENGTH_LONG).show();
                     }
                 });
             }
@@ -180,15 +192,6 @@ public class CommentaireBoxFragment extends Fragment {
         @Override
         protected void onPostExecute(ArrayList<Commentaire> commentaires) {
             super.onPostExecute(commentaires);
-            aucun_commentaire.setVisibility(View.INVISIBLE);
-            aucun_commentaire.setText("");
-            aucun_commentaire.setElevation(0);
-
-            if(commentaires.isEmpty()) {
-                aucun_commentaire.setText(R.string.commentaire_fragment_aucun_commentaire);
-                aucun_commentaire.setElevation(1);
-                aucun_commentaire.setVisibility(View.VISIBLE);
-            }
 
             ProgressBar progressBar = view.findViewById(R.id.commentaire_fragment_progress_bar);
             progressBar.setElevation(0);
@@ -199,30 +202,41 @@ public class CommentaireBoxFragment extends Fragment {
         @Override
         protected void onCancelled() {
             super.onCancelled();
-            loadCommentaire.cancel(true);
+            listeCommentaire.clear();
+            listeCommentaire = null;
         }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if(listeCommentaire==null){
-            loadCommentaire = new LoadCommentaire();
-            loadCommentaire.execute(boxId);
-        } else
-            setViewCommentaire();
+        if(internetAvaillable != UtilDAO.isInternetAvailable(getContext()))
+            ((NavigationHost)getActivity()).navigateTo(new CommentaireBoxFragment(boxId), false);
     }
 
     public void ajouterCommentaire(Commentaire commentaire){
-        if((listeCommentaire == null || listeCommentaire.isEmpty()) || !listeCommentaire.contains(commentaire)){
-            ajouterCommentaire = new AjouterCommentaire();
-            ajouterCommentaire.execute(commentaire);
-        } else {
-            Toast.makeText(getContext(),getString(R.string.commentaire_fragment_error_duplication), Toast.LENGTH_SHORT).show();
-        }
+        if(UtilDAO.isInternetAvailable(getContext())) {
+            if (listeCommentaire.isEmpty() || !listeCommentaire.contains(commentaire)) {
+                ajouterCommentaire = new AjouterCommentaire();
+                ajouterCommentaire.execute(commentaire);
+            } else {
+                Toast.makeText(getContext(), getString(R.string.commentaire_fragment_error_duplication), Toast.LENGTH_SHORT).show();
+            }
+        } else
+            Toast.makeText(getContext(), getString(R.string.error_no_internet), Toast.LENGTH_LONG).show();
     }
 
     private void setViewCommentaire(){
+        aucun_commentaire.setVisibility(View.INVISIBLE);
+        aucun_commentaire.setText("");
+        aucun_commentaire.setElevation(0);
+
+        if(listeCommentaire.isEmpty()) {
+            aucun_commentaire.setText(R.string.commentaire_fragment_aucun_commentaire);
+            aucun_commentaire.setElevation(1);
+            aucun_commentaire.setVisibility(View.VISIBLE);
+        }
+
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         String access_token = preferences.getString("access_token", null);
@@ -248,6 +262,6 @@ public class CommentaireBoxFragment extends Fragment {
 
         RecyclerView.LayoutManager manager = new LinearLayoutManager(getContext());
         recycler_view.setLayoutManager(manager);
-        recycler_view.setAdapter(new CommentaireViewAdapter(listeCommentaire, CommentaireBoxFragment.this));
+        recycler_view.setAdapter(new CommentaireViewAdapter(listeCommentaire, this));
     }
 }

@@ -133,7 +133,7 @@
 
 
     <!-- JokeENtry -->
-    <string name="joke_entry_erreur_read">Erreur dans la lecteur du fichier JSON</string>
-    <string name="joke_entry_erreur_close">Erreur fermeture du fichier JSON</string>
+    <string name="joke_entry_erreur_read">Erreur dans la lecteur des Joke de Papa</string>
+    <string name="joke_entry_erreur_close">Erreur fermeture dans la fermeture du fichier des Joke de Papa</string>
 
 </resources>

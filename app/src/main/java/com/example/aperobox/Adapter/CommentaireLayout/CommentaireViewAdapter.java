@@ -42,7 +42,8 @@ public class CommentaireViewAdapter extends RecyclerView.Adapter<CommentaireView
 
     @Override
     public int getItemCount() {
-
-        return listeCommentaire.size();
+        if(listeCommentaire!=null)
+            return listeCommentaire.size();
+        return 0;
     }
 }

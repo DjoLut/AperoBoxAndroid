@@ -10,6 +10,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 import com.example.aperobox.Dao.UtilDAO;
 import com.example.aperobox.Dao.UtilisateurDAO;
@@ -33,6 +34,7 @@ public class LoginFragment extends Fragment {
 
     private SharedPreferences preferences;
     private Connection connexionTask;
+    private ProgressBar progressBar;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,6 +56,8 @@ public class LoginFragment extends Fragment {
         final TextInputEditText usernameEditText = view.findViewById(R.id.login_username_edit_text);
         final MaterialButton nextButton = view.findViewById(R.id.connexion_button);
         final MaterialButton inscriptionButton = view.findViewById(R.id.inscription_button);
+        progressBar = view.findViewById(R.id.login_fragment_progress_bar);
+        progressBar.setVisibility(View.INVISIBLE);
 
         MaterialButton menu = ((MainActivity)getActivity()).compte;
         menu.setOnClickListener(null);
@@ -140,6 +144,12 @@ public class LoginFragment extends Fragment {
         private HttpResultException exception;
 
         @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressBar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
         protected JwtToken doInBackground(LoginModel... loginModels) {
             UtilisateurDAO utilisateurDAO = new UtilisateurDAO();
             JwtToken token = null;
@@ -163,6 +173,7 @@ public class LoginFragment extends Fragment {
         @Override
         protected void onPostExecute(JwtToken token)
         {
+            progressBar.setVisibility(View.INVISIBLE);
             preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
             SharedPreferences.Editor editor = preferences.edit();
             editor.putString("access_token", token.getAccess_token());
@@ -178,6 +189,7 @@ public class LoginFragment extends Fragment {
         @Override
         protected void onCancelled() {
             Toast.makeText(getContext(), R.string.login_failed, Toast.LENGTH_SHORT).show();
+            progressBar.setVisibility(View.INVISIBLE);
         }
     }
 
