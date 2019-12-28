@@ -55,6 +55,10 @@ public class LoginFragment extends Fragment {
         final MaterialButton nextButton = view.findViewById(R.id.connexion_button);
         final MaterialButton inscriptionButton = view.findViewById(R.id.inscription_button);
 
+        MaterialButton menu = ((MainActivity)getActivity()).compte;
+        menu.setOnClickListener(null);
+        menu.setElevation(1);
+
         // Set cut corner background for API 23+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             view.findViewById(R.id.login_grid)
@@ -197,6 +201,10 @@ public class LoginFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
+        MaterialButton menu = ((MainActivity)getActivity()).compte;
+        menu.setOnClickListener(null);
+        menu.setElevation(1);
     }
 
     @Override

@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Switch;
 import com.example.aperobox.R;
 import com.example.aperobox.Application.AperoBoxApplication;
+import com.google.android.material.button.MaterialButton;
 
 public class OptionFragment extends Fragment {
 
@@ -39,6 +40,10 @@ public class OptionFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable final Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.option_fragment, container, false);
 
+        MaterialButton menu = ((MainActivity)getActivity()).option;
+        menu.setOnClickListener(null);
+        menu.setElevation(1);
+
         Switch darkmode = view.findViewById(R.id.dark_mode);
         darkmode.setChecked(isNightMode);
         darkmode.setOnClickListener(new View.OnClickListener() {
@@ -61,6 +66,15 @@ public class OptionFragment extends Fragment {
         }
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        MaterialButton menu = ((MainActivity)getActivity()).option;
+        menu.setOnClickListener(null);
+        menu.setElevation(1);
     }
 
     @Override

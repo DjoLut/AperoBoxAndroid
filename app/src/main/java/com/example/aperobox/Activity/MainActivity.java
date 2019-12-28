@@ -28,17 +28,14 @@ public class MainActivity extends AppCompatActivity implements NavigationHost{
     private SharedPreferences preferences;
 
     private Toolbar toolbar;
-    private View acceuil;
-    private View boxPersonnalise;
-    private View option;
-    private View panier;
-    private View apropos;
-    private View nous_contacter;
-    private MaterialButton compte;
+    protected MaterialButton acceuil;
+    protected MaterialButton boxPersonnalise;
+    protected MaterialButton option;
+    protected MaterialButton panier;
+    protected MaterialButton apropos;
+    protected MaterialButton nous_contacter;
+    protected MaterialButton compte;
     private NavigationIconClickListener navigationIconClickListener;
-    private Boolean menuclick;
-    private FragmentTransaction transaction;
-    private Fragment fragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -108,13 +105,11 @@ public class MainActivity extends AppCompatActivity implements NavigationHost{
      */
     @Override
     public void navigateTo(Fragment fragment, boolean addToBackstack) {
-        this.fragment = fragment;
-        if(menuclick)
+        if(navigationIconClickListener.getBackDropShown())
             navigationIconClickListener.onClick(toolbar.getChildAt(1));
         setUpToolbar(findViewById(android.R.id.content).getRootView());
-        changeToolbar(fragment.getClass().getName());
 
-        transaction =
+        FragmentTransaction transaction =
                 getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.container, fragment, fragment.getClass().getName());
@@ -133,7 +128,6 @@ public class MainActivity extends AppCompatActivity implements NavigationHost{
     }
 
     private void setUpToolbar(View view) {
-        menuclick = false;
         toolbar = view.findViewById(R.id.app_bar);
         AppCompatActivity activity = (AppCompatActivity) this;
         if (activity != null) {
@@ -144,7 +138,6 @@ public class MainActivity extends AppCompatActivity implements NavigationHost{
         acceuil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                menuclick = true;
                 navigateTo(new BoxsGridFragment(),true);
             }
         });
@@ -154,7 +147,6 @@ public class MainActivity extends AppCompatActivity implements NavigationHost{
         boxPersonnalise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                menuclick = true;
                 navigateTo(new BoxPersonnaliseFragment(),true);
             }
         });
@@ -163,7 +155,6 @@ public class MainActivity extends AppCompatActivity implements NavigationHost{
         option.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                menuclick = true;
                 navigateTo(new OptionFragment(),true);
             }
         });
@@ -172,7 +163,6 @@ public class MainActivity extends AppCompatActivity implements NavigationHost{
         panier.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                menuclick = true;
                 navigateTo(new PanierFragment(),true);
             }
         });
@@ -181,7 +171,6 @@ public class MainActivity extends AppCompatActivity implements NavigationHost{
         apropos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                menuclick = true;
                 navigateTo(new AProposFragment(),true);
             }
         });
@@ -190,7 +179,6 @@ public class MainActivity extends AppCompatActivity implements NavigationHost{
         nous_contacter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                menuclick = true;
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("plain/text");
                 intent.setData(Uri.parse("mailto:"));
@@ -221,7 +209,6 @@ public class MainActivity extends AppCompatActivity implements NavigationHost{
             panier.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    menuclick = true;
                     MainActivity.this.navigateTo(new PanierFragment(), true);
                 }
             });
@@ -232,11 +219,17 @@ public class MainActivity extends AppCompatActivity implements NavigationHost{
             view.findViewById(R.id.menu_compte).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    menuclick = true;
                     MainActivity.this.navigateTo(new LoginFragment(), true);
                 }
             });
         }
+
+        acceuil.setElevation(0);
+        boxPersonnalise.setElevation(0);
+        apropos.setElevation(0);
+        compte.setElevation(0);
+        option.setElevation(0);
+        panier.setElevation(0);
 
         navigationIconClickListener = new NavigationIconClickListener(
                 this,
@@ -246,127 +239,5 @@ public class MainActivity extends AppCompatActivity implements NavigationHost{
                 this.getResources().getDrawable(R.drawable.close_menu));
 
         toolbar.setNavigationOnClickListener(navigationIconClickListener); // Menu close icon
-    }
-
-    private void changeToolbar(String name) {
-
-        acceuil.setElevation(0);
-        boxPersonnalise.setElevation(0);
-        apropos.setElevation(0);
-        compte.setElevation(0);
-        option.setElevation(0);
-        panier.setElevation(0);
-
-
-        /*
-        FragmentManager manager = getSupportFragmentManager();
-        Boolean trouvé = false;
-        for (int i = manager.getBackStackEntryCount() - 1; i > 0 && !trouvé; i--) {
-            if (manager.findFragmentByTag("com.example.aperobox.Activity.BoxPersonnaliseFragment") instanceof BoxPersonnaliseFragment) {
-                acceuil.setOnClickListener(null);
-                acceuil.setElevation(1);
-                trouvé = true;
-            }
-            if (manager.findFragmentByTag("com.example.aperobox.Activity.BoxPersonnaliseFragment") instanceof BoxPersonnaliseFragment) {
-                boxPersonnalise.setOnClickListener(null);
-                boxPersonnalise.setElevation(1);
-                trouvé = true;
-            }
-            if (manager.findFragmentByTag("com.example.aperobox.Activity.AProposFragment") instanceof AProposFragment) {
-                apropos.setOnClickListener(null);
-                apropos.setElevation(1);
-                trouvé = true;
-            }
-            if (manager.findFragmentByTag("com.example.aperobox.Activity.InscriptionFragment") instanceof InscriptionFragment) {
-                compte.setOnClickListener(null);
-                compte.setElevation(1);
-                trouvé = true;
-            }
-            if (manager.findFragmentByTag("com.example.aperobox.Activity.LoginFragment") instanceof LoginFragment) {
-                compte.setOnClickListener(null);
-                compte.setElevation(1);
-                trouvé = true;
-            }
-            if (manager.findFragmentByTag("com.example.aperobox.Activity.OptionFragment") instanceof OptionFragment) {
-                option.setOnClickListener(null);
-                option.setElevation(1);
-                trouvé = true;
-            }
-            if (manager.findFragmentByTag("com.example.aperobox.Activity.PanierFragment") instanceof PanierFragment) {
-                panier.setOnClickListener(null);
-                panier.setElevation(1);
-                trouvé = true;
-            }
-        }
-
-         */
-
-
-
-
-
-/*
-        FragmentManager manager = getSupportFragmentManager();
-        if(manager.findFragmentById(R.id.box_grid_fragment_container) instanceof BoxPersonnaliseFragment){
-            acceuil.setOnClickListener(null);
-            acceuil.setElevation(1);
-        }
-        if(manager.findFragmentById(R.id.box_personnalise_fragment_container) instanceof BoxPersonnaliseFragment){
-            boxPersonnalise.setOnClickListener(null);
-            boxPersonnalise.setElevation(1);
-        }
-        if(manager.findFragmentById(R.id.apropos_container) instanceof AProposFragment){
-            apropos.setOnClickListener(null);
-            apropos.setElevation(1);
-        }
-        if(manager.findFragmentById(R.id.inscription_fragment_container) instanceof InscriptionFragment){
-            compte.setOnClickListener(null);
-            compte.setElevation(1);
-        }
-        if(manager.findFragmentById(R.id.login_fragment_container) instanceof LoginFragment){
-            compte.setOnClickListener(null);
-            compte.setElevation(1);
-        }
-        if(manager.findFragmentById(R.id.option_fragment_container) instanceof OptionFragment){
-            option.setOnClickListener(null);
-            option.setElevation(1);
-        }
-        if(manager.findFragmentById(R.id.panier_fragment_container) instanceof PanierFragment){
-            panier.setOnClickListener(null);
-            panier.setElevation(1);
-        }
- */
-
-
-        switch (name){
-            case "com.example.aperobox.Activity.BoxsGridFragment":
-                acceuil.setOnClickListener(null);
-                acceuil.setElevation(1);
-                break;
-            case "com.example.aperobox.Activity.BoxPersonnaliseFragment":
-                boxPersonnalise.setOnClickListener(null);
-                boxPersonnalise.setElevation(1);
-                break;
-            case "com.example.aperobox.Activity.AProposFragment":
-                apropos.setOnClickListener(null);
-                apropos.setElevation(1);
-                break;
-            case "com.example.aperobox.Activity.InscriptionFragment":
-                compte.setOnClickListener(null);
-                compte.setElevation(1);
-                break;
-            case "com.example.aperobox.Activity.LoginFragment":
-                compte.setOnClickListener(null);
-                compte.setElevation(1);
-                break;
-            case "com.example.aperobox.Activity.OptionFragment":
-                option.setOnClickListener(null);
-                option.setElevation(1);
-                break;
-            case "com.example.aperobox.Activity.PanierFragment":
-                panier.setOnClickListener(null);
-                panier.setElevation(1);
-                break;
-        }
     }
 }

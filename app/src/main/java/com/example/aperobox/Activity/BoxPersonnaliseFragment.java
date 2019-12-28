@@ -29,6 +29,8 @@ import com.example.aperobox.Adapter.ProductLayout.ProductPersonnaliseViewAdapter
 import com.example.aperobox.R;
 import com.example.aperobox.Utility.Constantes;
 import com.example.aperobox.Application.SingletonPanier;
+import com.google.android.material.button.MaterialButton;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -79,6 +81,10 @@ public class BoxPersonnaliseFragment extends Fragment {
         super.onResume();
         if(!UtilDAO.isInternetAvailable(getContext()))
             setJoke();
+
+        MaterialButton menu = ((MainActivity)getActivity()).boxPersonnalise;
+        menu.setOnClickListener(null);
+        menu.setElevation(1);
     }
 
     @Override
@@ -168,6 +174,11 @@ public class BoxPersonnaliseFragment extends Fragment {
 
             }
         });
+
+
+        MaterialButton menu = ((MainActivity)getActivity()).boxPersonnalise;
+        menu.setOnClickListener(null);
+        menu.setElevation(1);
 
         setViewBoxPersonnaliseBox();
         if(listeProduits!=null)

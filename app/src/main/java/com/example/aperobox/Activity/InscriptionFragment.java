@@ -53,9 +53,23 @@ public class InscriptionFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+
+        MaterialButton menu = ((MainActivity)getActivity()).compte;
+        menu.setOnClickListener(null);
+        menu.setElevation(1);
+    }
+
+    @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.inscription_fragment, container, false);
+
+        MaterialButton menu = ((MainActivity)getActivity()).compte;
+        menu.setOnClickListener(null);
+        menu.setElevation(1);
+
 
         final TextInputLayout nomTextInput = view.findViewById(R.id.inscription_nom_text_input);
         final TextInputEditText nomEditText = view.findViewById(R.id.inscription_nom_edit_text);

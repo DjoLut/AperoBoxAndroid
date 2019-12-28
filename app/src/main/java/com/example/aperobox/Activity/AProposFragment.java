@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.example.aperobox.R;
 import com.example.aperobox.Application.AperoBoxApplication;
+import com.google.android.material.button.MaterialButton;
 
 public class AProposFragment extends Fragment {
 
@@ -23,6 +24,10 @@ public class AProposFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.apropos_fragment, container, false);
         this.container = container;
+
+        MaterialButton menu = ((MainActivity)getActivity()).apropos;
+        menu.setOnClickListener(null);
+        menu.setElevation(1);
 
         // Set cut corner background for API 23+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -61,6 +66,9 @@ public class AProposFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        MaterialButton menu = ((MainActivity)getActivity()).apropos;
+        menu.setOnClickListener(null);
+        menu.setElevation(1);
     }
 
     @Override

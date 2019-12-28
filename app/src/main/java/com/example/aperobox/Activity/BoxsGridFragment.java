@@ -25,6 +25,8 @@ import com.example.aperobox.Model.Box;
 import com.example.aperobox.Model.Utilisateur;
 import com.example.aperobox.R;
 import com.example.aperobox.Application.AperoBoxApplication;
+import com.google.android.material.button.MaterialButton;
+
 import java.util.ArrayList;
 
 public class BoxsGridFragment extends Fragment {
@@ -64,6 +66,11 @@ public class BoxsGridFragment extends Fragment {
     }
 
     private View setView(){
+
+        MaterialButton menu = ((MainActivity)getActivity()).acceuil;
+        menu.setOnClickListener(null);
+        menu.setElevation(1);
+
         //container.removeView(view);
         // Inflate the layout for this fragment with the ProductGrid theme
         if(UtilDAO.isInternetAvailable(getContext())) {
@@ -108,6 +115,10 @@ public class BoxsGridFragment extends Fragment {
             internetAvaillable = UtilDAO.isInternetAvailable(getContext());
             setView();
         }
+
+        MaterialButton menu = ((MainActivity)getActivity()).acceuil;
+        menu.setOnClickListener(null);
+        menu.setElevation(1);
     }
 
     @Override

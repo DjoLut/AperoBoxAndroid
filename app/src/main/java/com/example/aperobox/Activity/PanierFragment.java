@@ -27,6 +27,8 @@ import com.example.aperobox.Adapter.PanierLayout.PanierProduitViewAdapter;
 import com.example.aperobox.R;
 import com.example.aperobox.Application.AperoBoxApplication;
 import com.example.aperobox.Application.SingletonPanier;
+import com.google.android.material.button.MaterialButton;
+
 import java.net.HttpURLConnection;
 import java.util.Date;
 import java.util.Iterator;
@@ -66,6 +68,10 @@ public class PanierFragment extends Fragment {
         this.container = container;
 
         View view = inflater.inflate(R.layout.panier_fragment, this.container, false);
+
+        MaterialButton menu = ((MainActivity)getActivity()).panier;
+        menu.setOnClickListener(null);
+        menu.setElevation(1);
 
         panierBoxTextView = view.findViewById(R.id.panier_fragment_box_text_view);
         panierBoxPersoTextView = view.findViewById(R.id.panier_fragment_boxPerso_text_view);
@@ -121,7 +127,13 @@ public class PanierFragment extends Fragment {
     }
 
     @Override
-    public void onResume() { super.onResume(); }
+    public void onResume() {
+        super.onResume();
+
+        MaterialButton menu = ((MainActivity)getActivity()).panier;
+        menu.setOnClickListener(null);
+        menu.setElevation(1);
+    }
 
     @Override
     public void onStop() {
