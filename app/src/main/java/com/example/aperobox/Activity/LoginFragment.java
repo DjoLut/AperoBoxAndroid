@@ -171,6 +171,7 @@ public class LoginFragment extends Fragment {
                     }
                 });
             }
+            AperoBoxApplication.getInstance().setLoginModel(loginModels[0]);
             return token;
         }
 
@@ -184,6 +185,7 @@ public class LoginFragment extends Fragment {
             if (editor.commit()) {
                 //new Expiration().execute(token);
                 Toast.makeText(getContext(), R.string.login_success, Toast.LENGTH_LONG).show();
+                AperoBoxApplication.getInstance().startExpiration(token);
                 ((NavigationHost) getActivity()).navigateTo(new BoxsGridFragment(), false);
             } else {
                 Toast.makeText(getContext(), R.string.login_failed, Toast.LENGTH_SHORT).show();
