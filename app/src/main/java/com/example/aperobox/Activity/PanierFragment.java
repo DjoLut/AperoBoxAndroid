@@ -132,7 +132,8 @@ public class PanierFragment extends Fragment {
                                 }
                             }
                         };
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.AlertDialogStyle);
                         builder.setMessage(R.string.panier_fragment_commande_confirmation)
                                 .setPositiveButton(R.string.panier_fragment_commande_oui, dialClickListener)
                                 .setNegativeButton(R.string.panier_fragment_commande_non, dialClickListener).show();

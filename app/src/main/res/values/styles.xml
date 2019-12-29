@@ -140,4 +140,10 @@
         <item name="android:layout_marginBottom">8dp</item>
     </style>
 
+    <style name="AlertDialogStyle" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="colorAccent">@color/textColorPrimary</item>
+        <item name="android:textColorPrimary">@color/textColorPrimary</item>
+        <item name="android:background">@color/productGridBackgroundColor</item>
+    </style>
+
 </resources>

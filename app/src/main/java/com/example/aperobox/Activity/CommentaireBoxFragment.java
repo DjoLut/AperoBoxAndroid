@@ -243,6 +243,8 @@ public class CommentaireBoxFragment extends Fragment {
 
                         ajouterCommentaire(commentaire);
                     }
+                    else
+                        Toast.makeText(getContext(), getString(R.string.commentaire_fragment_error_vide), Toast.LENGTH_SHORT).show();
                 }
             });
         }
