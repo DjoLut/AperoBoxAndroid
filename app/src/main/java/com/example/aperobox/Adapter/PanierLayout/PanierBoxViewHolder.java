@@ -70,8 +70,7 @@ public class PanierBoxViewHolder extends RecyclerView.ViewHolder {
                         panier.modifQuantiteBox(box,quantite);
                         panierBoxQuantiteEditText.setText(quantite.toString());
                     }
-                    if(quantite == 0)
-                    {
+                    if(quantite == 0) {
                         panier.deleteBox(box);
                         fragment.getFragmentManager().beginTransaction().detach(fragment).attach(fragment).commit();
                     }

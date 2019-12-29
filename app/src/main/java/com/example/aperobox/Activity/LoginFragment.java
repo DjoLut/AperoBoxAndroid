@@ -115,9 +115,8 @@ public class LoginFragment extends Fragment {
         passwordEditText.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                if (isPasswordLengthValid(passwordEditText.getText())) {
+                if (isPasswordLengthValid(passwordEditText.getText()))
                     passwordTextInput.setError(null); //Clear the error
-                }
                 return false;
             }
         });
@@ -144,8 +143,6 @@ public class LoginFragment extends Fragment {
 
     private class Connection extends AsyncTask<LoginModel, Void, JwtToken> {
 
-        private HttpResultException exception;
-
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -159,7 +156,7 @@ public class LoginFragment extends Fragment {
             try {
                 token = utilisateurDAO.connection(loginModels[0]);
             } catch (HttpResultException e) {
-                exception = e;
+                HttpResultException exception = e;
                 cancel(true);
             } catch (Exception e) {
                 getActivity().runOnUiThread(new Runnable() {
@@ -185,9 +182,8 @@ public class LoginFragment extends Fragment {
                 Toast.makeText(getContext(), R.string.login_success, Toast.LENGTH_LONG).show();
                 AperoBoxApplication.getInstance().startExpiration(token);
                 ((NavigationHost) getActivity()).navigateTo(new BoxsGridFragment(), false);
-            } else {
+            } else
                 Toast.makeText(getContext(), R.string.login_failed, Toast.LENGTH_SHORT).show();
-            }
         }
 
         @Override
@@ -202,16 +198,6 @@ public class LoginFragment extends Fragment {
         super.onDestroy();
         if(connexionTask!=null)
             connexionTask.cancel(true);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
     }
 
     @Override
@@ -231,10 +217,5 @@ public class LoginFragment extends Fragment {
         MaterialButton boxPerso = ((MainActivity)getActivity()).boxPersonnalise;
         boxPerso.setElevation(0);
 
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
     }
 }

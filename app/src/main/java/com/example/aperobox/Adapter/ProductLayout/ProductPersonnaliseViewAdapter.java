@@ -27,9 +27,7 @@ public class ProductPersonnaliseViewAdapter extends RecyclerView.Adapter<Product
     }
 
     @Override
-    public int getItemViewType(int position) {
-        return 1;
-    }
+    public int getItemViewType(int position) { return 1; }
 
     @NonNull
     @Override
@@ -47,7 +45,5 @@ public class ProductPersonnaliseViewAdapter extends RecyclerView.Adapter<Product
     }
 
     @Override
-    public int getItemCount() {
-        return produits.length;
-    }
+    public int getItemCount() { return produits.length; }
 }

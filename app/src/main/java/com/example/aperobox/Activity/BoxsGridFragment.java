@@ -1,6 +1,5 @@
 package com.example.aperobox.Activity;
 
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -28,9 +27,6 @@ import java.util.ArrayList;
 
 public class BoxsGridFragment extends Fragment {
 
-
-    private SharedPreferences preferences;
-
     private ArrayList<Box> boxes;
     private RecyclerView boxToDisplay;
     private LoadBox loadBoxTask;
@@ -39,7 +35,6 @@ public class BoxsGridFragment extends Fragment {
     private LayoutInflater inflater;
     private ViewGroup container;
     private Boolean internetAvaillable;
-    private Bundle savedInstanceState;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,7 +50,6 @@ public class BoxsGridFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         this.inflater = inflater;
         this.container = container;
-        this.savedInstanceState = savedInstanceState;
         internetAvaillable = UtilDAO.isInternetAvailable(getContext());
         super.onCreateView(inflater,container,savedInstanceState);
         return setView();
@@ -116,21 +110,6 @@ public class BoxsGridFragment extends Fragment {
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
-
-    @Override
     public void onDestroy() {
         super.onDestroy();
         if(loadBoxTask != null)
@@ -168,21 +147,15 @@ public class BoxsGridFragment extends Fragment {
         protected void onPostExecute(ArrayList<Box> boxes)
         {
             ArrayList<Box> allBoxes = new ArrayList<>();
-            for(Box b : boxes) {
-                if(b.getAffichable()==1) {
+            for(Box b : boxes)
+                if(b.getAffichable()==1)
                     allBoxes.add(b);
-                }
-            }
 
             ProgressBar progressBar = view.findViewById(R.id.box_grid_fragment_progress_bar);
             progressBar.setElevation(0);
 
             BoxGridViewAdapter adapter = new BoxGridViewAdapter(allBoxes, BoxsGridFragment.this);
             boxToDisplay.setAdapter(adapter);
-            //int largePadding = getResources().getDimensionPixelSize(R.dimen.staggered_boxs_grid_spacing_large);
-            //int smallPadding = getResources().getDimensionPixelSize(R.dimen.staggered_boxs_grid_spacing_small);
-            //boxToDisplay.addItemDecoration(new BoxsGridItemDecoration(largePadding, smallPadding));
-
         }
 
         @Override

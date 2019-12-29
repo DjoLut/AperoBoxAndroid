@@ -1,14 +1,12 @@
 package com.example.aperobox.Activity;
 
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.preference.PreferenceManager;
@@ -24,7 +22,6 @@ import com.example.aperobox.Application.AperoBoxApplication;
 import com.example.aperobox.Dao.ProduitDAO;
 import com.example.aperobox.Dao.UtilDAO;
 import com.example.aperobox.Application.JokeEntry;
-import com.example.aperobox.Model.Box;
 import com.example.aperobox.Model.Panier;
 import com.example.aperobox.Model.Produit;
 import com.example.aperobox.Adapter.ProductLayout.ProductPersonnaliseViewAdapter;
@@ -38,10 +35,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 public class BoxPersonnaliseFragment extends Fragment {
-    private static final String SAVED_BUNDLE_TAG = "boxfragment";
-    private Bundle bundle;
 
-    private SharedPreferences preferences;
     //View
     private TextView box_name;
     private TextView box_price;
@@ -57,26 +51,12 @@ public class BoxPersonnaliseFragment extends Fragment {
     private RecyclerView produitToDisplay;
 
     private View view;
-    private Bundle savedInstanceState;
 
     private Panier panier;
 
     public BoxPersonnaliseFragment(){
     }
 
-    @Override
-    public void onConfigurationChanged(@NonNull Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        if(bundle==null && listeProduits!=null && !listeProduits.isEmpty()) {
-            bundle = new Bundle();
-        }
-        outState.putBundle(SAVED_BUNDLE_TAG, bundle);
-    }
 
     @Override
     public void onResume() {
@@ -127,8 +107,6 @@ public class BoxPersonnaliseFragment extends Fragment {
             view = inflater.inflate(R.layout.box_personnalise_fragment, container, false);
             produitToDisplay = view.findViewById(R.id.box_fragment_produit_recycler_view);
 
-            this.savedInstanceState = savedInstanceState;
-
             this.box_image = view.findViewById(R.id.box_fragment_box_image);
             this.box_name = view.findViewById(R.id.box_fragment_box_name);
             this.box_price = view.findViewById(R.id.box_fragment_box_price);
@@ -140,6 +118,9 @@ public class BoxPersonnaliseFragment extends Fragment {
                 loadProduit = new LoadProduit();
                 loadProduit.execute();
             }
+
+            MaterialButton menu = ((MainActivity)getActivity()).boxPersonnalise;
+            menu.setElevation(1);
 
             setView();
         } else {
@@ -155,9 +136,10 @@ public class BoxPersonnaliseFragment extends Fragment {
         button_ajout_panier.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
                 preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
                 String access_token = preferences.getString("access_token", null);
+
                 if(access_token != null)
                 {
                     Boolean isEmpty = true;
@@ -165,7 +147,6 @@ public class BoxPersonnaliseFragment extends Fragment {
 
                     for (Iterator<Map.Entry<Produit, Integer>> it = listeProduits.entrySet().iterator(); it.hasNext(); ) {
                         Map.Entry<Produit, Integer> entry = it.next();
-
                         if (entry.getValue() != 0) {
                             produitsBoxPerso.put(entry.getKey(), entry.getValue());
                             isEmpty = false;
@@ -177,21 +158,13 @@ public class BoxPersonnaliseFragment extends Fragment {
                         panier = SingletonPanier.getUniquePanier();
                         panier.addProduit(produitsBoxPerso);
                         Toast.makeText(getContext(), R.string.box_fragment_produits_ajouter, Toast.LENGTH_LONG).show();
-                    } else {
+                    } else
                         Toast.makeText(getContext(), R.string.box_fragment_box_personnalise_empty_quantite, Toast.LENGTH_LONG).show();
-                    }
                 }
                 else
-                {
                     Toast.makeText(getContext(),R.string.box_fragment_connection_obligatoire, Toast.LENGTH_LONG).show();
-                }
-
             }
         });
-
-
-        MaterialButton menu = ((MainActivity)getActivity()).boxPersonnalise;
-        menu.setElevation(1);
 
         setViewBoxPersonnaliseBox();
         if(listeProduits!=null)
@@ -249,9 +222,9 @@ public class BoxPersonnaliseFragment extends Fragment {
     public void affichePrix(){
         calculTotal();
         String prix;
-        if(sommeHTVA!=0) {
+        if(sommeHTVA!=0)
             prix = UtilDAO.format.format(Math.round(sommeHTVA*100.0)/100.0);
-        } else
+        else
             prix = getString(R.string.box_fragment_box_prix_gratuit);
         box_price.setText(prix);
     }

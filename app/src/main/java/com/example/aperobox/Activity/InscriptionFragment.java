@@ -33,18 +33,12 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
-/**
- * Fragment representing the register screen for AperoBox.
- */
 public class InscriptionFragment extends Fragment {
 
     private Utilisateur newUser;
     private Adresse newAdresse;
-    private SharedPreferences preferences;
     private Inscription inscriptionTask;
     private AjoutAdresse ajoutAdresseTask;
-    private Boolean valid;
 
 
     private TextInputLayout nomTextInput;
@@ -224,8 +218,9 @@ public class InscriptionFragment extends Fragment {
         return view;
     }
 
+    //Check all Input and set error if request
     private Boolean allValid(){
-        valid = true;
+        Boolean valid = true;
         if (!isPasswordLengthValid(passwordEditText.getText())) {
             passwordTextInput.setError(getString(R.string.invalid_password_length));
             valid = false;
@@ -576,9 +571,8 @@ public class InscriptionFragment extends Fragment {
             if(adresse.getId() != null){
                 inscriptionTask = new Inscription();
                 inscriptionTask.execute(newUser);
-            }else{
+            }else
                 Toast.makeText(getContext(), R.string.inscription_fragment_error_adresse, Toast.LENGTH_SHORT).show();// TODO: faire ça avec @string
-            }
         }
     }
 

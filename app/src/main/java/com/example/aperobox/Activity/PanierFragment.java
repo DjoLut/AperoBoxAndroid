@@ -41,8 +41,6 @@ import java.util.Map;
 
 public class PanierFragment extends Fragment {
     private ViewGroup container;
-    private LayoutInflater inflater;
-    private SharedPreferences preferences;
     private RecyclerView boxToDisplay;
     private RecyclerView produitToDisplay;
     private Panier panier = SingletonPanier.getUniquePanier();
@@ -53,6 +51,7 @@ public class PanierFragment extends Fragment {
     private TextView prixProduit;
     private TextView prixTotal;
     private TextView promotionTotal;
+    private AjoutCommande ajoutCommande;
     String access_token;
 
     public PanierFragment() {
@@ -72,7 +71,6 @@ public class PanierFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        this.inflater = inflater;
         this.container = container;
 
         View view = inflater.inflate(R.layout.panier_fragment, this.container, false);
@@ -125,7 +123,8 @@ public class PanierFragment extends Fragment {
                                         Commande commande = new Commande();
                                         commande.setDateCreation(new Date());
                                         commande.setPromotion(panier.calculTotalPromoBox());
-                                        new AjoutCommande().execute(commande);
+                                        ajoutCommande = new AjoutCommande();
+                                        ajoutCommande.execute(commande);
                                         break;
                                     case DialogInterface.BUTTON_NEGATIVE:
                                         Toast.makeText(getContext(), R.string.panier_fragment_commande_annule, Toast.LENGTH_LONG).show();
@@ -140,13 +139,9 @@ public class PanierFragment extends Fragment {
                     }
                 }
                 else
-                {
                     Toast.makeText(getContext(), R.string.panier_fragment_panier_vide, Toast.LENGTH_LONG).show();
-                }
-
             }
         });
-
         return view;
     }
 
@@ -175,22 +170,11 @@ public class PanierFragment extends Fragment {
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
+    public void onDestroy() {
+        super.onDestroy();
+        if(ajoutCommande!=null)
+            ajoutCommande.cancel(false);
     }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    public void onDestroy() { super.onDestroy(); }
 
 
     public static void affichePrixTotalPromotion(TextView prixTotal, TextView promotion, @Nullable TextView prixBox, @Nullable TextView prixProduit){
@@ -261,9 +245,8 @@ public class PanierFragment extends Fragment {
 
                 Toast.makeText(getContext(), R.string.panier_fragment_commande_save, Toast.LENGTH_LONG).show();
                 ((NavigationHost) getActivity()).navigateTo(new PanierFragment(), true);
-            }else{
+            } else
                 Toast.makeText(getContext(), R.string.retry, Toast.LENGTH_SHORT).show();
-            }
         }
     }
 
@@ -279,8 +262,7 @@ public class PanierFragment extends Fragment {
             try {
                 resultCode = ligneCommandeDAO.ajoutLigneCommande(access_token, params[0]);
             }
-            catch (Exception e)
-            {
+            catch (Exception e) {
                 e.printStackTrace();
             }
 
@@ -291,9 +273,7 @@ public class PanierFragment extends Fragment {
         protected void onPostExecute(Integer resultCode)
         {
             if(resultCode != HttpURLConnection.HTTP_CREATED)
-            {
                 Toast.makeText(getContext(), R.string.panier_fragment_erreur_save, Toast.LENGTH_SHORT).show();
-            }
         }
     }
 

@@ -51,9 +51,9 @@ public class ProductPersonnaliseViewHolder extends RecyclerView.ViewHolder {
                     BoxPersonnaliseFragment.listeProduits.put(ProductPersonnaliseViewAdapter.produits[position], quantite);
                     quantiteTextInput.setText(quantite.toString());
                 } catch(NumberFormatException e) {
-                    quantiteTextInput.setText("bug");
+                    quantiteTextInput.setText("");
                 } catch(NullPointerException e) {
-                    quantiteTextInput.setText("bug2");
+                    quantiteTextInput.setText("");
                 }
                 UtilDAO.affichePrix(UtilDAO.calculTotal(BoxPersonnaliseFragment.listeProduits), personnaliseContext, box_price);
             }
@@ -70,9 +70,9 @@ public class ProductPersonnaliseViewHolder extends RecyclerView.ViewHolder {
                         quantiteTextInput.setText(quantite.toString());
                     }
                 } catch(NumberFormatException e) {
-                    quantiteTextInput.setText("bug");
+                    quantiteTextInput.setText("");
                 } catch(NullPointerException e) {
-                    quantiteTextInput.setText("bug2");
+                    quantiteTextInput.setText("");
                 }
                 UtilDAO.affichePrix(UtilDAO.calculTotal(BoxPersonnaliseFragment.listeProduits), personnaliseContext, box_price);
             }

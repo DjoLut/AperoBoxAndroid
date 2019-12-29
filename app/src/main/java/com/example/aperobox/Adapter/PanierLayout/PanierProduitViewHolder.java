@@ -69,8 +69,7 @@ public class PanierProduitViewHolder extends RecyclerView.ViewHolder {
                         panier.modifQuantiteProduit(produit,quantite);
                         panierProduitQuantiteEditText.setText(quantite.toString());
                     }
-                    if(quantite == 0)
-                    {
+                    if(quantite == 0) {
                         panier.deleteProduit(produit);
                         fragment.getFragmentManager().beginTransaction().detach(fragment).attach(fragment).commit();
                     }

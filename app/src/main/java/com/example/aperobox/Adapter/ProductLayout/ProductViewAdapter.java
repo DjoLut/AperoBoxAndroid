@@ -4,7 +4,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.aperobox.Model.Produit;
 import com.example.aperobox.R;
@@ -14,7 +13,7 @@ public class ProductViewAdapter extends RecyclerView.Adapter<ProductViewHolder> 
     private Object[] produits;
     private Object[] quantites;
 
-    public ProductViewAdapter(Map<Produit, Integer> listeProduits, Fragment fragment) {
+    public ProductViewAdapter(Map<Produit, Integer> listeProduits) {
         this.produits = listeProduits.keySet().toArray();
         this.quantites = listeProduits.values().toArray();
     }

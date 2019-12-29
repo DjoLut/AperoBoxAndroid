@@ -28,8 +28,7 @@ public class PanierProduitViewAdapter extends RecyclerView.Adapter<PanierProduit
         this.promotionTotal = promotionTotal;
         this.prixProduit = prixProduit;
         this.fragment = fragment;
-        for (Iterator<Map.Entry<Produit, Integer>> it = panier.getProduit().entrySet().iterator(); it.hasNext();)
-        {
+        for (Iterator<Map.Entry<Produit, Integer>> it = panier.getProduit().entrySet().iterator(); it.hasNext();) {
             Map.Entry<Produit, Integer> entry = it.next();
             this.produit.add(entry.getKey());
             this.quantite.add(entry.getValue());

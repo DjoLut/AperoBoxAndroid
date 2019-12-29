@@ -28,6 +28,13 @@ public class OptionFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
+
+        if (AperoBoxApplication.getInstance().isNightModeEnabled()) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+
         isNightMode = AperoBoxApplication.getInstance().isNightModeEnabled();
         preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         SharedPreferences.Editor editor = preferences.edit();
@@ -53,7 +60,7 @@ public class OptionFragment extends Fragment {
                 AppCompatDelegate.setDefaultNightMode(isNightMode?AppCompatDelegate.MODE_NIGHT_NO:AppCompatDelegate.MODE_NIGHT_YES);
                 preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
                 AperoBoxApplication.token = preferences.getString("access_token", null);
-                //((NavigationHost)getActivity()).navigateTo(OptionFragment.this, false);
+                //Recreate the activity for update the theme color
                 OptionFragment.this.getActivity().recreate();
             }
         });
@@ -88,9 +95,8 @@ public class OptionFragment extends Fragment {
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        if(bundle==null) {
+        if(bundle==null)
             bundle = new Bundle();
-        }
         outState.putBundle(SAVED_BUNDLE_TAG, bundle);
     }
 }

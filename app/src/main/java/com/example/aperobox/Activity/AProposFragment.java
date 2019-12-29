@@ -1,6 +1,5 @@
 package com.example.aperobox.Activity;
 
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -16,14 +15,9 @@ import com.google.android.material.button.MaterialButton;
 
 public class AProposFragment extends Fragment {
 
-    private SharedPreferences preferences;
-    private ViewGroup container;
-
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.apropos_fragment, container, false);
-        this.container = container;
 
         MaterialButton menu = ((MainActivity)getActivity()).apropos;
         menu.setElevation(1);
@@ -36,7 +30,6 @@ public class AProposFragment extends Fragment {
         return view;
     }
 
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,21 +38,6 @@ public class AProposFragment extends Fragment {
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
     }
 
     @Override
@@ -79,10 +57,5 @@ public class AProposFragment extends Fragment {
         MaterialButton boxPerso = ((MainActivity)getActivity()).boxPersonnalise;
         boxPerso.setElevation(0);
 
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
     }
 }

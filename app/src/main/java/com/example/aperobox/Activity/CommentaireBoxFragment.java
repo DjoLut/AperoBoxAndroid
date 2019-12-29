@@ -35,7 +35,6 @@ import java.util.Date;
 public class CommentaireBoxFragment extends Fragment {
 
     private Integer boxId;
-    private SharedPreferences preferences;
 
     private RecyclerView recycler_view;
     private TextInputLayout text_input;
@@ -57,14 +56,12 @@ public class CommentaireBoxFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setRetainInstance(true);
 
-        if (AperoBoxApplication.getInstance().isNightModeEnabled()) {
+        if (AperoBoxApplication.getInstance().isNightModeEnabled())
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        } else {
+        else
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }
     }
 
     @Nullable
@@ -72,6 +69,7 @@ public class CommentaireBoxFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater,container,savedInstanceState);
         internetAvaillable = UtilDAO.isInternetAvailable(getContext());
+
         if(internetAvaillable) {
             view = inflater.inflate(R.layout.commentaire_box_fragment, container,false);
 
@@ -98,7 +96,6 @@ public class CommentaireBoxFragment extends Fragment {
             setJoke(view);
         }
 
-
         return view;
     }
 
@@ -113,9 +110,8 @@ public class CommentaireBoxFragment extends Fragment {
         super.onDestroy();
         if(loadCommentaire!=null)
             loadCommentaire.cancel(true);
-        if(ajouterCommentaire!=null){
+        if(ajouterCommentaire!=null)
             ajouterCommentaire.cancel(true);
-        }
     }
 
 
@@ -154,8 +150,8 @@ public class CommentaireBoxFragment extends Fragment {
             super.onPostExecute(commentaire);
             listeCommentaire.add(commentaire);
             edit_text.setText("");
-            ((NavigationHost)getActivity()).navigateTo(CommentaireBoxFragment.this, false);
-            //CommentaireBoxFragment.this.getActivity().recreate();
+            //((NavigationHost)getActivity()).navigateTo(CommentaireBoxFragment.this, false);
+            CommentaireBoxFragment.this.getActivity().recreate();
         }
 
         @Override
@@ -219,17 +215,15 @@ public class CommentaireBoxFragment extends Fragment {
             if (listeCommentaire.isEmpty() || !listeCommentaire.contains(commentaire)) {
                 ajouterCommentaire = new AjouterCommentaire();
                 ajouterCommentaire.execute(commentaire);
-            } else {
+            } else
                 Toast.makeText(getContext(), getString(R.string.commentaire_fragment_error_duplication), Toast.LENGTH_SHORT).show();
-            }
         } else
             Toast.makeText(getContext(), getString(R.string.error_no_internet), Toast.LENGTH_LONG).show();
     }
 
     private void setViewCommentaire(){
-        if(listeCommentaire.isEmpty()) {
+        if(listeCommentaire.isEmpty())
             aucun_commentaire.setText(R.string.commentaire_fragment_aucun_commentaire);
-        }
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         String access_token = preferences.getString("access_token", null);

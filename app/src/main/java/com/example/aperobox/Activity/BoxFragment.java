@@ -53,10 +53,8 @@ public class BoxFragment extends Fragment {
     private LoadBox loadBoxTask;
     private LoadProd loadProd;
     private Box selectedBox;
-    private Box boxPersonnalise;
     private Double sommeHTVA;
     private Double promotion;
-
 
     private Integer boxId;
     private Integer quantite;
@@ -87,10 +85,8 @@ public class BoxFragment extends Fragment {
                 if(listeProduits==null){
                     loadProd = new LoadProd();
                     loadProd.execute();
-                } else{
+                } else
                     setViewBoxProduit();
-                }
-
             }
         }
     }
@@ -115,6 +111,7 @@ public class BoxFragment extends Fragment {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
 
+        // Save the instance for the landscape mode change
         setRetainInstance(true);
 
         this.quantite = 1;
@@ -381,7 +378,7 @@ public class BoxFragment extends Fragment {
             GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1, GridLayoutManager.VERTICAL, false);
             produitToDisplay.setLayoutManager(gridLayoutManager);
 
-            ProductViewAdapter adapter = new ProductViewAdapter(listeProduits, BoxFragment.this);
+            ProductViewAdapter adapter = new ProductViewAdapter(listeProduits);
             produitToDisplay.setAdapter(adapter);
         } else {
             if(selectedBox==null){

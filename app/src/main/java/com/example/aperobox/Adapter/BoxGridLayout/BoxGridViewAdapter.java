@@ -73,7 +73,14 @@ public class BoxGridViewAdapter extends RecyclerView.Adapter<BoxGridViewHolder> 
                 });
             }
 
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
+            holder.layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((NavigationHost) fragment.getActivity()).navigateTo(new BoxFragment(boxes.get(position).getId()), true);
+                }
+            });
+
+            holder.boxImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     ((NavigationHost) fragment.getActivity()).navigateTo(new BoxFragment(boxes.get(position).getId()), true);
