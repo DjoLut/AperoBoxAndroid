@@ -10,12 +10,17 @@
         <item name="android:enforceStatusBarContrast">true</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
         <item name="android:textColorPrimary">@color/textColorPrimary</item>
+        <item name="android:textColorHint">@color/textInputOutlineColor</item>
+    </style>
+
+    <style name="Widget.AperoBox.TextInputEditText" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="android:textColor">#000000</item>
     </style>
 
     <style name="Widget.AperoBox.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="hintTextAppearance">@style/TextAppearance.AperoBox.TextInputLayout.HintText</item>
-        <item name="android:textColor">@color/colorAccent</item>
-        <item name="boxBackgroundColor">@color/productGridBackgroundColor</item>
+        <item name="android:textColor">?android:color</item>
+        <item name="boxBackgroundColor">?android:colorBackground</item>
         <item name="android:paddingTop">0dp</item>
         <item name="android:paddingBottom">8dp</item>
         <item name="boxStrokeColor">@color/textInputOutlineColor</item>
@@ -48,10 +53,6 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_width">0sp</item>
     </style>
-
-    android:layout_width="0sp"
-    android:layout_height="match_parent"
-    android:layout_weight="1"
 
     <style name="Widget.AperoBox.Button.TextButton" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:textColor">?android:attr/textColorPrimary</item>
@@ -121,6 +122,22 @@
         <item name="android:paddingTop">32dp</item>
         <item name="android:textSize">25dp</item>
         <item name="android:textStyle">bold</item>
+    </style>
+
+
+    <style name="BoxGridFragment.item.name" parent="TextAppearance.MaterialComponents.Subtitle1">
+        <item name="android:colorEdgeEffect">@color/textColorPrimary</item>
+        <item name="android:elevation">2dp</item>
+    </style>
+
+    <style name="BoxGridFragment.item.price" parent="TextAppearance.MaterialComponents.Subtitle1">
+        <item name="android:colorEdgeEffect">@color/textColorPrimary</item>
+        <item name="android:elevation">2dp</item>
+    </style>
+
+    <style name="BoxGridFragment.item.image" parent="Widget.AppCompat.ImageButton">
+        <item name="android:colorEdgeEffect">@color/colorPrimaryDark</item>
+        <item name="android:layout_marginBottom">8dp</item>
     </style>
 
 </resources>

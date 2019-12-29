@@ -9,15 +9,13 @@
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingRight="10dp"
-        android:paddingLeft="10dp"
-        android:layout_margin="10dp"
         android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:elevation="8dp"
             android:padding="16dp">
 
             <ImageView
@@ -25,12 +23,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/staggered_boxs_grid_card_height_portrait"
                 android:background="?attr/colorPrimaryDark"
+                style="@style/BoxGridFragment.item.image"
+                android:elevation="1dp"
                 android:scaleType="centerCrop"/>
 
             <TextView
                 android:id="@+id/box_grid_fragment_box_nom_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="@style/BoxGridFragment.item.name"
                 android:text="@string/product_title"
                 android:textAlignment="center"
                 android:textAppearance="?attr/textAppearanceSubtitle2" />
@@ -39,6 +40,7 @@
                 android:id="@+id/box_grid_fragment_box_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="@style/BoxGridFragment.item.price"
                 android:text="@string/product_description"
                 android:textAlignment="center"
                 android:textAppearance="?attr/textAppearanceBody2" />
