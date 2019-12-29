@@ -1,6 +1,6 @@
 <resources>
     <string name="product_title">Titre</string>
-    <string name="product_description">Text secondaire</string>
+    <string name="product_description">Texte secondaire</string>
 
     <string name="app_name">AperoBox</string>4
     <string name="aperobox">Apéro Box</string>
@@ -25,21 +25,16 @@
     <string name="connexion_title">Connexion</string>
     <string name="deconnection_title">Déconnexion</string>
     <string name="inscription_title">Inscription</string>
-    <string name="compte_title">Mon compte</string>
+    <string name="compte_title">Compte</string>
     <string name="inscription">S\'inscrire</string>
     <string name="connexion">Se connecter</string>
     <string name="deconnection">Se déconnecter</string>
-    <string name="mode_sombre">Mode sombre</string>
-    <string name="welcome">"Bienvenue !"</string>
-    <string name="switch_Dark_Mode">Dark mode</string>
+
+
+    <!-- Option Fragment -->
+    <string name="switch_Dark_Mode">Mode sombre</string>
 
     <!-- BoxFragment -->
-    <string name="box_fragment_box_personne2">2</string>
-    <string name="box_fragment_box_personne4">4</string>
-    <string name="box_fragment_box_personne6">6</string>
-    <string name="box_fragment_box_personne8">8</string>
-    <string name="box_fragment_box_personne10">10</string>
-    <string name="box_fragment_box_personne">Combien de personnes?</string>
     <string name="box_fragment_box_personnalise_name">Box Personnalisée</string>
     <string name="box_fragment_box_personnalise_description">Une box qui ne contient que ce que vous désirez.</string>
     <string name="box_fragment_box_error_chargement_api_name">Box (erreur)</string>
@@ -51,7 +46,7 @@
     <string name="box_fragment_box_button_ajout_panier">Ajouter au panier</string>
     <string name="box_fragment_box_personnalise_empty_quantite">Vous devez ajouter au moins un produit à votre box personnalisée pour pouvoir la commander</string>
     <string name="box_fragment_box__empty_quantite">Vous devez avoir une quantité de box supérieur à 0 pour pouvoir commander</string>
-    <string name="box_fragment_connection_obligatoire">Vous devez être connecté pour ajouter une box</string>
+    <string name="box_fragment_connection_obligatoire">Vous devez être connecté pour ajouter une box à votre panier</string>
     <string name="box_fragment_box_ajouter">Box ajoutée(s)</string>
     <string name="box_fragment_produits_ajouter">Produit(s) ajouté(s)</string>
     <string name="box_fragment_commentaire">Commentaires</string>
@@ -64,10 +59,10 @@
     <string name="commentaire_fragment_aucun_commentaire">Aucun commentaire.</string>
 
     <!-- AProposFragment -->
-    <string name="apropos_message">Application créé et inventée par deux étudiants d\'IG et trois étudiants de marketing de l\'HENALLux IESN de Namur</string>
+    <string name="apropos_message">Application créée et inventéée par deux étudiants d\'IG et trois étudiants de marketing de l\'HENALLux IESN de Namur</string>
 
     <!-- ContactFragment -->
-    <string name="contact_nous_contactez">Nous contactez</string>
+    <string name="contact_nous_contactez">Nous contacter</string>
     <string name="contact_mail">aperobox.henallux@outlook.com</string>
     <string name="contact_mail_sujet">aperoBox_contact_us</string>
     <string name="contact_mail_chooser">Boite mail</string>
@@ -110,7 +105,7 @@
 
     <!-- Backdrop menu -->
     <string name="menu_acceuil">Accueil</string>
-    <string name="menu_box_perso">Box personnalisé</string>
+    <string name="menu_box_perso">Box personnalisée</string>
     <string name="menu_panier">Panier</string>
     <string name="menu_options">Options</string>
     <string name="menu_a_propos">À propos</string>
