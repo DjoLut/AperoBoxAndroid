@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.util.Log;
+
 import androidx.appcompat.app.AppCompatDelegate;
 import com.example.aperobox.Dao.UtilisateurDAO;
 import com.example.aperobox.Exception.HttpResultException;
@@ -78,7 +80,7 @@ public class AperoBoxApplication extends Application {
                 connection = new Connection();
                 connection.execute(loginModel);
             }
-        }, jwtToken.getExpires_in()*1000);
+        }, (jwtToken.getExpires_in()*1000)-5000);
     }
 
     public void deconnexion(){

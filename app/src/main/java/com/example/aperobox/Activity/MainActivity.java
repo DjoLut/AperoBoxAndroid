@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity implements NavigationHost{
     private Boolean internetAvaillable;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
