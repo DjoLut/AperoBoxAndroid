@@ -4,7 +4,6 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.view.KeyEvent;
@@ -20,7 +19,6 @@ import com.example.aperobox.Model.JwtToken;
 import com.example.aperobox.Model.LoginModel;
 import com.example.aperobox.R;
 import com.example.aperobox.Application.AperoBoxApplication;
-import com.example.aperobox.Thread.TokenExpire;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -28,8 +26,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
-
-import java.util.TimerTask;
 
 /**
  * Fragment representing the login screen for AperoBox.

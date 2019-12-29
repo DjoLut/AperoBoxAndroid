@@ -67,26 +67,3 @@
         </LinearLayout>
     </RelativeLayout>
 </com.google.android.material.card.MaterialCardView>
-<!--
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingBottom="16dp">
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/panier_fragment_produit_nom_text_view"
-        style="@style/Widget.AperoBox.TextInputLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/panier_fragment_produit_quantite_edit_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:digits="0123456789"
-            android:maxLines="1" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-</LinearLayout>-->

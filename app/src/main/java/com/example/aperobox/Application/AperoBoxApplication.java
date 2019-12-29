@@ -3,25 +3,14 @@ package com.example.aperobox.Application;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.media.session.MediaSession;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatDelegate;
-
-import com.example.aperobox.Activity.BoxsGridFragment;
-import com.example.aperobox.Activity.NavigationHost;
 import com.example.aperobox.Dao.UtilisateurDAO;
 import com.example.aperobox.Exception.HttpResultException;
 import com.example.aperobox.Model.JwtToken;
 import com.example.aperobox.Model.LoginModel;
-import com.example.aperobox.R;
-import com.example.aperobox.Thread.TokenExpire;
 
 public class AperoBoxApplication extends Application {
     public static final String NIGHT_MODE = "NIGHT_MODE";
@@ -82,8 +71,6 @@ public class AperoBoxApplication extends Application {
     }
 
     public void startExpiration(JwtToken jwtToken){
-        long time = jwtToken.getExpires_in()*1000;
-
         token = jwtToken.getAccess_token();
 
         final Handler handler = new Handler();
@@ -99,37 +86,6 @@ public class AperoBoxApplication extends Application {
     public void deconnexion(){
         token = null;
     }
-
-    /*
-    private class Expiration extends AsyncTask<JwtToken, Void, Void>
-    {
-        @Override
-        protected Void doInBackground(JwtToken...token)
-        {
-            long time = token[0].getExpires_in()*1000;
-
-            final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    Connection connection = new Connection();
-                    connection.execute(loginModel);
-                }
-            }, long - 5000);
-
-
-            return null;
-        }
-
-        @Override
-        protected void onCancelled() {
-            super.onCancelled();
-            if(connection!=null)
-                connection.cancel(true);
-        }
-    }
-
-     */
 
     private class Connection extends AsyncTask<LoginModel, Void, Void> {
 

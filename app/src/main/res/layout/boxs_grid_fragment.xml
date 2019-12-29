@@ -10,7 +10,6 @@
     android:forceDarkAllowed="true"
     tools:context=".Activity.BoxsGridFragment">
 
-
     <ProgressBar
         android:id="@+id/box_grid_fragment_progress_bar"
         android:layout_width="150dp"
@@ -30,10 +29,28 @@
         android:elevation="8dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            android:padding="24dp"
+            android:paddingTop="16dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="250dp"
+                android:layout_margin="5dp"
+                app:srcCompat="@drawable/aperoboxlogo" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/box_grid_fragment_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
 

@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,17 +15,14 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.aperobox.Adapter.StaggeredGridLayout.StaggeredProductCardRecyclerViewAdapter;
+import com.example.aperobox.Adapter.BoxGridLayout.BoxGridViewAdapter;
 import com.example.aperobox.Dao.BoxDAO;
 import com.example.aperobox.Dao.UtilDAO;
 import com.example.aperobox.Application.JokeEntry;
 import com.example.aperobox.Model.Box;
-import com.example.aperobox.Model.Utilisateur;
 import com.example.aperobox.R;
 import com.example.aperobox.Application.AperoBoxApplication;
 import com.google.android.material.button.MaterialButton;
-
 import java.util.ArrayList;
 
 public class BoxsGridFragment extends Fragment {
@@ -35,7 +31,6 @@ public class BoxsGridFragment extends Fragment {
     private SharedPreferences preferences;
 
     private ArrayList<Box> boxes;
-    private Utilisateur utilisateur;
     private RecyclerView boxToDisplay;
     private LoadBox loadBoxTask;
     private View view;
@@ -70,21 +65,14 @@ public class BoxsGridFragment extends Fragment {
         MaterialButton menu = ((MainActivity)getActivity()).acceuil;
         menu.setElevation(1);
 
-        //container.removeView(view);
         // Inflate the layout for this fragment with the ProductGrid theme
         if(UtilDAO.isInternetAvailable(getContext())) {
             view = this.inflater.inflate(R.layout.boxs_grid_fragment, this.container, false);
 
             // Set up the RecyclerView
-            boxToDisplay = view.findViewById(R.id.recycler_view);
+            boxToDisplay = view.findViewById(R.id.box_grid_fragment_recycler_view);
             boxToDisplay.setHasFixedSize(true);
-            GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2, GridLayoutManager.HORIZONTAL, false);
-            gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-                @Override
-                public int getSpanSize(int position) {
-                    return position % 3 == 2 ? 2 : 1;
-                }
-            });
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1, GridLayoutManager.VERTICAL, false);
             boxToDisplay.setLayoutManager(gridLayoutManager);
             loadBoxTask = new LoadBox();
             loadBoxTask.execute();
@@ -94,9 +82,6 @@ public class BoxsGridFragment extends Fragment {
             Toast.makeText(getContext(), getString(R.string.error_no_internet), Toast.LENGTH_LONG).show();
             setJoke(view);
         }
-
-        // Set up the tool bar
-        //setUpToolbar(view);
 
         // Set cut corner background for API 23+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -191,11 +176,11 @@ public class BoxsGridFragment extends Fragment {
             ProgressBar progressBar = view.findViewById(R.id.box_grid_fragment_progress_bar);
             progressBar.setElevation(0);
 
-            StaggeredProductCardRecyclerViewAdapter adapter = new StaggeredProductCardRecyclerViewAdapter(allBoxes, BoxsGridFragment.this);
+            BoxGridViewAdapter adapter = new BoxGridViewAdapter(allBoxes, BoxsGridFragment.this);
             boxToDisplay.setAdapter(adapter);
-            int largePadding = getResources().getDimensionPixelSize(R.dimen.staggered_boxs_grid_spacing_large);
-            int smallPadding = getResources().getDimensionPixelSize(R.dimen.staggered_boxs_grid_spacing_small);
-            boxToDisplay.addItemDecoration(new BoxsGridItemDecoration(largePadding, smallPadding));
+            //int largePadding = getResources().getDimensionPixelSize(R.dimen.staggered_boxs_grid_spacing_large);
+            //int smallPadding = getResources().getDimensionPixelSize(R.dimen.staggered_boxs_grid_spacing_small);
+            //boxToDisplay.addItemDecoration(new BoxsGridItemDecoration(largePadding, smallPadding));
 
         }
 
