@@ -78,7 +78,6 @@ public class PanierFragment extends Fragment {
         View view = inflater.inflate(R.layout.panier_fragment, this.container, false);
 
         MaterialButton menu = ((MainActivity)getActivity()).panier;
-        menu.setOnClickListener(null);
         menu.setElevation(1);
 
         panierBoxTextView = view.findViewById(R.id.panier_fragment_box_text_view);
@@ -154,6 +153,11 @@ public class PanierFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        access_token = preferences.getString("access_token", null);
+        if(access_token == null)
+            ((NavigationHost) getActivity()).navigateTo(new LoginFragment(), true);
 
         MaterialButton accueil = ((MainActivity)getActivity()).acceuil;
         accueil.setElevation(0);

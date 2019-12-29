@@ -64,7 +64,6 @@ public class LoginFragment extends Fragment {
         progressBar.setVisibility(View.INVISIBLE);
 
         MaterialButton menu = ((MainActivity)getActivity()).compte;
-        menu.setOnClickListener(null);
         menu.setElevation(1);
 
         // Set cut corner background for API 23+

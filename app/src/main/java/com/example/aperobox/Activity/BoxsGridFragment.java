@@ -68,7 +68,6 @@ public class BoxsGridFragment extends Fragment {
     private View setView(){
 
         MaterialButton menu = ((MainActivity)getActivity()).acceuil;
-        menu.setOnClickListener(null);
         menu.setElevation(1);
 
         //container.removeView(view);

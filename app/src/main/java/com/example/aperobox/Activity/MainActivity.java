@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements NavigationHost{
     private void setUpToolbar(View view) {
         internetAvaillable = UtilDAO.isInternetAvailable(view.getContext());
         toolbar = view.findViewById(R.id.app_bar);
-        AppCompatActivity activity = (AppCompatActivity) this;
+        final AppCompatActivity activity = (AppCompatActivity) this;
         if (activity != null) {
             activity.setSupportActionBar(toolbar);
         }
@@ -140,7 +140,8 @@ public class MainActivity extends AppCompatActivity implements NavigationHost{
         acceuil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navigateTo(new BoxsGridFragment(), true);
+                if(acceuil.getElevation() == 0)
+                    navigateTo(new BoxsGridFragment(), true);
             }
         });
 
@@ -149,7 +150,8 @@ public class MainActivity extends AppCompatActivity implements NavigationHost{
         boxPersonnalise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navigateTo(new BoxPersonnaliseFragment(),true);
+                if(boxPersonnalise.getElevation() == 0)
+                    navigateTo(new BoxPersonnaliseFragment(),true);
             }
         });
 
@@ -157,7 +159,8 @@ public class MainActivity extends AppCompatActivity implements NavigationHost{
         option.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navigateTo(new OptionFragment(),true);
+                if(option.getElevation() == 0)
+                    navigateTo(new OptionFragment(),true);
             }
         });
 
@@ -165,7 +168,8 @@ public class MainActivity extends AppCompatActivity implements NavigationHost{
         panier.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navigateTo(new PanierFragment(),true);
+                if(panier.getElevation() == 0)
+                    navigateTo(new PanierFragment(),true);
             }
         });
 
@@ -173,7 +177,8 @@ public class MainActivity extends AppCompatActivity implements NavigationHost{
         apropos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navigateTo(new AProposFragment(),true);
+                if(apropos.getElevation() == 0)
+                    navigateTo(new AProposFragment(),true);
             }
         });
 
@@ -212,7 +217,8 @@ public class MainActivity extends AppCompatActivity implements NavigationHost{
             panier.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    MainActivity.this.navigateTo(new PanierFragment(), true);
+                    if(panier.getElevation() == 0)
+                        MainActivity.this.navigateTo(new PanierFragment(), true);
                 }
             });
         }
@@ -222,7 +228,8 @@ public class MainActivity extends AppCompatActivity implements NavigationHost{
             view.findViewById(R.id.menu_compte).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    MainActivity.this.navigateTo(new LoginFragment(), true);
+                    if(compte.getElevation() == 0)
+                        MainActivity.this.navigateTo(new LoginFragment(), true);
                 }
             });
         }

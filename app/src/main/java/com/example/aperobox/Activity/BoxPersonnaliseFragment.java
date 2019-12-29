@@ -191,7 +191,6 @@ public class BoxPersonnaliseFragment extends Fragment {
 
 
         MaterialButton menu = ((MainActivity)getActivity()).boxPersonnalise;
-        menu.setOnClickListener(null);
         menu.setElevation(1);
 
         setViewBoxPersonnaliseBox();

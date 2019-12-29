@@ -77,7 +77,6 @@ public class InscriptionFragment extends Fragment {
         View view = inflater.inflate(R.layout.inscription_fragment, container, false);
 
         MaterialButton menu = ((MainActivity)getActivity()).compte;
-        menu.setOnClickListener(null);
         menu.setElevation(1);
 
 

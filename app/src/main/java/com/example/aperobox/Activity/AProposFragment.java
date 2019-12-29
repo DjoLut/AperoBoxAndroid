@@ -26,7 +26,6 @@ public class AProposFragment extends Fragment {
         this.container = container;
 
         MaterialButton menu = ((MainActivity)getActivity()).apropos;
-        menu.setOnClickListener(null);
         menu.setElevation(1);
 
         // Set cut corner background for API 23+
