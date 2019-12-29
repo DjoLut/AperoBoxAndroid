@@ -5,6 +5,7 @@
     android:id="@+id/commentaire_fragment_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:backgroundTint="@color/productGridBackgroundColor"
     android:clipChildren="false"
     android:clipToPadding="false"
     android:forceDarkAllowed="true"
