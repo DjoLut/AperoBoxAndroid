@@ -164,7 +164,6 @@ public class PanierFragment extends Fragment {
         MaterialButton option = ((MainActivity)getActivity()).option;
         option.setElevation(0);
         MaterialButton panierM = ((MainActivity)getActivity()).panier;
-        panierM.setOnClickListener(null);
         panierM.setElevation(1);
         MaterialButton boxPerso = ((MainActivity)getActivity()).boxPersonnalise;
         boxPerso.setElevation(0);

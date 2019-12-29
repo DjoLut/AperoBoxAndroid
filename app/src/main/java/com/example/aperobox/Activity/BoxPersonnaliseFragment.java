@@ -95,7 +95,6 @@ public class BoxPersonnaliseFragment extends Fragment {
         MaterialButton panierM = ((MainActivity)getActivity()).panier;
         panierM.setElevation(0);
         MaterialButton boxPerso = ((MainActivity)getActivity()).boxPersonnalise;
-        boxPerso.setOnClickListener(null);
         boxPerso.setElevation(1);
 
     }

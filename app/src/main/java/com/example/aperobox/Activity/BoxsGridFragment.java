@@ -116,7 +116,6 @@ public class BoxsGridFragment extends Fragment {
             ((NavigationHost)getActivity()).navigateTo(new BoxsGridFragment(), false);
 
         MaterialButton accueil = ((MainActivity)getActivity()).acceuil;
-        accueil.setOnClickListener(null);
         accueil.setElevation(1);
         MaterialButton apropos = ((MainActivity)getActivity()).apropos;
         apropos.setElevation(0);

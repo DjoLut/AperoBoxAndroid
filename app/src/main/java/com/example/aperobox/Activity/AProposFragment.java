@@ -70,7 +70,6 @@ public class AProposFragment extends Fragment {
         MaterialButton accueil = ((MainActivity)getActivity()).acceuil;
         accueil.setElevation(0);
         MaterialButton apropos = ((MainActivity)getActivity()).apropos;
-        apropos.setOnClickListener(null);
         apropos.setElevation(1);
         MaterialButton compte = ((MainActivity)getActivity()).compte;
         compte.setElevation(0);

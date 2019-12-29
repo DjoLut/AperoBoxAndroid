@@ -228,7 +228,6 @@ public class LoginFragment extends Fragment {
         MaterialButton apropos = ((MainActivity)getActivity()).apropos;
         apropos.setElevation(0);
         MaterialButton compte = ((MainActivity)getActivity()).compte;
-        compte.setOnClickListener(null);
         compte.setElevation(1);
         MaterialButton option = ((MainActivity)getActivity()).option;
         option.setElevation(0);

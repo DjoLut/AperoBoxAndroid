@@ -57,12 +57,10 @@ public class InscriptionFragment extends Fragment {
         super.onResume();
 
         MaterialButton accueil = ((MainActivity)getActivity()).acceuil;
-        accueil.setOnClickListener(null);
         accueil.setElevation(0);
         MaterialButton apropos = ((MainActivity)getActivity()).apropos;
         apropos.setElevation(0);
         MaterialButton compte = ((MainActivity)getActivity()).compte;
-        compte.setOnClickListener(null);
         compte.setElevation(1);
         MaterialButton option = ((MainActivity)getActivity()).option;
         option.setElevation(0);

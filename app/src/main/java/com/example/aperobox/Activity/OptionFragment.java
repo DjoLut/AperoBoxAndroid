@@ -79,7 +79,6 @@ public class OptionFragment extends Fragment {
         MaterialButton compte = ((MainActivity)getActivity()).compte;
         compte.setElevation(0);
         MaterialButton option = ((MainActivity)getActivity()).option;
-        option.setOnClickListener(null);
         option.setElevation(1);
         MaterialButton panierM = ((MainActivity)getActivity()).panier;
         panierM.setElevation(0);
