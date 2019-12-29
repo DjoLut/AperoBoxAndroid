@@ -1,6 +1,7 @@
 package com.example.aperobox.Activity;
 
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -72,7 +73,7 @@ public class BoxsGridFragment extends Fragment {
             // Set up the RecyclerView
             boxToDisplay = view.findViewById(R.id.box_grid_fragment_recycler_view);
             boxToDisplay.setHasFixedSize(true);
-            GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1, GridLayoutManager.VERTICAL, false);
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE?2:1, GridLayoutManager.VERTICAL, false);
             boxToDisplay.setLayoutManager(gridLayoutManager);
             loadBoxTask = new LoadBox();
             loadBoxTask.execute();
