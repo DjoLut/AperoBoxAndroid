@@ -227,16 +227,9 @@ public class CommentaireBoxFragment extends Fragment {
     }
 
     private void setViewCommentaire(){
-        aucun_commentaire.setVisibility(View.INVISIBLE);
-        aucun_commentaire.setText("");
-        aucun_commentaire.setElevation(0);
-
         if(listeCommentaire.isEmpty()) {
             aucun_commentaire.setText(R.string.commentaire_fragment_aucun_commentaire);
-            aucun_commentaire.setElevation(1);
-            aucun_commentaire.setVisibility(View.VISIBLE);
         }
-
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         String access_token = preferences.getString("access_token", null);
