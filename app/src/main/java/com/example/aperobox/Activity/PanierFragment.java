@@ -1,10 +1,12 @@
 package com.example.aperobox.Activity;
 
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -51,6 +53,7 @@ public class PanierFragment extends Fragment {
     private TextView prixProduit;
     private TextView prixTotal;
     private TextView promotionTotal;
+    String access_token;
 
     public PanierFragment() {
     }
@@ -113,13 +116,28 @@ public class PanierFragment extends Fragment {
             public void onClick(View v) {
                 if(panier.sizeBox() != 0 || panier.sizeProduit() != 0)
                 {
-                    Commande commande = new Commande();
-                    commande.setDateCreation(new Date());
-                    commande.setPromotion(panier.calculTotalPromoBox());
-
                     if(UtilDAO.isInternetAvailable(getContext()))
                     {
-                        new AjoutCommande().execute(commande);
+                        DialogInterface.OnClickListener dialClickListener = new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                switch (which) {
+                                    case DialogInterface.BUTTON_POSITIVE:
+                                        Commande commande = new Commande();
+                                        commande.setDateCreation(new Date());
+                                        commande.setPromotion(panier.calculTotalPromoBox());
+                                        new AjoutCommande().execute(commande);
+                                        break;
+                                    case DialogInterface.BUTTON_NEGATIVE:
+                                        Toast.makeText(getContext(), R.string.panier_fragment_commande_annule, Toast.LENGTH_LONG).show();
+                                        break;
+                                }
+                            }
+                        };
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                        builder.setMessage(R.string.panier_fragment_commande_confirmation)
+                                .setPositiveButton(R.string.panier_fragment_commande_oui, dialClickListener)
+                                .setNegativeButton(R.string.panier_fragment_commande_non, dialClickListener).show();
                     }
                 }
                 else
@@ -179,7 +197,7 @@ public class PanierFragment extends Fragment {
             CommandeDAO commandeDAO = new CommandeDAO();
             Commande commande = new Commande();
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-            String access_token = preferences.getString("access_token", null);
+            access_token = preferences.getString("access_token", null);
             try{
                 commande = commandeDAO.ajoutCommande(access_token, newCommande[0]);
             }
@@ -242,7 +260,8 @@ public class PanierFragment extends Fragment {
         protected Integer doInBackground(LigneCommande ...params) {
             Integer resultCode = null;
             LigneCommandeDAO ligneCommandeDAO = new LigneCommandeDAO();
-            String access_token = preferences.getString("access_token", null);
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+            access_token = preferences.getString("access_token", null);
             try {
                 resultCode = ligneCommandeDAO.ajoutLigneCommande(access_token, params[0]);
             }

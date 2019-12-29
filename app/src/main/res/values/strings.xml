@@ -132,6 +132,10 @@
     <string name="panier_fragment_commande_save">Commande enregistrée</string>
     <string name="panier_fragment_erreur_save">Erreur lors de l\'enregistrement du panier</string>
     <string name="panier_fragment_sous_total">Sous-total : </string>
+    <string name="panier_fragment_commande_annule">Commande annulée</string>
+    <string name="panier_fragment_commande_confirmation">Voulez-vous commander votre panier ?</string>
+    <string name="panier_fragment_commande_oui">Oui</string>
+    <string name="panier_fragment_commande_non">Non</string>
 
 
     <!-- JokeENtry -->
