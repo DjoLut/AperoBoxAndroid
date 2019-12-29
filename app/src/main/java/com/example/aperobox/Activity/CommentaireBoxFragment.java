@@ -140,7 +140,7 @@ public class CommentaireBoxFragment extends Fragment {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(getContext(), getString(R.string.commentaire_fragment_error_ajout_commentaire) + "\n" + getString(R.string.retry), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), getString(R.string.commentaire_fragment_error_ajout_commentaire) + "\n" + getString(R.string.retry), Toast.LENGTH_LONG).show();
                         }
                     });
                     cancel(true);
