@@ -42,9 +42,8 @@ public class UtilisateurDAO {
             connection.disconnect();
             inputJsonString = stringBuilder.toString();
             return gson.fromJson(inputJsonString, JwtToken.class);
-        }else {
+        }else
             throw new HttpResultException(connection.getResponseCode());
-        }
     }
 
     public int inscription(Utilisateur newUser)throws Exception {

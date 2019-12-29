@@ -10,9 +10,7 @@ public class SingletonPanier {
 
     public static Panier getUniquePanier() {
         if(uniquePanier == null)
-        {
             uniquePanier = new Panier();
-        }
         return uniquePanier;
     }
 }

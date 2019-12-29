@@ -121,42 +121,6 @@ public class ProduitDAO {
         LinkedHashMap<Produit, Integer> produits = new LinkedHashMap<>();
         for(LigneProduit l: ligneProduits)
             produits.put(getProduit(l.getProduit()), l.getQuantite());
-        /*
-
-        LinkedHashMap<Produit, Integer> produits = new LinkedHashMap<>();
-        Gson gson = new Gson();
-
-        URL url = new URL(Constantes.URL_API + "LigneProduit/"+boxId);
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-
-        connection.setRequestMethod("GET");
-        connection.setDoInput(true);
-        connection.setDoOutput(false);
-        //connection.setRequestProperty("Authorization", "Bearer " + token);
-
-        InputStream inputStream = connection.getInputStream();
-        InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-        BufferedReader buffer = new BufferedReader(inputStreamReader);
-        StringBuilder builder = new StringBuilder();
-        String stringJSON = "", line;
-        while ((line = buffer.readLine()) != null)
-        {
-            builder.append(line);
-        }
-        buffer.close();
-        connection.disconnect();
-
-        String inputStringJSON = builder.toString();
-        JSONArray jsonArray = new JSONArray(inputStringJSON);
-        for(int i = 0; i < jsonArray.length(); i++)
-        {
-            LigneProduit ligneProduit = gson.fromJson(jsonArray.getJSONObject(i).toString(), LigneProduit.class);
-            produits.put(getProduit(ligneProduit.getProduit()),ligneProduit.getQuantite());
-        }
-
-        return produits;
-
-         */
         return produits;
     }
 }

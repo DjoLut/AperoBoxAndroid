@@ -30,9 +30,9 @@ public class UtilDAO {
 
     public static void affichePrix(Double sommeHTVA, Context context, TextView box_price){
         String prix;
-        if(sommeHTVA!=0) {
+        if(sommeHTVA!=0)
             prix = UtilDAO.format.format(Math.round(sommeHTVA*100.0)/100.0);
-        } else
+        else
             prix = context.getString(R.string.box_fragment_box_prix_gratuit);
         box_price.setText(prix);
     }

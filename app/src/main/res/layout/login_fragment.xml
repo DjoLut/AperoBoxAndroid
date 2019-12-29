@@ -94,7 +94,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
                     android:text="@string/connexion" />
 
                 <com.google.android.material.button.MaterialButton
@@ -103,9 +102,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="12dp"
-                    android:layout_marginRight="12dp"
                     android:layout_toStartOf="@id/connexion_button"
-                    android:layout_toLeftOf="@id/connexion_button"
                     android:text="@string/inscription" />
 
             </RelativeLayout>

@@ -27,14 +27,16 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="80dp"
                 android:paddingBottom="32dp"
+
+                android:textSize="28dp"
                 android:text="@string/box_fragment_box_error_chargement_api_description"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="56dp"
+                android:textSize="28dp"
                 android:id="@+id/boxs_joke"
                 />
         </LinearLayout>

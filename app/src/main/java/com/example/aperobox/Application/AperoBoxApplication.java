@@ -29,8 +29,6 @@ public class AperoBoxApplication extends Application {
         return instance;
     }
 
-    public static Context getAppContext() { return appContext; }
-
     public void setAppContext(Context mAppContext) {
         this.appContext = mAppContext;
     }
@@ -85,6 +83,7 @@ public class AperoBoxApplication extends Application {
 
     public void deconnexion(){
         token = null;
+        connection.cancel(true);
     }
 
     private class Connection extends AsyncTask<LoginModel, Void, Void> {
@@ -106,7 +105,6 @@ public class AperoBoxApplication extends Application {
                 } catch (Exception e) {
                     cancel(true);
                 }
-
             }
             return null;
         }

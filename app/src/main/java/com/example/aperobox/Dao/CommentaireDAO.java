@@ -47,7 +47,6 @@ public class CommentaireDAO {
         {
             commentaires.add(gson.fromJson(jsonArray.getJSONObject(i).toString(), Commentaire.class));
         }
-
         return commentaires;
     }
 

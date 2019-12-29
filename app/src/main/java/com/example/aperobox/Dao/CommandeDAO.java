@@ -12,8 +12,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class CommandeDAO {
-
-
     public Commande ajoutCommande(String token, Commande commande) throws Exception {
 
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
