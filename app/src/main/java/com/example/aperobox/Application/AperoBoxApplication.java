@@ -93,7 +93,7 @@ public class AperoBoxApplication extends Application {
                 connection = new Connection();
                 connection.execute(loginModel);
             }
-        }, 5000);
+        }, jwtToken.getExpires_in()*1000);
     }
 
     public void deconnexion(){
@@ -148,11 +148,9 @@ public class AperoBoxApplication extends Application {
                     jwtToken = utilisateurDAO.connection(loginModels[0]);
                     token = jwtToken.getAccess_token();
                 } catch (Exception e) {
-                    Log.i("test", e.getMessage());
                     cancel(true);
                 }
 
-                Log.i("test", "Token refresh!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             }
             return null;
         }

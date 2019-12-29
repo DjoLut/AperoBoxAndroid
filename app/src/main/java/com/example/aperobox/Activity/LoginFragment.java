@@ -187,7 +187,6 @@ public class LoginFragment extends Fragment {
             SharedPreferences.Editor editor = preferences.edit();
             editor.putString("access_token", token.getAccess_token());
             if (editor.commit()) {
-                //new Expiration().execute(token);
                 Toast.makeText(getContext(), R.string.login_success, Toast.LENGTH_LONG).show();
                 AperoBoxApplication.getInstance().startExpiration(token);
                 ((NavigationHost) getActivity()).navigateTo(new BoxsGridFragment(), false);
@@ -202,28 +201,6 @@ public class LoginFragment extends Fragment {
             progressBar.setVisibility(View.INVISIBLE);
         }
     }
-
-
-    /*private class Expiration extends AsyncTask<JwtToken, Void, String>
-    {
-        @Override
-        protected String doInBackground(JwtToken ...token)
-        {
-            TokenExpire tokenExpire = new TokenExpire((token[0].getExpires_in())*1000);
-            tokenExpire.run();
-            //tokenExpire.start();
-            return token[0].getAccess_token();
-        }
-        @Override
-        protected void onPostExecute(String acces_token)
-        {
-            SharedPreferences.Editor editor = preferences.edit();
-            editor.clear();
-            editor.commit();
-            Toast.makeText(getContext(), R.string.login_token_expire, Toast.LENGTH_LONG).show();
-            ((NavigationHost) getActivity()).navigateTo(new BoxsGridFragment(), false);
-        }
-    }*/
 
     @Override
     public void onDestroy() {
