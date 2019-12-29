@@ -60,8 +60,6 @@ public class BoxPersonnaliseFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if(!UtilDAO.isInternetAvailable(getContext()))
-            setJoke();
 
         MaterialButton accueil = ((MainActivity)getActivity()).acceuil;
         accueil.setElevation(0);
@@ -125,7 +123,7 @@ public class BoxPersonnaliseFragment extends Fragment {
         } else {
             Toast.makeText(getContext(), getString(R.string.error_no_internet), Toast.LENGTH_SHORT).show();
             view = inflater.inflate(R.layout.joke, container,false);
-            setJoke();
+            setJoke(view);
         }
 
         return view;
@@ -228,10 +226,11 @@ public class BoxPersonnaliseFragment extends Fragment {
         box_price.setText(prix);
     }
 
-    private void setJoke(){
+    private void setJoke(View view){
         JokeEntry jokeEntry = JokeEntry.getRandom();
         TextView textView = view.findViewById(R.id.boxs_joke);
         textView.setText(jokeEntry.getBase()+"\n\n\n" + jokeEntry.getReponse());
+        ((TextView)view.findViewById(R.id.joke_title)).setText(getString(R.string.box_personnalise_title));
     }
 
     private void setViewBoxPersonnaliseBox(){

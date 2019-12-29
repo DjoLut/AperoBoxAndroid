@@ -29,6 +29,12 @@
     <string name="inscription">S\'inscrire</string>
     <string name="connexion">Se connecter</string>
     <string name="deconnection">Se déconnecter</string>
+    <string name="acceuil_title">Acceuil</string>
+    <string name="box_title">Box</string>
+    <string name="box_personnalise_title">Box personnalisée</string>
+    <string name="commentaire_title">Commentaire</string>
+
+
 
 
     <!-- Option Fragment -->

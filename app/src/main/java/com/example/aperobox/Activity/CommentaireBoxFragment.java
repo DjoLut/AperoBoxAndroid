@@ -102,6 +102,7 @@ public class CommentaireBoxFragment extends Fragment {
         JokeEntry jokeEntry = JokeEntry.getRandom();
         TextView textView = view.findViewById(R.id.boxs_joke);
         textView.setText(jokeEntry.getBase()+"\n\n\n" + jokeEntry.getReponse());
+        ((TextView)view.findViewById(R.id.joke_title)).setText(getString(R.string.commentaire_title));
     }
 
     @Override
