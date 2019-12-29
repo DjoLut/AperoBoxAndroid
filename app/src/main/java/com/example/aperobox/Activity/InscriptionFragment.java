@@ -30,6 +30,8 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.net.HttpURLConnection;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 /**
@@ -441,116 +443,6 @@ public class InscriptionFragment extends Fragment {
             public void afterTextChanged(Editable s) { codePostalTextInput.setError(!isCodePostalValid(codePostalEditText.getText())?getString(R.string.invalid_codePostal):null); }
         });
 
-        /*
-        passwordEditText.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                if (isPasswordLengthValid(passwordEditText.getText())) {
-                    passwordTextInput.setError(null); //Clear the error
-                }
-                return false;
-            }
-        });
-        usernameEditText.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if(isUsernameLengthValid(usernameEditText.getText()))
-                    usernameTextInput.setError(null);
-                return false;
-            }
-        });
-
-        confPasswordEditText.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if(isConfPasswordValid(confPasswordEditText.getText().toString(), passwordEditText.getText().toString()))
-                    confPasswordTextInput.setError(null);
-                return false;
-            }
-        });
-
-        nomEditText.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if(isNomValid(nomEditText.getText()))
-                    nomTextInput.setError(null);
-                return false;
-            }
-        });
-
-        prenomEditText.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if(isPrenomValid(prenomEditText.getText()))
-                    prenomTextInput.setError(null);
-                return false;
-            }
-        });
-
-        mailEditText.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if(isMailValid(mailEditText.getText()))
-                    mailTextInput.setError(null);
-                return false;
-            }
-        });
-
-        telephoneEditText.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if(isTelephoneValid(telephoneEditText.getText()))
-                    telephoneTextInput.setError(null);
-                return false;
-            }
-        });
-
-        gsmEditText.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if(isGsmValid(gsmEditText.getText()))
-                    gsmTextInput.setError(null);
-                return false;
-            }
-        });
-
-        rueEditText.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if(isRueValid(rueEditText.getText()))
-                    rueTextInput.setError(null);
-                return false;
-            }
-        });
-
-        numeroEditText.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if(isNumeroValid(numeroEditText.getText()))
-                    numeroTextInput.setError(null);
-                return false;
-            }
-        });
-
-        localiteEditText.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if(isLocaliteValid(localiteEditText.getText()))
-                    localiteTextInput.setError(null);
-                return false;
-            }
-        });
-
-        codePostalEditText.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if(isCodePostalValid(codePostalEditText.getText()))
-                    codePostalTextInput.setError(null);
-                return false;
-            }
-        });
-
-         */
     }
 
     private boolean isPasswordLengthValid(@Nullable Editable text) {
@@ -580,7 +472,9 @@ public class InscriptionFragment extends Fragment {
     }
 
     private boolean isMailValid(@NonNull Editable mail) {
-        return mail!=null && mail.length() >= 2 && mail.length() < 50;
+        Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(mail);
+        return matcher.find() && mail!=null && mail.length() >= 2 && mail.length() < 50;
     }
 
     private boolean isTelephoneValid(@NonNull Editable telephone) {

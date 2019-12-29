@@ -87,7 +87,7 @@
     <string name="invalid_date_naissance">La date de naissance n\'est pas valable (minimum 13 ans)</string>
     <string name="invalid_nom">2 caractères minimum et 50 maximum</string>
     <string name="invalid_prenom">2 caractères minimum et 50 maximum</string>
-    <string name="invalid_mail">2 caractères minimum et 50 maximum</string>
+    <string name="invalid_mail">Adresse mail invalide (example@hotmail.com) </string>
     <string name="invalid_telephone">Non obligatoire ou 9 chiffres sont requis</string>
     <string name="invalid_gsm">10 chiffres sont requis</string>
     <string name="invalid_rue">2 caractères minimum et 100 maximum</string>
