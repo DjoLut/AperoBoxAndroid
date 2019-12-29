@@ -83,7 +83,6 @@ public class AperoBoxApplication extends Application {
 
     public void deconnexion(){
         token = null;
-        connection.cancel(true);
     }
 
     private class Connection extends AsyncTask<LoginModel, Void, Void> {
