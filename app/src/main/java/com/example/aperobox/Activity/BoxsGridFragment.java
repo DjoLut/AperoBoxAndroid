@@ -114,6 +114,21 @@ public class BoxsGridFragment extends Fragment {
         super.onResume();
         if(internetAvaillable != UtilDAO.isInternetAvailable(getContext()))
             ((NavigationHost)getActivity()).navigateTo(new BoxsGridFragment(), false);
+
+        MaterialButton accueil = ((MainActivity)getActivity()).acceuil;
+        accueil.setOnClickListener(null);
+        accueil.setElevation(1);
+        MaterialButton apropos = ((MainActivity)getActivity()).apropos;
+        apropos.setElevation(0);
+        MaterialButton compte = ((MainActivity)getActivity()).compte;
+        compte.setElevation(0);
+        MaterialButton option = ((MainActivity)getActivity()).option;
+        option.setElevation(0);
+        MaterialButton panierM = ((MainActivity)getActivity()).panier;
+        panierM.setElevation(0);
+        MaterialButton boxPerso = ((MainActivity)getActivity()).boxPersonnalise;
+        boxPerso.setElevation(0);
+
     }
 
     @Override

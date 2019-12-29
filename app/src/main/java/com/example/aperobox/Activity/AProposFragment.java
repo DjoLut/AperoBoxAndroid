@@ -66,9 +66,21 @@ public class AProposFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        MaterialButton menu = ((MainActivity)getActivity()).apropos;
-        menu.setOnClickListener(null);
-        menu.setElevation(1);
+
+        MaterialButton accueil = ((MainActivity)getActivity()).acceuil;
+        accueil.setElevation(0);
+        MaterialButton apropos = ((MainActivity)getActivity()).apropos;
+        apropos.setOnClickListener(null);
+        apropos.setElevation(1);
+        MaterialButton compte = ((MainActivity)getActivity()).compte;
+        compte.setElevation(0);
+        MaterialButton option = ((MainActivity)getActivity()).option;
+        option.setElevation(0);
+        MaterialButton panierM = ((MainActivity)getActivity()).panier;
+        panierM.setElevation(0);
+        MaterialButton boxPerso = ((MainActivity)getActivity()).boxPersonnalise;
+        boxPerso.setElevation(0);
+
     }
 
     @Override

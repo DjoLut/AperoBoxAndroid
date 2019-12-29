@@ -223,9 +223,20 @@ public class LoginFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        MaterialButton menu = ((MainActivity)getActivity()).compte;
-        menu.setOnClickListener(null);
-        menu.setElevation(1);
+        MaterialButton accueil = ((MainActivity)getActivity()).acceuil;
+        accueil.setElevation(0);
+        MaterialButton apropos = ((MainActivity)getActivity()).apropos;
+        apropos.setElevation(0);
+        MaterialButton compte = ((MainActivity)getActivity()).compte;
+        compte.setOnClickListener(null);
+        compte.setElevation(1);
+        MaterialButton option = ((MainActivity)getActivity()).option;
+        option.setElevation(0);
+        MaterialButton panierM = ((MainActivity)getActivity()).panier;
+        panierM.setElevation(0);
+        MaterialButton boxPerso = ((MainActivity)getActivity()).boxPersonnalise;
+        boxPerso.setElevation(0);
+
     }
 
     @Override
