@@ -167,6 +167,8 @@ public class BoxPersonnaliseFragment extends Fragment {
                         panier = SingletonPanier.getUniquePanier();
                         panier.addProduit(produitsBoxPerso);
                         Toast.makeText(getContext(), R.string.box_fragment_produits_ajouter, Toast.LENGTH_LONG).show();
+                        listeProduits = null;
+                        getActivity().recreate();
                     } else {
                         Toast.makeText(getContext(), R.string.box_fragment_box_personnalise_empty_quantite, Toast.LENGTH_LONG).show();
                     }

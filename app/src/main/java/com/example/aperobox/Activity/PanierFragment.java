@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -176,6 +178,7 @@ public class PanierFragment extends Fragment {
         protected Commande doInBackground(Commande... newCommande) {
             CommandeDAO commandeDAO = new CommandeDAO();
             Commande commande = new Commande();
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
             String access_token = preferences.getString("access_token", null);
             try{
                 commande = commandeDAO.ajoutCommande(access_token, newCommande[0]);
