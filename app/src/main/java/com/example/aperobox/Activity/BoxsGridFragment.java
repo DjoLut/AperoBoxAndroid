@@ -170,7 +170,7 @@ public class BoxsGridFragment extends Fragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(getContext(), getString(R.string.box_grid_fragment_erreur_load_boxs) + "\n" + getString(R.string.retry), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), getString(R.string.box_grid_fragment_erreur_load_boxs) + "\n" + getString(R.string.retry), Toast.LENGTH_LONG).show();
                     }
                 });
             }
