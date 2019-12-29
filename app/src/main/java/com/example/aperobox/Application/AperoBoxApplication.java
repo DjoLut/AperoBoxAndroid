@@ -6,8 +6,6 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.util.Log;
-
 import androidx.appcompat.app.AppCompatDelegate;
 import com.example.aperobox.Dao.UtilisateurDAO;
 import com.example.aperobox.Exception.HttpResultException;

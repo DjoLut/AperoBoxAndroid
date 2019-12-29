@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.aperobox.Adapter.CommentaireLayout.CommentaireViewAdapter;
 import com.example.aperobox.Application.AperoBoxApplication;
 import com.example.aperobox.Application.JokeEntry;
