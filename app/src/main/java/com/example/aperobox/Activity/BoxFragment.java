@@ -277,32 +277,32 @@ public class BoxFragment extends Fragment {
         }
     }
 
-        private class LoadProd extends AsyncTask<Void, Void, Map<Produit,Integer>>
+    private class LoadProd extends AsyncTask<Void, Void, Map<Produit,Integer>>
+    {
+        @Override
+        protected Map<Produit, Integer> doInBackground(Void... params)
         {
-            @Override
-            protected Map<Produit, Integer> doInBackground(Void... params)
-            {
-                ProduitDAO produitDAO = new ProduitDAO();
-                try {
-                    listeProduits = produitDAO.getProduitByBoxId(boxId);
-                } catch (final HttpResultException h){
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getContext(), h.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    Toast.makeText(getContext(), h.getMessage(), Toast.LENGTH_SHORT).show();
-                } catch (Exception e) {
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getContext(), getString(R.string.box_fragment_erreur_load_produits) + "\n" + getString(R.string.retry), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
-                return listeProduits;
+            ProduitDAO produitDAO = new ProduitDAO();
+            try {
+                listeProduits = produitDAO.getProduitByBoxId(boxId);
+            } catch (final HttpResultException h){
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getContext(), h.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+                Toast.makeText(getContext(), h.getMessage(), Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getContext(), getString(R.string.box_fragment_erreur_load_produits) + "\n" + getString(R.string.retry), Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
+            return listeProduits;
+        }
 
         @Override
         protected void onPostExecute(Map<Produit, Integer> produit)

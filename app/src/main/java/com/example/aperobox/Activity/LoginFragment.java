@@ -212,10 +212,8 @@ public class LoginFragment extends Fragment {
             TokenExpire tokenExpire = new TokenExpire((token[0].getExpires_in())*1000);
             tokenExpire.run();
             //tokenExpire.start();
-
             return token[0].getAccess_token();
         }
-
         @Override
         protected void onPostExecute(String acces_token)
         {
@@ -225,8 +223,6 @@ public class LoginFragment extends Fragment {
             Toast.makeText(getContext(), R.string.login_token_expire, Toast.LENGTH_LONG).show();
             ((NavigationHost) getActivity()).navigateTo(new BoxsGridFragment(), false);
         }
-
-
     }*/
 
     @Override

@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
@@ -71,7 +72,7 @@ public class BoxPersonnaliseFragment extends Fragment {
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        if(bundle==null && listeProduits!=null) {
+        if(bundle==null && listeProduits!=null && !listeProduits.isEmpty()) {
             bundle = new Bundle();
         }
         outState.putBundle(SAVED_BUNDLE_TAG, bundle);
@@ -107,11 +108,6 @@ public class BoxPersonnaliseFragment extends Fragment {
         }
 
         setRetainInstance(true);
-
-        if(UtilDAO.isInternetAvailable(getContext())) {
-            loadProduit = new LoadProduit();
-            loadProduit.execute();
-        }
     }
 
 
@@ -121,7 +117,7 @@ public class BoxPersonnaliseFragment extends Fragment {
             view = inflater.inflate(R.layout.box_personnalise_fragment, container, false);
             produitToDisplay = view.findViewById(R.id.box_fragment_produit_recycler_view);
 
-            savedInstanceState = savedInstanceState;
+            this.savedInstanceState = savedInstanceState;
 
             this.box_image = view.findViewById(R.id.box_fragment_box_image);
             this.box_name = view.findViewById(R.id.box_fragment_box_name);
@@ -130,7 +126,7 @@ public class BoxPersonnaliseFragment extends Fragment {
             this.button_ajout_panier = view.findViewById(R.id.box_fragment_box_button_ajout_panier);
             this.box_quantite = view.findViewById(R.id.box_fragment_box_quantite);
 
-            if(listeProduits!=null){
+            if(listeProduits==null){
                 loadProduit = new LoadProduit();
                 loadProduit.execute();
             }
@@ -209,7 +205,6 @@ public class BoxPersonnaliseFragment extends Fragment {
         protected Map<Produit, Integer> doInBackground(Void... params)
         {
             ProduitDAO produitDAO = new ProduitDAO();
-            listeProduits = new HashMap<>();
             try {
                 listeProduits = produitDAO.getAllProduitBoxPersonnalise();
             } catch (Exception e) {
@@ -276,11 +271,13 @@ public class BoxPersonnaliseFragment extends Fragment {
         affichePrix();
 
         // Set up the RecyclerView
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1, GridLayoutManager.VERTICAL, false);
-        produitToDisplay.setLayoutManager(gridLayoutManager);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(),RecyclerView.VERTICAL,false);
+        //GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1, GridLayoutManager.VERTICAL, false);
+        produitToDisplay.setLayoutManager(layoutManager);
 
         final ProductPersonnaliseViewAdapter adapter = new ProductPersonnaliseViewAdapter(getContext(), box_price);
         produitToDisplay.setAdapter(adapter);
+
     }
 
 }

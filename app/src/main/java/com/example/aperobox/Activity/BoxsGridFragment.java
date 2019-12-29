@@ -102,8 +102,8 @@ public class BoxsGridFragment extends Fragment {
         // Set cut corner background for API 23+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if(view.findViewById(R.id.product_grid)!=null)
-            view.findViewById(R.id.product_grid)
-                    .setBackgroundResource(R.drawable.product_grid_background_shape);
+                view.findViewById(R.id.product_grid)
+                        .setBackgroundResource(R.drawable.product_grid_background_shape);
         }
 
         return view;
