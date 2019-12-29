@@ -27,6 +27,7 @@
                 android:id="@+id/box_fragment_produit_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:enabled="false"
                 style="@style/Widget.AperoBox.TextInputEditText"
                 android:inputType="number"
                 android:digits="0123456789"
