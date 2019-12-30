@@ -57,7 +57,7 @@ public class BoxsGridFragment extends Fragment {
 
     private View setView(){
 
-        MaterialButton menu = ((MainActivity)getActivity()).acceuil;
+        MaterialButton menu = ((MainActivity)getActivity()).accueil;
         menu.setElevation(1);
 
         // Inflate the layout for this fragment with the ProductGrid theme
@@ -94,7 +94,7 @@ public class BoxsGridFragment extends Fragment {
         if(internetAvaillable != UtilDAO.isInternetAvailable(getContext()))
             ((NavigationHost)getActivity()).navigateTo(new BoxsGridFragment(), false);
 
-        MaterialButton accueil = ((MainActivity)getActivity()).acceuil;
+        MaterialButton accueil = ((MainActivity)getActivity()).accueil;
         accueil.setElevation(1);
         MaterialButton apropos = ((MainActivity)getActivity()).apropos;
         apropos.setElevation(0);
@@ -120,7 +120,7 @@ public class BoxsGridFragment extends Fragment {
         JokeEntry jokeEntry = JokeEntry.getRandom();
         TextView textView = view.findViewById(R.id.boxs_joke);
         textView.setText(jokeEntry.getBase()+"\n\n\n" + jokeEntry.getReponse());
-        ((TextView)view.findViewById(R.id.joke_title)).setText(getString(R.string.acceuil_title));
+        ((TextView)view.findViewById(R.id.joke_title)).setText(getString(R.string.accueil_title));
     }
 
     private class LoadBox extends AsyncTask<String, Void, ArrayList<Box>>

@@ -61,7 +61,7 @@ public class BoxPersonnaliseFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        MaterialButton accueil = ((MainActivity)getActivity()).acceuil;
+        MaterialButton accueil = ((MainActivity)getActivity()).accueil;
         accueil.setElevation(0);
         MaterialButton apropos = ((MainActivity)getActivity()).apropos;
         apropos.setElevation(0);
@@ -252,7 +252,6 @@ public class BoxPersonnaliseFragment extends Fragment {
 
         // Set up the RecyclerView
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(),RecyclerView.VERTICAL,false);
-        //GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1, GridLayoutManager.VERTICAL, false);
         produitToDisplay.setLayoutManager(layoutManager);
 
         final ProductPersonnaliseViewAdapter adapter = new ProductPersonnaliseViewAdapter(getContext(), box_price);

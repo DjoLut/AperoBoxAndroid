@@ -150,7 +150,6 @@ public class CommentaireBoxFragment extends Fragment {
             super.onPostExecute(commentaire);
             listeCommentaire.add(commentaire);
             edit_text.setText("");
-            //((NavigationHost)getActivity()).navigateTo(CommentaireBoxFragment.this, false);
             CommentaireBoxFragment.this.getActivity().recreate();
         }
 

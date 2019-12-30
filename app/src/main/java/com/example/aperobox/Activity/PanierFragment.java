@@ -153,7 +153,7 @@ public class PanierFragment extends Fragment {
         if(access_token == null)
             ((NavigationHost) getActivity()).navigateTo(new LoginFragment(), true);
 
-        MaterialButton accueil = ((MainActivity)getActivity()).acceuil;
+        MaterialButton accueil = ((MainActivity)getActivity()).accueil;
         accueil.setElevation(0);
         MaterialButton apropos = ((MainActivity)getActivity()).apropos;
         apropos.setElevation(0);

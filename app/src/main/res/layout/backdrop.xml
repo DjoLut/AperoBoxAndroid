@@ -3,10 +3,10 @@
 
     <com.google.android.material.button.MaterialButton
         style="@style/Widget.AperoBox.Button.TextButton"
-        android:id="@+id/menu_acceuil"
+        android:id="@+id/menu_accueil"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/menu_acceuil" />
+        android:text="@string/menu_accueil" />
 
     <com.google.android.material.button.MaterialButton
         style="@style/Widget.AperoBox.Button.TextButton"

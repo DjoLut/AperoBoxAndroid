@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity implements NavigationHost{
     private SharedPreferences preferences;
 
     private Toolbar toolbar;
-    protected MaterialButton acceuil;
+    protected MaterialButton accueil;
     protected MaterialButton boxPersonnalise;
     protected MaterialButton option;
     protected MaterialButton panier;
@@ -83,12 +83,6 @@ public class MainActivity extends AppCompatActivity implements NavigationHost{
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        /*if(AperoBoxApplication.token == null) {
-            preferences = PreferenceManager.getDefaultSharedPreferences(this);
-            SharedPreferences.Editor editor = preferences.edit();
-            editor.clear();
-            editor.commit();
-        }*/
     }
 
     /**
@@ -129,11 +123,11 @@ public class MainActivity extends AppCompatActivity implements NavigationHost{
             activity.setSupportActionBar(toolbar);
         }
 
-        acceuil = view.findViewById(R.id.menu_acceuil);
-        acceuil.setOnClickListener(new View.OnClickListener() {
+        accueil = view.findViewById(R.id.menu_accueil);
+        accueil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(acceuil.getElevation() == 0)
+                if(accueil.getElevation() == 0)
                     navigateTo(new BoxsGridFragment(), true);
             }
         });
@@ -227,7 +221,7 @@ public class MainActivity extends AppCompatActivity implements NavigationHost{
             });
         }
 
-        acceuil.setElevation(0);
+        accueil.setElevation(0);
         boxPersonnalise.setElevation(0);
         apropos.setElevation(0);
         compte.setElevation(0);

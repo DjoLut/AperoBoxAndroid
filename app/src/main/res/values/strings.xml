@@ -29,7 +29,7 @@
     <string name="inscription">S\'inscrire</string>
     <string name="connexion">Se connecter</string>
     <string name="deconnection">Se déconnecter</string>
-    <string name="acceuil_title">Acceuil</string>
+    <string name="accueil_title">Accueil</string>
     <string name="box_title">Box</string>
     <string name="box_personnalise_title">Box personnalisée</string>
     <string name="commentaire_title">Commentaire</string>
@@ -44,8 +44,8 @@
     <string name="box_fragment_box_personnalise_name">Box Personnalisée</string>
     <string name="box_fragment_box_personnalise_description">Une box qui ne contient que ce que vous désirez.</string>
     <string name="box_fragment_box_error_chargement_api_name">Box (erreur)</string>
-    <string name="box_fragment_box_error_chargement_api_description">Une erreur est survenue lors de l\'accès aux données.\nEn attendant son retour, voici une petit Joke de papa</string>
-    <string name="box_fragment_box_prix_gratuit">Gratuit!</string>
+    <string name="box_fragment_box_error_chargement_api_description">Une erreur est survenue lors de l\'accès aux données.\nEn attendant son retour, voici une petite Joke de papa</string>
+    <string name="box_fragment_box_prix_gratuit">Gratuit !</string>
     <string name="box_fragment_produit_title">Produits</string>
     <string name="box_fragment_produit_nom">produits</string>
     <string name="box_fragment_produit_quantite">Quantité :</string>
@@ -61,15 +61,15 @@
     <string name="commentaire_fragment_error_load_commentaire">Une erreur est survenue lors du chargement des commentaires.</string>
     <string name="commentaire_fragment_edit_text_envoyer_commentaire">Envoyez un commentaire.</string>
     <string name="commentaire_fragment_error_ajout_commentaire">Une erreur est survenue lors de l\'ajout de votre commentaire.</string>
-    <string name="commentaire_fragment_error_duplication">Vous ne pouvez ajoutez 2 fois le même commentaire.</string>
+    <string name="commentaire_fragment_error_duplication">Vous ne pouvez ajouter 2 fois le même commentaire.</string>
     <string name="commentaire_fragment_aucun_commentaire">Aucun commentaire.</string>
     <string name="commentaire_fragment_error_vide">Ajoutez un texte au commentaire</string>
 
     <!-- AProposFragment -->
-    <string name="apropos_message">Application créée et inventéée par deux étudiants d\'IG et trois étudiants de marketing de l\'HENALLux IESN de Namur</string>
+    <string name="apropos_message">Application créée et inventée par deux étudiants d\'IG et trois étudiants de marketing de l\'HENALLux IESN de Namur</string>
 
     <!-- ContactFragment -->
-    <string name="contact_nous_contactez">Nous contacter</string>
+    <string name="contact_nous_contactez">Contactez-nous</string>
     <string name="contact_mail">aperobox.henallux@outlook.com</string>
     <string name="contact_mail_sujet">aperoBox_contact_us</string>
     <string name="contact_mail_chooser">Boite mail</string>
@@ -82,10 +82,10 @@
     <string name="invalid_username_length">3 caractères minimum et 30 maximum</string>
     <string name="invalid_password_length">3 caractères minimum et 20 maximum</string>
     <string name="invalid_password">Mauvais mot de passe</string>
-    <string name="invalid_conf_password">Mots de passes différents</string>
+    <string name="invalid_conf_password">Mots de passe différents</string>
     <string name="login_failed">Échec de la connexion</string>
     <string name="login_success">Succès de la connexion</string>
-    <string name="login_token_expire">Session expiré. Veuillez-vous reconnecter</string>
+    <string name="login_token_expire">Session expirée. Veuillez-vous reconnecter</string>
     <string name="invalid_date_naissance">La date de naissance n\'est pas valable (minimum 13 ans)</string>
     <string name="invalid_nom">2 caractères minimum et 50 maximum</string>
     <string name="invalid_prenom">2 caractères minimum et 50 maximum</string>
@@ -97,21 +97,21 @@
     <string name="invalid_localite">2 caractères minimum et 20 maximum</string>
     <string name="invalid_codePostal">1 à 7 chiffres requis</string>
 
-    <string name="box_grid_fragment_erreur_load_boxs">Une erreur est survenue lors du chargement de toute les boxs</string>
+    <string name="box_grid_fragment_erreur_load_boxs">Une erreur est survenue lors du chargement de toutes les box</string>
     <string name="box_fragment_erreur_load_box">Une erreur est survenue lors du chargement de la box</string>
     <string name="box_fragment_erreur_load_produits">Une erreur est survenue lors du chargement des produits</string>
     <string name="inscription_fragment_erreur_inscription">Une erreur est survenue lors de votre inscription.</string>
     <string name="inscription_fragment_erreur_ajout_adresse">Une erreur est survenue lors de l\'ajout de votre adresse.</string>
     <string name="connexion_fragment_erreur_connexion">Une erreur est survenue lors de votre connexion.</string>
-    <string name="chargement_lost_connection">La connection internet s\'est interrompue durant le chargement d\'un/plusieurs élément(s).\n Veuillez vérifier votre connection internet, revenir en arrière et réessayer</string>
-    <string name="retry">Veuillez vérifier votre connection internet, revenir en arrière et réessayer</string>
+    <string name="chargement_lost_connection">La connection internet s\'est interrompue durant le chargement d\'un/plusieurs élément(s).\n Veuillez vérifier votre connection internet, revenez en arrière et réessayez</string>
+    <string name="retry">Veuillez vérifier votre connection internet, revenez en arrière et réessayez</string>
 
     <string name="inscription_fragment_success_inscription">Inscription réussie</string>
-    <string name="inscription_fragment_error_unique_field">Nom d\'utilisateur et/ou adresse email existe déjà dans la base de données</string>
+    <string name="inscription_fragment_error_unique_field">Nom d\'utilisateur et/ou adresse email existe(nt) déjà dans la base de données</string>
     <string name="inscription_fragment_error_adresse">Erreur de l\'inscription, l\'addresse n\'est pas conforme</string>
 
     <!-- Backdrop menu -->
-    <string name="menu_acceuil">Accueil</string>
+    <string name="menu_accueil">Accueil</string>
     <string name="menu_box_perso">Box personnalisée</string>
     <string name="menu_panier">Panier</string>
     <string name="menu_options">Options</string>
@@ -125,11 +125,11 @@
     <string name="panier_fragment_box_name">Box : </string>
     <string name="panier_fragment_box_personnalise_name">Box Personnalisée : </string>
     <string name="panier_fragment_box_vide">Box : Aucune box dans le panier</string>
-    <string name="panier_fragment_produit_vide">Box Personnalisée : Aucun produits dans le panier</string>
+    <string name="panier_fragment_produit_vide">Box Personnalisée : Aucun produit dans le panier</string>
     <string name="panier_fragment_votre_panier">Votre panier : </string>
     <string name="panier_fragment_button_acheter">Commander !</string>
     <string name="panier_fragment_prix_total">Prix total (TVAC): </string>
-    <string name="panier_fragment_promotion_total">Promotion total: </string>
+    <string name="panier_fragment_promotion_total">Promotion totale : </string>
     <string name="panier_fragment_panier_vide">Aucun article dans votre panier !</string>
     <string name="panier_fragment_commande_save">Commande enregistrée</string>
     <string name="panier_fragment_erreur_save">Erreur lors de l\'enregistrement du panier</string>
@@ -142,6 +142,6 @@
 
     <!-- JokeENtry -->
     <string name="joke_entry_erreur_read">Erreur dans la lecteur des Joke de Papa</string>
-    <string name="joke_entry_erreur_close">Erreur fermeture dans la fermeture du fichier des Joke de Papa</string>
+    <string name="joke_entry_erreur_close">Erreur fermeture du fichier des Joke de Papa</string>
 
 </resources>
