@@ -143,6 +143,7 @@
     <string name="panier_fragment_commande_non">Non</string>
     <string name="panier_fragment_button_clearAll">Supprimer le panier</string>
     <string name="panier_fragment_panier_supprime">Panier supprimé</string>
+    <string name="panier_fragment_connection_obligatoire">Vous devez être connecté pour commander</string>
 
 
     <!-- JokeENtry -->

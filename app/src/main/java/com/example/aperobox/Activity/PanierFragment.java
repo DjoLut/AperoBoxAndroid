@@ -152,7 +152,8 @@ public class PanierFragment extends Fragment {
                         builder.setMessage(R.string.panier_fragment_commande_confirmation)
                                 .setPositiveButton(R.string.panier_fragment_commande_oui, dialClickListener)
                                 .setNegativeButton(R.string.panier_fragment_commande_non, dialClickListener).show();
-                    }
+                    } else
+                        Toast.makeText(getContext(), getString(R.string.panier_fragment_connection_obligatoire), Toast.LENGTH_LONG).show();
                 }
                 else
                     Toast.makeText(getContext(), R.string.panier_fragment_panier_vide, Toast.LENGTH_LONG).show();
@@ -217,12 +218,17 @@ public class PanierFragment extends Fragment {
             }
             catch (HttpResultException e)
             {
-                exception = e;
                 cancel(true);
             }
             catch (Exception e)
             {
-                e.printStackTrace();
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getContext(), getString(R.string.panier_fragment_erreur_save) + "\n" + getString(R.string.retry), Toast.LENGTH_LONG).show();
+                    }
+                });
+                cancel(true);
             }
             return commande;
         }
