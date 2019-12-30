@@ -107,19 +107,8 @@ public class BoxFragment extends Fragment {
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
-
         // Save the instance for the landscape mode change
         setRetainInstance(true);
-
-        this.quantite = 1;
-        this.boxDAO = new BoxDAO();
-
-        if(UtilDAO.isInternetAvailable(getContext())) {
-            loadBoxTask = new LoadBox();
-            loadBoxTask.execute();
-        } else {
-            Toast.makeText(getContext(), getString(R.string.error_no_internet), Toast.LENGTH_SHORT).show();
-        }
     }
 
 
@@ -127,10 +116,14 @@ public class BoxFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         if(UtilDAO.isInternetAvailable(getContext())) {
             this.view = inflater.inflate(R.layout.box_fragment, container, false);
+            loadBoxTask = new LoadBox();
+            loadBoxTask.execute();
+            this.quantite = 1;
             setView();
         } else {
-            this.view = inflater.inflate(R.layout.joke, container);
+            this.view = inflater.inflate(R.layout.joke, container, false);
             setJoke(view);
+            Toast.makeText(getContext(), getString(R.string.error_no_internet), Toast.LENGTH_SHORT).show();
         }
         return view;
     }
@@ -238,6 +231,7 @@ public class BoxFragment extends Fragment {
         @Override
         protected Box doInBackground(Void... params) {
             try {
+                boxDAO = new BoxDAO();
                 selectedBox = boxDAO.getBox(boxId);
             } catch (Exception e) {
                 getActivity().runOnUiThread(new Runnable() {
