@@ -157,9 +157,11 @@ public class BoxFragment extends Fragment {
         this.button_plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                quantite = Integer.parseInt(box_quantite.getText().toString());
-                quantite++;
-                box_quantite.setText(quantite.toString());
+                if(quantite < 25) {
+                    quantite = Integer.parseInt(box_quantite.getText().toString());
+                    quantite++;
+                    box_quantite.setText(quantite.toString());
+                }
                 affichePrix();
             }
         });

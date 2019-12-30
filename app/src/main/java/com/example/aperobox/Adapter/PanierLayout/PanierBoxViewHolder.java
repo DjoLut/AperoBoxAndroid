@@ -53,10 +53,6 @@ public class PanierBoxViewHolder extends RecyclerView.ViewHolder {
                         panier.modifQuantiteBox(box, quantite);
                         panierBoxQuantiteEditText.setText(quantite.toString());
                     }
-                    else {
-                        panier.modifQuantiteBox(box, 25);
-                        panierBoxQuantiteEditText.setText("25");
-                    }
                 } catch(NumberFormatException e) {
                     panierBoxQuantiteEditText.setText("bug");
                 } catch(NullPointerException e) {

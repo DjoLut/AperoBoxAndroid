@@ -46,10 +46,12 @@ public class ProductPersonnaliseViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View v) {
                 try {
-                    quantite = Integer.parseInt(quantiteTextInput.getText().toString());
-                    quantite++;
-                    BoxPersonnaliseFragment.listeProduits.put(ProductPersonnaliseViewAdapter.produits[position], quantite);
-                    quantiteTextInput.setText(quantite.toString());
+                    if(quantite < 25) {
+                        quantite = Integer.parseInt(quantiteTextInput.getText().toString());
+                        quantite++;
+                        BoxPersonnaliseFragment.listeProduits.put(ProductPersonnaliseViewAdapter.produits[position], quantite);
+                        quantiteTextInput.setText(quantite.toString());
+                    }
                 } catch(NumberFormatException e) {
                     quantiteTextInput.setText("");
                 } catch(NullPointerException e) {
