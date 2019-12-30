@@ -188,7 +188,7 @@ public class BoxFragment extends Fragment {
                 String access_token = preferences.getString("access_token", null);
                 if(access_token != null)
                 {
-                    if(Integer.valueOf(box_quantite.getText().toString()) != 0)
+                    if(Integer.valueOf(box_quantite.getText().toString()) > 0 && Integer.valueOf(box_quantite.getText().toString()) < 26)
                     {
 
                         //AJOUT DES BOX DANS LE PANIER

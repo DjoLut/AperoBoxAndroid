@@ -46,10 +46,16 @@ public class PanierProduitViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View v) {
                 try {
-                    quantite = Integer.parseInt(panierProduitQuantiteEditText.getText().toString());
-                    quantite++;
-                    panier.modifQuantiteProduit(produit, quantite);
-                    panierProduitQuantiteEditText.setText(quantite.toString());
+                    if(quantite < 25) {
+                        quantite = Integer.parseInt(panierProduitQuantiteEditText.getText().toString());
+                        quantite++;
+                        panier.modifQuantiteProduit(produit, quantite);
+                        panierProduitQuantiteEditText.setText(quantite.toString());
+                    }
+                    else {
+                        panier.modifQuantiteProduit(produit, 25);
+                        panierProduitQuantiteEditText.setText("25");
+                    }
                 } catch(NumberFormatException e) {
                     panierProduitQuantiteEditText.setText("bug");
                 } catch(NullPointerException e) {

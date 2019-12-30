@@ -37,7 +37,7 @@ public class PanierBoxViewHolder extends RecyclerView.ViewHolder {
         PanierFragment.affichePrixTotalPromotion(this.prixTotal, this.promotionTotal, prixBox, null);
     }
 
-    public void bind(final Box box, Integer quantit)
+    public void bind(final Box box, final Integer quantit)
     {
         this.quantite = quantit;
         panierBoxNomTextView.setText(box.getNom());
@@ -47,10 +47,16 @@ public class PanierBoxViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View v) {
                 try {
-                    quantite = Integer.parseInt(panierBoxQuantiteEditText.getText().toString());
-                    quantite++;
-                    panier.modifQuantiteBox(box,quantite);
-                    panierBoxQuantiteEditText.setText(quantite.toString());
+                    if(quantite < 25) {
+                        quantite = Integer.parseInt(panierBoxQuantiteEditText.getText().toString());
+                        quantite++;
+                        panier.modifQuantiteBox(box, quantite);
+                        panierBoxQuantiteEditText.setText(quantite.toString());
+                    }
+                    else {
+                        panier.modifQuantiteBox(box, 25);
+                        panierBoxQuantiteEditText.setText("25");
+                    }
                 } catch(NumberFormatException e) {
                     panierBoxQuantiteEditText.setText("bug");
                 } catch(NullPointerException e) {

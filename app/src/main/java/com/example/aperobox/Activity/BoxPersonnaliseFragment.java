@@ -144,7 +144,7 @@ public class BoxPersonnaliseFragment extends Fragment {
 
                     for (Iterator<Map.Entry<Produit, Integer>> it = listeProduits.entrySet().iterator(); it.hasNext(); ) {
                         Map.Entry<Produit, Integer> entry = it.next();
-                        if (entry.getValue() != 0) {
+                        if (entry.getValue() > 0 && entry.getValue() < 26) {
                             produitsBoxPerso.put(entry.getKey(), entry.getValue());
                             isEmpty = false;
                         }

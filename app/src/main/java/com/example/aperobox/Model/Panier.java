@@ -55,7 +55,10 @@ public class Panier {
             {
                 oldQuantite = entry.getValue();
                 it.remove();
-                boxes.put(box, quantite + oldQuantite);
+                if((quantite + oldQuantite) < 25)
+                    boxes.put(box, quantite + oldQuantite);
+                else
+                    boxes.put(box, 25);
                 boxEstPresent = true;
                 break;
             }
@@ -79,7 +82,10 @@ public class Panier {
                 {
                     oldQuantite = entryProduits.getValue();
                     itProduits.remove();
-                    produits.put(entryListeProduit.getKey(), entryListeProduit.getValue() + oldQuantite);
+                    if((entryListeProduit.getValue() + oldQuantite) < 25)
+                        produits.put(entryListeProduit.getKey(), entryListeProduit.getValue() + oldQuantite);
+                    else
+                        produits.put(entryListeProduit.getKey(), 25);
                     produitEstPresent = true;
                     break;
                 }
@@ -170,7 +176,10 @@ public class Panier {
             if (entry.getKey().getId() == box.getId())
             {
                 it.remove();
-                boxes.put(entry.getKey(), quantite);
+                if(quantite < 25)
+                    boxes.put(entry.getKey(), quantite);
+                else
+                    boxes.put(entry.getKey(), 25);
                 break;
             }
         }
@@ -183,7 +192,10 @@ public class Panier {
             if (entry.getKey().getId() == produit.getId())
             {
                 it.remove();
-                produits.put(entry.getKey(), quantite);
+                if(quantite < 25)
+                    produits.put(entry.getKey(), quantite);
+                else
+                    produits.put(entry.getKey(), 25);
                 break;
             }
         }

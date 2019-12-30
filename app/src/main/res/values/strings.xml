@@ -51,7 +51,7 @@
     <string name="box_fragment_produit_quantite">Quantité :</string>
     <string name="box_fragment_box_button_ajout_panier">Ajouter au panier</string>
     <string name="box_fragment_box_personnalise_empty_quantite">Vous devez ajouter au moins un produit à votre box personnalisée pour pouvoir la commander</string>
-    <string name="box_fragment_box__empty_quantite">Vous devez avoir une quantité de box supérieur à 0 pour pouvoir commander</string>
+    <string name="box_fragment_box__empty_quantite">Vous devez avoir une quantité de box supérieure à 0 et inférieure ou égale à 25 pour pouvoir commander</string>
     <string name="box_fragment_connection_obligatoire">Vous devez être connecté pour ajouter une box à votre panier</string>
     <string name="box_fragment_box_ajouter">Box ajoutée(s)</string>
     <string name="box_fragment_produits_ajouter">Produit(s) ajouté(s)</string>
