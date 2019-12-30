@@ -45,6 +45,7 @@ public class PanierFragment extends Fragment {
     private TextView panierBoxTextView;
     private TextView panierBoxPersoTextView;
     private Button panierButtonAcheter;
+    private Button panierButtonClearAll;
     private TextView prixBox;
     private TextView prixProduit;
     private TextView prixTotal;
@@ -79,6 +80,7 @@ public class PanierFragment extends Fragment {
         panierBoxTextView = view.findViewById(R.id.panier_fragment_box_text_view);
         panierBoxPersoTextView = view.findViewById(R.id.panier_fragment_boxPerso_text_view);
         panierButtonAcheter = view.findViewById(R.id.panier_fragment_button_acheter);
+        panierButtonClearAll = view.findViewById(R.id.panier_fragment_button_clearAll);
         prixTotal = view.findViewById(R.id.panier_fragment_total_prix);
         promotionTotal = view.findViewById(R.id.panier_fragment_total_promotion);
         prixBox = view.findViewById(R.id.panier_fragment_prix_box);
@@ -105,6 +107,21 @@ public class PanierFragment extends Fragment {
         if(adapterProduit.getItemCount() == 0)
             panierBoxPersoTextView.setText(R.string.panier_fragment_produit_vide);
         produitToDisplay.setAdapter(adapterProduit);
+
+        panierButtonClearAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(panier.sizeBox() != 0 || panier.sizeProduit() != 0)
+                {
+                    panier.deleteAllProduit();
+                    panier.deleteAllBox();
+                    Toast.makeText(getContext(), R.string.panier_fragment_panier_supprime, Toast.LENGTH_SHORT).show();
+                    ((NavigationHost) getActivity()).navigateTo(new PanierFragment(), true);
+                }
+                else
+                    Toast.makeText(getContext(), R.string.panier_fragment_panier_vide, Toast.LENGTH_LONG).show();
+            }
+        });
 
         panierButtonAcheter.setOnClickListener(new View.OnClickListener() {
             @Override

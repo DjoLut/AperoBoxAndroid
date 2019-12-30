@@ -130,7 +130,7 @@
     <string name="panier_fragment_box_vide">Box : Aucune box dans le panier</string>
     <string name="panier_fragment_produit_vide">Box Personnalisée : Aucun produit dans le panier</string>
     <string name="panier_fragment_votre_panier">Votre panier : </string>
-    <string name="panier_fragment_button_acheter">Commander !</string>
+    <string name="panier_fragment_button_acheter">Commander le panier</string>
     <string name="panier_fragment_prix_total">Prix total (TVAC): </string>
     <string name="panier_fragment_promotion_total">Promotion totale : </string>
     <string name="panier_fragment_panier_vide">Aucun article dans votre panier !</string>
@@ -141,6 +141,8 @@
     <string name="panier_fragment_commande_confirmation">Voulez-vous commander votre panier ?</string>
     <string name="panier_fragment_commande_oui">Oui</string>
     <string name="panier_fragment_commande_non">Non</string>
+    <string name="panier_fragment_button_clearAll">Supprimer le panier</string>
+    <string name="panier_fragment_panier_supprime">Panier supprimé</string>
 
 
     <!-- JokeENtry -->

@@ -171,16 +171,39 @@
 
             </LinearLayout>
 
-            <Button
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2"
+                >
+                <Button
                 android:id="@+id/panier_fragment_button_acheter"
                 android:layout_width="match_parent"
                 android:paddingTop="16dp"
+                android:layout_marginRight="5dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:minHeight="45dp"
+                android:layout_weight="1"
                 android:text="@string/panier_fragment_button_acheter"
                 style="@style/Widget.AperoBox.Button"
                 />
+
+            <Button
+                android:id="@+id/panier_fragment_button_clearAll"
+                android:layout_width="match_parent"
+                android:paddingTop="16dp"
+                android:layout_marginLeft="5dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:minHeight="45dp"
+                android:layout_weight="1"
+                android:text="@string/panier_fragment_button_clearAll"
+                style="@style/Widget.AperoBox.Button"
+                />
+
+            </LinearLayout>
 
         </LinearLayout>
 
