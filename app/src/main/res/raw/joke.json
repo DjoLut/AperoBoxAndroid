@@ -2,17 +2,11 @@
   {	"base":"Quelle est la différence entre tintin et milou ?",
     "reponse":"Milou n’a pas de chien …"
   },
-  {	"base":"Melon et Melèche jouent au billard.",
-    "reponse":"Melon range les boules et Melèche la queue."
-  },
   {	"base":"Docteur, je crois que j’ai besoin de lunettes.",
     "reponse":"Oui certainement. Ici c’est une banque."
   },
   {	"base":"Quand un électricien meurt…",
     "reponse":"Il faut mettre sa famille au courant"
-  },
-  {	"base":"Melon et Melèche attrapent une abeille.",
-    "reponse":"Melon lui arrache les pattes et Melèche le dard."
   },
   {	"base":"Pourquoi les pêcheurs ne sont jamais gros ?",
     "reponse":"Parce qu’ils surveillent leur ligne."
@@ -31,12 +25,6 @@
   },
   {	"base":"Comment appelle-t-on une frite enceinte ?",
     "reponse":"Une pomme de terre sautée"
-  },
-  {	"base":"Melon et Melèche attrapent une abeille.",
-    "reponse":"Melon lui arrache les pattes et Melèche le dard."
-  },
-  {	"base":"Melon et Melèche sont charcutiers :",
-    "reponse":"Melon prépare les filets et Melèche les rognons"
   },
   {	"base":"Ce que j’ai en commun avec mon mari ?",
     "reponse":"On s’est mariés le même jour."
@@ -65,20 +53,11 @@
   {	"base":"Avec quoi ramasse t’on la papaye ?",
     "reponse":"Avec une foufourche"
   },
-  {	"base":"Melon et Melèche vont à l’église :",
-    "reponse":"Melon cherche le curé et Melèche les Saints"
-  },
   {	"base":"Un piano à un autre : \", Hey, ça va ? \"",
     "reponse":"L’autre : \" Non, j’ai mal au do ! \""
   },
   {	"base":"Deux gars discutent:\n– Tu ferais quoi si aujourd’hui c’était la fin du monde?\n– Moi je tirerais tout ce qui bouge et toi?\n",
     "reponse":"– Moi je bougerais pas…"
-  },
-  {	"base":"Melon et Melèche apprennent la navigation à voile.",
-    "reponse":"Melon étudie le vent, et Melèche le noeud."
-  },
-  {	"base":"Melon et Melèche prennent de la bouteille.",
-    "reponse":"Melon se redresse et Melèche s’affaisse"
   },
   {	"base":"C’est l’histoire d’un pingouin qui respire par les fesses",
     "reponse":"Un jour il s’assoit, et il meurt …"
@@ -118,9 +97,6 @@
   },
   {	"base" :"Pourquoi le lapin est bleu ?",
     "reponse":"Parce qu’on l’a peint…"
-  },
-  {	"base":"Melon et Melèche prennent une maison. Melon l’achète…",
-    "reponse":"Et Melèche l’habite"
   },
   {	"base":"On ne dit pas mine de rien, mais gisement épuisé."
   },
@@ -166,9 +142,6 @@
   {	"base":"Un hippie n’urine pas…",
     "reponse":"Il peace"
   },
-  {	"base":"C’est Melon et Melèche qui boivent l’apéro",
-    "reponse":"Melon mange des gâteaux apéro et melèche le saucisson."
-  },
 
   {
     "base":"Qu’est-ce qu’un homme intelligent en Belgique ?",
@@ -197,14 +170,6 @@
   {
     "base":"Pourquoi Gilbert Montagné se balance-t-il lorsqu’il chante ? ",
     "reponse":"– Pour être sûr de passer au moins une fois devant le micro."
-  },
-  {
-    "base":"Melon et Melèche attrapent une abeille.",
-    "reponse":"Melon lui arrache les pattes et Melèche le dard."
-  },
-  {
-    "base":"Melon et Melèche sont en avion :",
-    "reponse":"Melon surveille les instruments et Melèche le manche."
   },
   {
     "base":"2 amirs : \"C’est lours un prout ? \"\n– \" Non, c’est un gaz \" ",
@@ -255,10 +220,6 @@
     "reponse":"Parce qu’il n’y a plus de papmouth"
   },
   {
-    "base":"Melon et Melèche s’échappent de prison.",
-    "reponse":"Melon force la serrure et Melèche le barreau."
-  },
-  {
     "base":"Pourquoi les Belges tirent-ils à côté du but ?",
     "reponse":"Parce que les buts à l’extérieur comptent double"
   },
@@ -303,10 +264,6 @@
     "reponse":"D’avoir des ampoules aux pieds"
   },
   {
-    "base":"Melon et Melèche s’occupent du jardin.",
-    "reponse":"Melon fait le gazon et Melèche la fleur."
-  },
-  {
     "base":"Pourquoi les fonctionnaires font leurs manifs en défilant de la République à la Bastille ?",
     "reponse":"Parce que c’est en descente"
   },
@@ -323,10 +280,6 @@
     "reponse":"Et depuis, castorama"
   },
   {
-    "base":"Melon et Melèche vont a la pêche.",
-    "reponse":"Melon prends les hameçons et Melèche la gaule."
-  },
-  {
     "base":"Un piano à un autre : \" Hey, ça va ? \"",
     "reponse":"L’autre : \" Non, j’ai mal au do ! \""
   },
@@ -337,10 +290,6 @@
   {
     "base":"Vous cherchez un livre de blagues ? Les meilleures livres drôles sont sur Amazon !\nQu’est-ce qu’un yaourt dans la forêt ?",
     "reponse":"Un yaourt nature"
-  },
-  {
-    "base":"Melon et Melèche sont charcutiers :",
-    "reponse":"Melon prépare les filets et Melèche les rognons"
   },
   {
     "base":"T’as deux poussins, t’en veux qu’un. Tu fais quoi?",
@@ -387,10 +336,6 @@
     "reponse":"Bordeaux"
   },
   {
-    "base":"Melon et Melèche sont électriciens.",
-    "reponse":"Melon casse le fusible et Melèche l’ampoule."
-  },
-  {
     "base":"De quelle couleur est la voiture de John Travolta? ",
     "reponse":"Elle est grease !"
   },
@@ -421,10 +366,6 @@
   {
     "base":"Pourquoi Napoléon n’ a jamais déménagé?",
     "reponse":"Parce qu’il avait un Bonaparte"
-  },
-  {
-    "base":"Melon et Melèche sont à la pêche.",
-    "reponse":"Melon pêche le thon et Melèche la raie."
   },
   {
     "base":"Un geek ne s’ennuie pas…",
@@ -471,10 +412,6 @@
     "reponse":"Avec une foufourche"
   },
   {
-    "base":"Melon et Melèche prennent une maison. Melon l’achète…",
-    "reponse":"Et Melèche l’habite"
-  },
-  {
     "base":"Comment sort-on de la mer Rouge ?",
     "reponse":"Mouillé !"
   },
@@ -515,16 +452,8 @@
     "reponse":"Un Malabar."
   },
   {
-    "base":"Melon et Melèche vont à l’église :",
-    "reponse":"Melon cherche le curé et Melèche les Saints"
-  },
-  {
     "base":"Qu’est ce qu’un chat bossu ? ",
     "reponse":"Un chameau"
-  },
-  {
-    "base":"Melon et Melèche sont deux copains.",
-    "reponse":"Melon est un crétin et Melèche une burne."
   },
   {
     "base":"C’est l’histoire d’un schtroumpf qui tombe",
@@ -563,10 +492,6 @@
     "reponse":"Il l’accoste !"
   },
   {
-    "base":"Melon et Melèche se font attaquer par un chien.",
-    "reponse":"Melon lui tire les oreilles et Melèche la queue."
-  },
-  {
     "base":"Que dit Frodon devant sa maison ?",
     "reponse":"C’est là que j’hobbit…"
   },
@@ -577,10 +502,6 @@
   {
     "base":"C’est quand le retour du Jedi ?",
     "reponse":"Entre Mercredaille et Jeudaille"
-  },
-  {
-    "base":"Melon et Melèche construisent une tirelire.",
-    "reponse":"Melon fait le moule, Melèche la fente."
   },
   {
     "base":"Avec quoi ramasse t’on la papaye ?",
@@ -597,14 +518,6 @@
   {
     "base":"Pourquoi les pêcheurs ne sont jamais gros ? ",
     "reponse":"Parce qu’ils surveillent leur ligne."
-  },
-  {
-    "base":"Melon et Melèche jouent au billard.",
-    "reponse":"Melon range les boules et Melèche la queue."
-  },
-  {
-    "base":"Melon et Melèche prennent de la bouteille.",
-    "reponse":"Melon se redresse et Melèche s’affaisse"
   },
   {
     "base":"J’ai fait une blague sur les magasins.",
@@ -651,10 +564,6 @@
     "reponse":"Speed heure man !"
   },
   {
-    "base":"Melon et Melèche sont très pro-europeens.",
-    "reponse":"Melon aime l’Euro et Melèche l’Écu."
-  },
-  {
     "base":"Que fait un chien noir qui tombe dans la mer rouge ?",
     "reponse":"Plouf !"
   },
@@ -663,24 +572,8 @@
     "reponse":"En appuyant sur le bouton…"
   },
   {
-    "base":"Melon et Melèche nettoient l’écurie.",
-    "reponse":"Melon brosse les chevaux et Melèche les selles."
-  },
-  {
     "base":"Est-ce que faire des gâteaux d’instinct",
     "reponse":"C ‘est avoir la pate à tarte innée ?"
-  },
-  {
-    "base":"Melon et Melèche sont très pro-europeens.",
-    "reponse":"Melon aime l’Euro et Melèche l’Écu."
-  },
-  {
-    "base":"Melon et Melèche font de la mécanique.",
-    "reponse":"Melon place la vis et Melèche la rondelle."
-  },
-  {
-    "base":"Melon et Melèche découvrent les épices dans un magasin du Sentier.",
-    "reponse":"Melon découvre le safran et Melèche l’anis (avec l’accent)."
   },
   {
     "base":"Quel est l’ami du feu ?",
@@ -727,10 +620,6 @@
     "reponse":"C’est d’habiter dans un palais."
   },
   {
-    "base":"Melon et Melèche sont électriciens.",
-    "reponse":"Melon casse le fusible et Melèche l’ampoule."
-  },
-  {
     "base":"Est-ce qu’une bouteille de vin…",
     "reponse":"Est une bouteille qui voit l’avenir ?"
   },
@@ -745,10 +634,6 @@
   {
     "base":"Quel est le légume le plus courageux ?",
     "reponse":"Le pois chiche"
-  },
-  {
-    "base":"Melon et Melèche jouent au Scrabble.",
-    "reponse":"Melon pioche le W et Melèche le Q."
   },
   {
     "base":"Un mec sur leboncoin veut vendre son SPA. Mais personne ne l’achète. Pourquoi ?",
@@ -767,10 +652,6 @@
     "reponse":"La palourde…"
   },
   {
-    "base":"Melon et Melèche dorment à la belle étoile.",
-    "reponse":"Melon regarde les étoiles et Melèche la lune."
-  },
-  {
     "base":"Pourquoi Gilbert Montagné se balance-t-il lorsqu’il chante ? ",
     "reponse":"– Pour être sûr de passer au moins une fois devant le micro."
   },
@@ -783,24 +664,12 @@
     "reponse":"Car ils ont la peau lisse !"
   },
   {
-    "base":"Melon et Melèche jouent à la pétanque.",
-    "reponse":"Melon jette le cochonnet et Melèche les boules."
-  },
-  {
     "base":"Qu’est-ce qu’un homme intelligent en Belgique ? ",
     "reponse":"Un touriste."
   },
   {
-    "base":"Melon et Melèche font une tarte aux pruneaux",
-    "reponse":"Melon prépare la tarte et Melèche les pruneaux."
-  },
-  {
     "base":"Dans un restaurant, un client dit :\n– Garçon, que fait cette mouche dans ma soupe ? ",
     "reponse":"– Je pense que c’est de la brasse… mais je peux me tromper…"
-  },
-  {
-    "base":"Melon et Melèche doivent se construire un bateau chacun et choisir des matériaux différents.",
-    "reponse":"Melon choisit le bois et Melèche le jonc ."
   },
   {
     "base":"Que fait un crocodile lorsqu’il rencontre une crocodile ?",
@@ -819,10 +688,6 @@
     "reponse":"Il se Fichier…"
   },
   {
-    "base":"Melon et Melèche jouent au billard.",
-    "reponse":"Melon range les boules et Melèche la queue."
-  },
-  {
     "base":"Comment appelle-t-on un covoiturage au Sénégal ?",
     "reponse":"Un Babacar"
   },
@@ -831,32 +696,16 @@
     "reponse":"Un Malabar."
   },
   {
-    "base":"Melon et Melèche ont envie de se fumer un petit pet,",
-    "reponse":"Melon achète les feuilles, Melèche le bout."
-  },
-  {
     "base":"– T’as picolé, hier ? ",
     "reponse":"– Je me rappelle pas, je suis rentré bourré."
-  },
-  {
-    "base":"Melon et Melèche sont à l’assemblée :",
-    "reponse":"Melon vote la poursuite des essais nucléaires et Melèche l’arrêt."
   },
   {
     "base":"Que disent les maitres nageurs à nouvel an ?",
     "reponse":"Bonne apnée !"
   },
   {
-    "base":"Melon et Melèche sont charcutiers :",
-    "reponse":"Melon prépare les filets et Melèche les rognons"
-  },
-  {
     "base":"Un jour, Dieu demanda à Léonard de devenir une sci",
     "reponse":"Et depuis, Leonard De Vinci…"
-  },
-  {
-    "base":"Melon et Melèche s’occupent du jardin.",
-    "reponse":"Melon fait le gazon et Melèche la fleur."
   },
   {
     "base":"Pourquoi les sorcières utilisent des balais pour voler ?",
@@ -923,10 +772,6 @@
     "reponse":"Un portugais"
   },
   {
-    "base":"Melon et melèche qui construisent un drapeau.",
-    "reponse":"Melon achète le tissu et melèche le poteau."
-  },
-  {
     "base":"J’ai raconté une blague à un Parisien…",
     "reponse":"Il a pas ri…"
   },
@@ -939,10 +784,6 @@
     "reponse":"C’est une histoire sans queue ni tête !"
   },
   {
-    "base":"Melon et Melèche sont en avion :",
-    "reponse":"Melon surveille les instruments et Melèche le manche."
-  },
-  {
     "base":"Un jour Dieu dit à Casto de ramer.",
     "reponse":"Et depuis, castorama"
   },
@@ -951,15 +792,7 @@
     "reponse":"Je suis un pirate des Caraïbes ?"
   },
   {
-    "base":"Melon et Melèche ont envie de se fumer un petit pet,",
-    "reponse":"Melon achète les feuilles, Melèche le bout."
-  },
-  {
     "base":"Que fait-on aux voleurs de salades ?",
     "reponse":"On laitue"
-  },
-  {
-    "base":"Melon et Melèche ont envie de se fumer un petit pet,",
-    "reponse":"Melon achète les feuilles, Melèche le bout."
   }
 ]
