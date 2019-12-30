@@ -161,7 +161,7 @@
                     android:id="@+id/box_fragment_box_quantite_title"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:textSize="25dp"
+                    android:textSize="25sp"
                     android:text="@string/box_fragment_produit_quantite"
                     android:layout_weight="1"
                     android:textAppearance="@style/TextAppearance.aperoBox.Box.Description" />
@@ -179,6 +179,7 @@
                     android:layout_width="0sp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:enabled="false"
                     android:inputType="number"
                     android:text="@string/box_fragment_zero"
                     android:textAlignment="center" />

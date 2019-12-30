@@ -20,7 +20,7 @@
         <TextView
             android:id="@+id/panier_fragment_produit_nom_text_view"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:maxWidth="80dp"
             android:text="@string/box_fragment_produit_nom"
             android:gravity="left"
@@ -53,6 +53,7 @@
                 android:layout_weight="1"
                 android:textAlignment="center"
                 android:inputType="number"
+                android:enabled="false"
                 android:text=""
                 android:layout_gravity="right" />
 
