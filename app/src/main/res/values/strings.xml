@@ -56,6 +56,9 @@
     <string name="box_fragment_box_ajouter">Box ajoutée(s)</string>
     <string name="box_fragment_produits_ajouter">Produit(s) ajouté(s)</string>
     <string name="box_fragment_commentaire">Commentaires</string>
+    <string name="box_fragment_moins">-</string>
+    <string name="box_fragment_plus">+</string>
+    <string name="box_fragment_zero">0</string>
 
     <!-- CommentaireFragment -->
     <string name="commentaire_fragment_error_load_commentaire">Une erreur est survenue lors du chargement des commentaires.</string>

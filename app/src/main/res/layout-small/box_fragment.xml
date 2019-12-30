@@ -101,7 +101,7 @@
                 android:outlineSpotShadowColor="@color/textColorPrimary"/>
 
 
-            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:weightSum="6"
@@ -118,28 +118,28 @@
 
                 <Button
                     android:id="@+id/box_fragment_box_quantite_moins"
+                    style="@style/Widget.AperoBox.NumberSpinner.Button"
                     android:layout_width="0sp"
                     android:layout_height="match_parent"
                     android:layout_weight="2"
-                    style="@style/Widget.AperoBox.NumberSpinner.Button"
-                    android:text="-" />
+                    android:text="@string/box_fragment_moins" />
 
                 <EditText
                     android:id="@+id/box_fragment_box_quantite"
                     android:layout_width="0sp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:textAlignment="center"
                     android:inputType="number"
-                    android:text="0" />
+                    android:text="@string/box_fragment_zero"
+                    android:textAlignment="center" />
 
                 <Button
                     android:id="@+id/box_fragment_box_quantite_plus"
+                    style="@style/Widget.AperoBox.NumberSpinner.Button"
                     android:layout_width="0sp"
                     android:layout_height="match_parent"
                     android:layout_weight="2"
-                    style="@style/Widget.AperoBox.NumberSpinner.Button"
-                    android:text="+" />
+                    android:text="@string/box_fragment_plus" />
             </LinearLayout>
 
             <Button
